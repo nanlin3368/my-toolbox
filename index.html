@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>实用软件集</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#5c6bc0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="实用软件集">
+    <link rel="apple-touch-icon" href="icon.png">
+
+    <style>
+        /* 定义颜色变量 */
+        :root {
+            --bg-color: #f5f6f8;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --text-sub: #888888;
+            --border-color: #eeeeee;
+            --card-border: #f0f0f0;
+            --input-bg: #ffffff;
+            --modal-info-bg: #f8f9fa;
+            --search-bar-bg: rgba(245, 246, 248, 0.8);
+            --pagination-bg: rgba(255, 255, 255, 0.8);
+            --accent-color: #5c6bc0;
+        }
+
+        /* 黑暗模式颜色变量 */
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-main: #e0e0e0;
+            --text-sub: #aaaaaa;
+            --border-color: #333333;
+            --card-border: #2c2c2c;
+            --input-bg: #2c2c2c;
+            --modal-info-bg: #252525;
+            --search-bar-bg: rgba(18, 18, 18, 0.8);
+            --pagination-bg: rgba(30, 30, 30, 0.8);
+            --accent-color: #7986cb;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg-color); font-family: -apple-system, sans-serif; margin: 0; padding: 0; font-size: 13px; color: var(--text-main); padding-bottom: 90px; transition: background-color 0.3s; }
+
+        .header { background: var(--card-bg); padding: 15px 0; text-align: center; font-size: 1.1rem; font-weight: bold; border-bottom: 1px solid var(--border-color); color: var(--text-main); }
+        .search-container { position: sticky; top: 0; z-index: 10; background: var(--search-bar-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 8px 12px; }
+        #search-input { width: 100%; max-width: 600px; margin: 0 auto; display: block; padding: 10px 15px; border-radius: 20px; border: 1px solid var(--border-color); outline: none; font-size: 12px; background: var(--input-bg); color: var(--text-main); }
+        #app-count { max-width: 600px; margin: 8px auto 4px auto; color: var(--text-sub); font-size: 11px; text-align: center; }
+
+        #app-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; padding: 10px; max-width: 1200px; margin: 0 auto; }
+        .app-card { background: var(--card-bg); border-radius: 14px; padding: 15px; display: flex; flex-direction: column; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.04); border: 1px solid var(--card-border); cursor: pointer; transition: transform 0.2s, background-color 0.3s; }
+        .app-card:active { transform: scale(0.95); }
+        .app-icon { width: 55px; height: 55px; border-radius: 12px; margin-bottom: 10px; object-fit: cover; }
+        .app-title { font-size: 14px; font-weight: bold; margin-bottom: 10px; text-align: center; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-main); }
+        .download-btn { width: 100%; background: var(--accent-color); color: white; text-align: center; padding: 8px 0; border-radius: 18px; text-decoration: none; font-size: 11px; font-weight: bold; }
+
+        /* 列表加载动画 */
+        .skeleton { background: var(--card-border); border-radius: 14px; height: 140px; position: relative; overflow: hidden; border: 1px solid var(--card-border); }
+        .skeleton::after {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: skeleton-loading 1.5s infinite;
+        }
+        @keyframes skeleton-loading { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+
+        .empty-status { grid-column: 1 / -1; text-align: center; padding: 40px 20px; color: var(--text-sub); font-size: 14px; }
+
+        .pagination-footer { position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 8px; background: var(--pagination-bg); padding: 6px 15px; border-radius: 30px; box-shadow: 0 8px 25px rgba(0,0,0,0.12); z-index: 90; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.1); min-width: 200px; justify-content: space-between; }
+        .page-btn { background: transparent; color: var(--accent-color); border: none; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer; }
+        .page-btn:active { background: rgba(92, 107, 192, 0.1); }
+        .page-btn:disabled { color: #666; cursor: not-allowed; }
+        #page-info { font-weight: bold; font-size: 12px; color: var(--text-main); min-width: 50px; text-align: center; }
+
+        /* 弹窗样式 */
+        #modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0); z-index: 1000; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(0px); -webkit-backdrop-filter: blur(0px); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        #modal-overlay.active { background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
+        .modal-content { background: var(--card-bg); width: 95%; max-width: 500px; border-radius: 24px; max-height: 85vh; overflow-y: auto; position: relative; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transform: scale(0.9) translateY(20px); opacity: 0; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); color: var(--text-main); }
+        #modal-overlay.active .modal-content { transform: scale(1) translateY(0); opacity: 1; }
+        .close-btn { position: absolute; top: 12px; right: 16px; font-size: 32px; color: var(--text-main); cursor: pointer; line-height: 1; z-index: 100; }
+        .modal-header { display: flex; align-items: center; margin-bottom: 20px; }
+        .modal-icon { width: 64px; height: 64px; border-radius: 14px; margin-right: 15px; }
+        .modal-app-name { font-size: 19px; font-weight: bold; }
+        .modal-info-box { background: var(--modal-info-bg); border-radius: 12px; padding: 15px; margin-bottom: 20px; }
+        .info-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .info-left { display: flex; align-items: center; flex: 1; overflow: hidden; }
+        .info-label { color: var(--text-sub); margin-right: 6px; flex-shrink: 0; }
+        .info-value { color: var(--text-main); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .pkg-section { border-top: 1px dashed var(--border-color); margin-top: 5px; padding-top: 12px; }
+        .pkg-value { font-family: monospace; color: var(--text-sub); font-size: 11px; word-break: break-all; margin-top: 4px; }
+        .section-title { font-weight: bold; margin: 18px 0 10px 0; font-size: 14px; }
+        .screenshot-container { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
+        .screenshot-img { height: 180px; border-radius: 10px; flex-shrink: 0; border: 1px solid var(--border-color); cursor: pointer; }
+        .app-intro { font-size: 13px; color: var(--text-main); line-height: 1.7; background: var(--card-bg); border: 1px solid var(--border-color); padding: 12px; border-radius: 12px; white-space: pre-wrap; opacity: 0.9; }
+        .modal-footer { display: flex; gap: 8px; margin-top: 25px; justify-content: space-between; }
+        .footer-btn { flex: 1; padding: 12px 0; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 12px; text-align: center; display: flex; align-items: center; justify-content: center; }
+        .footer-btn:active { transform: scale(0.95); opacity: 0.8; transition: transform 0.1s; }
+        .btn-secondary { background: var(--modal-info-bg); color: var(--text-main); border: none; cursor: pointer; }
+        .btn-primary { background: linear-gradient(135deg, #5c6bc0, #3949ab); color: #fff; }
+
+        /* 浮动按钮组样式优化 */
+        .fab-group { position: fixed; right: 20px; display: flex; flex-direction: column; gap: 12px; z-index: 99; bottom: 25px; }
+        
+        .fab-btn { 
+            width: 48px; 
+            height: 48px; 
+            color: white; 
+            border-radius: 50%; 
+            border: none; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+            cursor: pointer; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            font-size: 20px; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: var(--accent-color);
+            opacity: 0.9;
+        }
+
+        /* 回到顶部按钮优化 */
+        #back-to-top { 
+            background: #5c6bc0; 
+            transform: translateY(20px) scale(0);
+            opacity: 0;
+            pointer-events: none;
+        }
+        #back-to-top.show { 
+            transform: translateY(0) scale(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* 主题按钮与刷新按钮背景优化 */
+        #theme-btn, #refresh-btn { 
+            background: rgba(92, 107, 192, 0.8); 
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        /* 旋转动画类 */
+        .rotating {
+            transform: rotate(360deg) scale(1.1);
+        }
+
+        .fab-btn:active { transform: scale(0.85); filter: brightness(1.2); }
+
+        /* 大图预览层 */
+        #preview-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0); z-index: 2000; justify-content: center; align-items: center; touch-action: none; transition: all 0.3s ease; backdrop-filter: blur(0px); -webkit-backdrop-filter: blur(0px); }
+        #preview-overlay.active { background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); }
+        #preview-img { max-width: 90%; max-height: 80%; object-fit: contain; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); transform: scale(0.8); opacity: 0; transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
+        #preview-overlay.active #preview-img { transform: scale(1); opacity: 1; }
+        .preview-close { position: absolute; top: 20px; right: 20px; color: white; background: rgba(255,255,255,0.2); width: 42px; height: 42px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 30px; cursor: pointer; z-index: 2100; border: 1px solid rgba(255,255,255,0.3); }
+        #preview-counter { position: absolute; bottom: 30px; color: white; background: rgba(0,0,0,0.3); padding: 6px 18px; border-radius: 20px; z-index: 2100; font-size: 14px; font-weight: bold; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1); }
+        
+        .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.1); color: white; border: none; padding: 25px 15px; font-size: 30px; cursor: pointer; display: none; }
+        @media (min-width: 768px) { .nav-btn { display: block; } .screenshot-img { height: 240px; } }
+    </style>
+</head>
+<body>
+
+    <div class="header">实用软件集</div>
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="搜索应用..." oninput="filterApps()">
+        <div id="app-count">同步数据中...</div>
+    </div>
+    
+    <div id="app-container">
+        <div class="skeleton"></div><div class="skeleton"></div>
+        <div class="skeleton"></div><div class="skeleton"></div>
+        <div class="skeleton"></div><div class="skeleton"></div>
+    </div>
+
+    <div class="pagination-footer" id="pagination-bar">
+        <button class="page-btn" id="prev-btn" onclick="changePage(-1)">上一页</button>
+        <span id="page-info">1 / 1</span>
+        <button class="page-btn" id="next-btn" onclick="changePage(1)">下一页</button>
+    </div>
+
+    <div class="fab-group">
+        <button id="back-to-top" class="fab-btn" onclick="scrollToTop()" title="回到顶部">↑</button>
+        <button id="theme-btn" class="fab-btn" onclick="toggleTheme()" title="切换主题">🌓</button>
+        <button id="refresh-btn" class="fab-btn" onclick="location.reload()" title="刷新页面">↻</button>
+    </div>
+
+    <div id="modal-overlay" onclick="handleBack()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="close-btn" onclick="handleBack()">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <div id="preview-overlay" onclick="handlePreviewBack(event)">
+        <div class="preview-close" onclick="handlePreviewBack(event)">&times;</div>
+        <button class="nav-btn" style="left:10px;" onclick="event.stopPropagation();changePreview(-1)">&#10094;</button>
+        <img id="preview-img" src="" onclick="event.stopPropagation()">
+        <button class="nav-btn" style="right:10px;" onclick="event.stopPropagation();changePreview(1)">&#10095;</button>
+        <div id="preview-counter">1/1</div>
+    </div>
+
+    <script>
+        let myApps = [];           
+        let displayList = [];      
+        let currentPage = 1;       
+        const itemsPerPage = 50;   
+        let currentScreenshots = []; let currentImgIndex = 0; let touchStartX = 0;
+
+        // --- 主题与按钮逻辑优化 ---
+        
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateThemeIcon(savedTheme);
+        }
+
+        function toggleTheme() {
+            const btn = document.getElementById('theme-btn');
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            // 触发旋转动画
+            btn.classList.add('rotating');
+            
+            // 动画中途切换图标和属性
+            setTimeout(() => {
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateThemeIcon(newTheme);
+            }, 150);
+
+            // 清除动画类以便下次使用
+            setTimeout(() => btn.classList.remove('rotating'), 400);
+        }
+
+        function updateThemeIcon(theme) {
+            const btn = document.getElementById('theme-btn');
+            // 白天显示月亮（点它变黑），黑夜显示太阳（点它变亮）
+            btn.innerHTML = theme === 'light' ? '🌙' : '☀️';
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.onscroll = function() {
+            const topBtn = document.getElementById("back-to-top");
+            if (window.scrollY > 400) {
+                topBtn.classList.add('show');
+            } else {
+                topBtn.classList.remove('show');
+            }
+        };
+
+        // --- 原有业务逻辑 ---
+
+        function showElement(id) {
+            const el = document.getElementById(id);
+            el.style.display = 'flex';
+            requestAnimationFrame(() => { el.classList.add('active'); });
+        }
+
+        function hideElement(id) {
+            const el = document.getElementById(id);
+            el.classList.remove('active');
+            setTimeout(() => { el.style.display = 'none'; }, 300);
+        }
+
+        window.onpopstate = function(event) {
+            if (document.getElementById('preview-overlay').classList.contains('active')) {
+                hideElement('preview-overlay');
+            } else if (document.getElementById('modal-overlay').classList.contains('active')) {
+                hideElement('modal-overlay');
+            } else if (event.state && event.state.page) {
+                currentPage = event.state.page;
+                renderApps();
+            }
+        };
+
+        function getPageFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            const p = parseInt(params.get('p'));
+            return (isNaN(p) || p < 1) ? 1 : p;
+        }
+
+        async function loadAppData() {
+            try {
+                const response = await fetch('apps.json?t=' + Date.now());
+                myApps = await response.json();
+                displayList = [...myApps];
+                currentPage = getPageFromUrl();
+                setTimeout(renderApps, 500); 
+            } catch (e) { document.getElementById('app-count').innerText = "加载失败"; }
+        }
+
+        function renderApps() {
+            const container = document.getElementById('app-container');
+            const countDisplay = document.getElementById('app-count');
+            const totalPages = Math.ceil(displayList.length / itemsPerPage) || 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+            if (currentPage < 1) currentPage = 1;
+            
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const pageData = displayList.slice(start, end);
+            countDisplay.innerText = `共收录 ${displayList.length} 款应用 (第 ${currentPage}/${totalPages} 页)`;
+            
+            if (pageData.length === 0) {
+                container.innerHTML = '<div class="empty-status">未发现相关应用</div>';
+                document.getElementById('pagination-bar').style.display = 'none';
+                return;
+            }
+            container.innerHTML = pageData.map((app) => {
+                const realIndex = myApps.findIndex(a => a.name === app.name);
+                return `
+                <div class="app-card" onclick="openModal(${realIndex})">
+                    <img src="${app.icon}" class="app-icon" loading="lazy">
+                    <div class="app-title">${app.name}</div>
+                    <div class="download-btn">点击查看</div>
+                </div>`
+            }).join('');
+            document.getElementById('pagination-bar').style.display = 'flex';
+            document.getElementById('page-info').innerText = `${currentPage} / ${totalPages}`;
+            document.getElementById('prev-btn').disabled = (currentPage === 1);
+            document.getElementById('next-btn').disabled = (currentPage === totalPages);
+        }
+
+        function changePage(step) {
+            currentPage += step;
+            const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?p=' + currentPage;
+            window.history.pushState({page: currentPage}, "", newUrl);
+            renderApps();
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function filterApps() {
+            const term = document.getElementById('search-input').value.toLowerCase();
+            displayList = myApps.filter(app => app.name.toLowerCase().includes(term));
+            currentPage = 1; 
+            const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            window.history.pushState({page: 1}, "", newUrl);
+            renderApps();
+        }
+        
+function openModal(index) {
+    const app = myApps[index];
+    currentScreenshots = app.screenshots;
+    let btnText = "官方网站"; let btnColor = "#5c6bc0"; 
+    if (app.source) {
+        const s = app.source.toLowerCase();
+        if (s.indexOf("github.com") !== -1 || s.indexOf("gitee.com") !== -1 || s.indexOf("gitlab.com") !== -1) { btnText = "查看源码"; btnColor = "#5c6bc0"; }
+        else if (s.indexOf("coolapk.com") !== -1) { btnText = "酷安主页"; btnColor = "#11ab60"; }
+        else if (s.indexOf("bilibili.com") !== -1 || s.indexOf("b23.tv") !== -1) { btnText = "B站主页"; btnColor = "#fb7299"; }
+        else if (s.indexOf("douyin.com") !== -1) { btnText = "抖音主页"; btnColor = "#161823"; }
+        else if (s.indexOf("t.me") !== -1) { btnText = "TG 群聊/频道"; btnColor = "#0088cc"; }
+        else if (s.indexOf("qm.qq.com") !== -1 || s.indexOf("qq.com") !== -1) { btnText = "QQ 群聊"; btnColor = "#12b7f5"; }
+    }
+    const sourceBtn = app.source ? `<a href="${app.source}" target="_blank" class="footer-btn btn-secondary" style="background:var(--modal-info-bg); color:${btnColor}; font-size:12px;">${btnText}</a>` : `<div class="footer-btn" style="visibility:hidden;"></div>`;
+    let downloadText = "立即下载"; let downloadColor = "#5c6bc0";
+    if (app.url) {
+        const d = app.url.toLowerCase();
+        if (d.indexOf("123pan.com") !== -1 || d.indexOf("123912.com") !== -1) { downloadText = "123云盘"; downloadColor = "#2d72f1"; } 
+        else if (d.indexOf("lanzou") !== -1 || d.indexOf("lanzv") !== -1 || d.indexOf("lanzx") !== -1 || d.indexOf("lanzp") !== -1) { downloadText = "蓝奏云"; downloadColor = "#00adff"; }
+        else if (d.indexOf("quark.cn") !== -1) { downloadText = "夸克网盘"; downloadColor = "#00c9b0"; }
+        else if (d.indexOf("alipan.com") !== -1 || d.indexOf("aliyundrive.com") !== -1) { downloadText = "阿里云盘"; downloadColor = "#6356ff"; }
+        else if (d.indexOf("weiyun.com") !== -1) { downloadText = "腾讯微云"; downloadColor = "#3072f6"; }
+        else if (d.indexOf("github.com") !== -1 && (d.endsWith(".apk") || d.endsWith(".zip"))) { downloadText = "GitHub直链"; downloadColor = "#24292f"; }
+    }
+    document.getElementById('modal-body').innerHTML = `
+        <div class="modal-header"><img src="${app.icon}" class="modal-icon"><div class="modal-app-name">${app.name}</div></div>
+        <div class="modal-info-box">
+            <div class="info-row"><div class="info-left"><span class="info-label">版本</span><span class="info-value">${app.version}</span></div><div class="info-right" style="width:110px"><span class="info-label">大小</span><span class="info-value">${app.size}</span></div></div>
+            <div class="info-row"><div class="info-left"><span class="info-label">系统</span><span class="info-value">${app.system}</span></div><div class="info-right" style="width:110px"><span class="info-label">类型</span><span class="info-value">${app.mod || '原版'}</span></div></div>
+            <div class="pkg-section"><span class="info-label">应用包名</span><div class="pkg-value">${app.pkg}</div></div>
+        </div>
+        <div class="section-title">📸 应用截图</div>
+        <div class="screenshot-container">${app.screenshots.map((s, idx) => `<img src="${s}" class="screenshot-img" onclick="openPreview(${idx})">`).join('')}</div>
+        <div class="section-title">📝 应用介绍</div><div class="app-intro">${app.intro}</div>
+        <div class="modal-footer" style="gap: 8px;">
+            <button class="footer-btn btn-secondary" style="font-size:12px;" onclick="handleBack()">返回列表</button>
+            ${sourceBtn} 
+            <a href="${app.url}" target="_blank" class="footer-btn btn-primary" style="background:${downloadColor}; border:none; font-size:12px;">${downloadText}</a>
+        </div>
+    `;
+    showElement('modal-overlay');
+    window.history.pushState({state: 'modal', page: currentPage}, "");
+}
+        
+        function handleBack() { window.history.back(); }
+        function openPreview(index) {
+            currentImgIndex = index; updatePreviewUI(); showElement('preview-overlay');
+            window.history.pushState({state: 'preview', page: currentPage}, "");
+        }
+        function handlePreviewBack(e) { if (e) e.stopPropagation(); window.history.back(); }
+        function updatePreviewUI() {
+            document.getElementById('preview-img').src = currentScreenshots[currentImgIndex];
+            document.getElementById('preview-counter').innerText = `${currentImgIndex + 1} / ${currentScreenshots.length}`;
+        }
+        function changePreview(step) {
+            if (!currentScreenshots || !currentScreenshots.length) return;
+            currentImgIndex = (currentImgIndex + step + currentScreenshots.length) % currentScreenshots.length;
+            updatePreviewUI();
+        }
+
+        const previewLayer = document.getElementById('preview-overlay');
+        previewLayer.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX, {passive: true});
+        previewLayer.addEventListener('touchend', e => {
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 60) changePreview(diff > 0 ? 1 : -1);
+        }, {passive: true});
+
+        // 执行初始化
+        initTheme();
+        loadAppData();
+    </script>
+</body>
+</html>
