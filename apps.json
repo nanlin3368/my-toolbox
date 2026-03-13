@@ -6,11 +6,11 @@
         "size": "3.48MB",
         "system": "Android",
         "mod": "开源",
-        "icon": "https://pic1.imgdb.cn/item/69b05c8e6738cb8aa129c762.png",
+        "icon": "./assets/Shizuku_icon.png",
         "intro": "Shizuku 是一款 Android 权限桥接工具，它允许普通应用在不需要 Root 的情况下调用系统级 API，从而实现很多原本只有 Root 才能做到的功能。很多高级工具（如应用冻结、自动化、系统调节）都会依赖它。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b07bf66738cb8aa129cc75.jpg", 
-            "https://pic1.imgdb.cn/item/69b07c036738cb8aa129cc79.jpg"
+            "./assets/Shizuku_shot_1.jpg", 
+            "./assets/Shizuku_shot_2.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iIKDJ3iifbzg",
         "source": "https://github.com/thedjchi/Shizuku" 
@@ -22,11 +22,11 @@
         "size": "3.87MB",
         "system": "Android",
         "mod": "开源",
-        "icon": "https://pic1.imgdb.cn/item/69b0746b6738cb8aa129cb77.png",
+        "icon": "./assets/GKD_icon.png",
         "intro": "GKD 是一款基于“安卓无障碍服务 + 规则订阅 + 自动点击技术”的开源应用。它可以在满足某些条件时自动点击屏幕，比如自动点“跳过广告”按钮。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b072fc6738cb8aa129cb40.jpg",
-            "https://pic1.imgdb.cn/item/69b073316738cb8aa129cb4f.jpg"
+            "./assets/GKD_shot_1.jpg",
+            "./assets/GKD_shot_2.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/izk0Q3iifhyb",
         "source": "https://github.com/gkd-kit/gkd"
@@ -38,11 +38,11 @@
         "size": "5.61MB",
         "system": "Android",
         "mod": "开源",
-        "icon": "https://pic1.imgdb.cn/item/69b0791a6738cb8aa129cc11.png",
+        "icon": "./assets/甲壳虫ADB助手_icon.png",
         "intro": "甲壳虫ADB助手 是一款用于安卓设备调试和管理的工具应用，可以让手机直接通过 ADB 控制其他安卓设备。它把原本需要输入命令的 ADB 操作做成了可视化按钮。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b078706738cb8aa129cc04.jpg",
-            "https://pic1.imgdb.cn/item/69b078746738cb8aa129cc05.jpg"
+            "./assets/69b078706738cb8aa129cc04.jpg",
+            "./assets/69b078746738cb8aa129cc05.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/ikdSH3ij3bmh",
         "source": "https://github.com/didjdk/adbhelper"
@@ -54,11 +54,11 @@
         "size": "4.40MB",
         "system": "Android",
         "mod": "开源",
-        "icon": "https://pic1.imgdb.cn/item/69b0ab0d6738cb8aa129d215.png",
+        "icon": "./assets/Stellar_icon.png",
         "intro": "Stellar 是一款基于 Shizuku 的魔改分支，让应用通过 ADB 或 Root 权限使用系统级 API。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b0abd46738cb8aa129d23b.jpg",
-            "https://pic1.imgdb.cn/item/69b0abe86738cb8aa129d243.jpg"
+            "./assets/69b0abd46738cb8aa129d23b.jpg",
+            "./assets/69b0abe86738cb8aa129d243.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/ittD73khlupc",
         "source": "https://github.com/roro2239/Stellar"
@@ -70,10 +70,10 @@
         "size": "63.18kB",
         "system": "Android",
         "mod": "原版",
-        "icon": "https://pic1.imgdb.cn/item/69b0c6e16738cb8aa129ee70.png",
+        "icon": "./assets/无障碍管理器_icon.png",
         "intro": "无障碍管理器 是一款可以完全替代系统设置中的辅助功能设置页面。该应用程序只需要授权即可将安全设置写入功能。支持不耗电、不主动唤醒的可访问保活，保活速度极快。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b0c6e16738cb8aa129ee71.png"
+            "./assets/69b0c6e16738cb8aa129ee71.png"
         ],
         "url": "https://nanlinyou.lanzoul.com/iZjKH3iif95e",
         "source": "https://github.com/WuDi-ZhanShen/AccessibilityManager"
@@ -85,11 +85,11 @@
         "size": "4.42MB",
         "system": "Android",
         "mod": "开源",
-        "icon": "https://pic1.imgdb.cn/item/69b0d29f6738cb8aa12a01ae.png",
+        "icon": "./assets/Anywhere-_icon.png",
         "intro": "Anywhere- 是一款强大的快捷方式工具，可以将任何 Activity、URL Scheme 等固定到桌面，极大提高操作效率。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b0d3446738cb8aa12a0223.jpg",
-            "https://pic1.imgdb.cn/item/69b0d3446738cb8aa12a0222.jpg"
+            "./assets/69b0d3446738cb8aa12a0223.jpg",
+            "./assets/69b0d3446738cb8aa12a0222.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iCH1z3ij3o2f",
         "source": "https://github.com/zhaobozhen/Anywhere-"
@@ -101,11 +101,11 @@
         "size": "5.13MB",
         "system": "Android",
         "mod": "开源",
-        "icon": "https://pic1.imgdb.cn/item/69b0d48e6738cb8aa12a0342.png",
+        "icon": "./assets/LibChecker_icon.png",
         "intro": "LibChecker 是一个 Android 应用库 analysis 工具，可以查看应用使用的SDK、架构和组件结构，常用于应用分析和开发调试。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b0d5e66738cb8aa12a0485.jpg",
-            "https://pic1.imgdb.cn/item/69b0d5e46738cb8aa12a0484.jpg"
+            "./assets/69b0d5e66738cb8aa12a0485.jpg",
+            "./assets/69b0d5e46738cb8aa12a0484.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iPaBR3khptqb",
         "source": "https://github.com/LibChecker/LibChecker"
@@ -117,11 +117,11 @@
         "size": "2.72MB",
         "system": "Android",
         "mod": "开源",
-        "icon": "https://pic1.imgdb.cn/item/69b10308e42d9f85db6dbe5a.png",
+        "icon": "./assets/ShizukuFlow_icon.png",
         "intro": "ShizukuFlow 是一款功能强大的 Android 系统信息查看和管理工具，专为需要深入了解和管理 Android 设备的用户设计。基于 Shizuku 权限框架，能够提供丰富的系统信息查询和高级管理功能，让您更好地了解和控制自己的设备。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b10308e42d9f85db6dbe5b.jpg",
-            "https://pic1.imgdb.cn/item/69b10308e42d9f85db6dbe5c.jpg"
+            "./assets/69b10308e42d9f85db6dbe5b.jpg",
+            "./assets/69b10308e42d9f85db6dbe5c.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/izgjE3kb4vni",
         "source": "https://gitee.com/xiaowan12/v-app-info"
@@ -133,11 +133,11 @@
         "size": "27.46MB",
         "system": "Android",
         "mod": "原版",
-        "icon": "https://pic1.imgdb.cn/item/69b106f5e42d9f85db6dd68d.png",
+        "icon": "./assets/MT管理器_icon.png",
         "intro": "MT管理器 是一款功能非常强大的 Android 文件管理与逆向编辑工具。它不仅可以像普通文件管理器一样管理手机文件，还提供 APK编辑、代码查看、压缩包处理、Root操作等高级功能。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b106f4e42d9f85db6dd68b.jpg",
-            "https://pic1.imgdb.cn/item/69b106f4e42d9f85db6dd68a.jpg"
+            "./assets/69b106f4e42d9f85db6dd68b.jpg",
+            "./assets/69b106f4e42d9f85db6dd68a.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iQE793iigo7c",
         "source": "https://mt2.cn/"
@@ -149,11 +149,11 @@
         "size": "5.56MB",
         "system": "Android",
         "mod": "开源",
-        "icon": "https://pic1.imgdb.cn/item/69b114c4e42d9f85db6e0265.png",
+        "icon": "./assets/自动任务_icon.png",
         "intro": "自动任务 是一款基于 Shizuku + 无障碍服务的 Android 自动化任务工具，可以让手机自动执行各种操作和流程。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b113c5e42d9f85db6e00b0.jpg",
-            "https://pic1.imgdb.cn/item/69b113c6e42d9f85db6e00b1.jpg"
+            "./assets/69b113c5e42d9f85db6e00b0.jpg",
+            "./assets/69b113c6e42d9f85db6e00b1.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iMqHk3iif97g",
         "source": "https://github.com/xjunz/AutoTask"
@@ -165,11 +165,11 @@
         "size": "4.48MB",
         "system": "Android",
         "mod": "开源",
-        "icon": "https://pic1.imgdb.cn/item/69b11844e42d9f85db6e0f74.png",
+        "icon": "./assets/Canta_icon.png",
         "intro": "Canta 是一款无需 Root 的安卓系统精简工具，通过 Shizuku 获取 ADB 权限，可以卸载系统应用、清理预装软件，让手机更加干净、流畅。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b11847e42d9f85db6e0f77.jpg",
-            "https://pic1.imgdb.cn/item/69b11847e42d9f85db6e0f78.jpg"
+            "./assets/69b11847e42d9f85db6e0f77.jpg",
+            "./assets/69b11847e42d9f85db6e0f78.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iqMfv3khm8ub",
         "source": "https://github.com/samolego/Canta"
@@ -181,11 +181,11 @@
         "size": "4.82MB",
         "system": "Android",
         "mod": "开源",
-        "icon": "https://pic1.imgdb.cn/item/69b12e5ee42d9f85db6e9e9b.png",
+        "icon": "./assets/蓝牙遥控器_icon.png",
         "intro": "蓝牙遥控器 是一款开源的 Android 蓝牙遥控器应用，可以把手机变成蓝牙遥控器，用来控制 Android TV、电视盒子或其他支持 Bluetooth HID 的设备。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b12e5fe42d9f85db6e9e9e.jpg",
-            "https://pic1.imgdb.cn/item/69b12e60e42d9f85db6e9ea0.jpg"
+            "./assets/69b12e5fe42d9f85db6e9e9e.jpg",
+            "./assets/69b12e60e42d9f85db6e9ea0.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/izYu73khluyb",
         "source": "https://gitlab.com/Atharok/BtRemote"
@@ -197,11 +197,11 @@
         "size": "4.57MB",
         "system": "Android",
         "mod": "开源",
-        "icon": "https://pic1.imgdb.cn/item/69b1324be42d9f85db6ec12b.png",
+        "icon": "./assets/InstallerX_Revived_icon.png",
         "intro": "InstallerX Revived 是一款开源的 Android 第三方应用安装器，主要用于替代系统默认安装器，让用户在安装 APK、APKS、XAPK 等应用包时拥有更多高级控制功能。它是经典项目 InstallerX 的改进分支版本。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b1324de42d9f85db6ec130.jpg",
-            "https://pic1.imgdb.cn/item/69b1324be42d9f85db6ec12e.jpg"
+            "./assets/69b1324de42d9f85db6ec130.jpg",
+            "./assets/69b1324be42d9f85db6ec12e.jpg"
         ],
         "url": "https://www.123912.com/s/TUtbTd-GdGtH?pwd=OC2u",
         "source": "https://github.com/wxxsfxyzm/InstallerX-Revived"
@@ -213,11 +213,11 @@
         "size": "9.86MB",
         "system": "Android",
         "mod": "开源",
-        "icon": "https://pic1.imgdb.cn/item/69b1390ee42d9f85db6edb61.png",
+        "icon": "./assets/App_Ops_icon.png",
         "intro": "App Ops 是一款用于精细管理 Android 应用权限的玩机工具。它可以让用户查看并修改系统中每个应用的底层权限状态，从而更严格地控制应用对设备功能和数据的访问。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b1390ee42d9f85db6edb63.jpg",
-            "https://pic1.imgdb.cn/item/69b1390ee42d9f85db6edb62.jpg"
+            "./assets/69b1390ee42d9f85db6edb63.jpg",
+            "./assets/69b1390ee42d9f85db6edb62.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/ilLSg3iif6ef",
         "source": "https://github.com/RikkaApps/App-Ops-issue-tracker"
@@ -229,11 +229,11 @@
         "size": "5.08MB",
         "system": "Android",
         "mod": "原版",
-        "icon": "https://pic1.imgdb.cn/item/69b13e22e42d9f85db6eeabb.png",
+        "icon": "./assets/幻_实验室_icon.png",
         "intro": "幻·实验室 是一款轻量级安卓工具箱应用，集系统优化、应用管理、脚本执行和自动化任务于一体。用户可以通过内置或自定义脚本，对系统进行调整或自动执行特定操作，从而提升设备使用效率和流畅度。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b13e24e42d9f85db6eeac8.jpg",
-            "https://pic1.imgdb.cn/item/69b13e24e42d9f85db6eeacb.jpg"
+            "./assets/69b13e24e42d9f85db6eeac8.jpg",
+            "./assets/69b13e24e42d9f85db6eeacb.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/i2A033khlv7a",
         "source": "https://www.coolapk.com/u/3287595"
@@ -245,10 +245,10 @@
         "size": "3.06MB",
         "system": "Android",
         "mod": "原版",
-        "icon": "https://pic1.imgdb.cn/item/69b14185e42d9f85db6ef72a.png",
+        "icon": "./assets/李跳跳_icon.png",
         "intro": "李跳跳 是一款专注于帮助 Android 用户自动跳过启动广告和弹窗提示的免费工具，通过无障碍服务模拟点击广告跳过按钮，减少烦人的等待和干扰。它支持自定义规则与导入功能，使广告跳过效果更精准。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b14186e42d9f85db6ef72d.jpg"
+            "./assets/69b14186e42d9f85db6ef72d.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/ilxGK3iifcna",
         "source": "https://github.com/rongzhiy/LiTiaotiao"
@@ -260,11 +260,11 @@
         "size": "8.98MB",
         "system": "Android",
         "mod": "原版",
-        "icon": "https://pic1.imgdb.cn/item/69b145f2e42d9f85db6f0f89.png",
+        "icon": "./assets/手机性能排行_icon.png",
         "intro": "手机性能排行 是一款极为好用的手机性能参数对比软件，它收录了市面上几乎所有机型的性能参数、测试数据及分数，并且实时更新新机型，手机、电脑的各类性能参数都做了详细测试及排行比对，让你一目了然。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b145f3e42d9f85db6f0f8d.jpg",
-            "https://pic1.imgdb.cn/item/69b145f6e42d9f85db6f0f99.jpg"
+            "./assets/69b145f3e42d9f85db6f0f8d.jpg",
+            "./assets/69b145f6e42d9f85db6f0f99.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iG95W3iifb9a",
         "source": ""
@@ -276,11 +276,11 @@
         "size": "5.87MB",
         "system": "Android",
         "mod": "开源",
-        "icon": "https://pic1.imgdb.cn/item/69b1542ee42d9f85db6f4c8f.png",
+        "icon": "./assets/雹_icon.png",
         "intro": "雹 是一款面向 Android 设备的系统管理工具，主要功能是帮助用户对手机上的应用进行冻结 / 停用管理，从而提高系统性能、节省资源和延长电池续航。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b1542fe42d9f85db6f4c90.jpg",
-            "https://pic1.imgdb.cn/item/69b1542fe42d9f85db6f4c91.jpg"
+            "./assets/69b1542fe42d9f85db6f4c90.jpg",
+            "./assets/69b1542fe42d9f85db6f4c91.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/ivQip3iifccj",
         "source": "https://github.com/aistra0528/Hail"
@@ -292,11 +292,11 @@
         "size": "16.68MB",
         "system": "Android",
         "mod": "开源",
-        "icon": "https://pic1.imgdb.cn/item/69b15bc7e42d9f85db6f5cfe.png",
+        "icon": "./assets/LocalSend_icon.png",
         "intro": "LocalSend 是一款免费的开源文件传输工具，支持 Android、iOS、Windows、macOS、Linux 等多个平台。它通过本地 Wi-Fi 或局域网直接连接设备，无需互联网或云服务器即可完成文件传输。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b15bc8e42d9f85db6f5cff.jpg",
-            "https://pic1.imgdb.cn/item/69b15bc9e42d9f85db6f5d03.jpg"
+            "./assets/69b15bc8e42d9f85db6f5cff.jpg",
+            "./assets/69b15bc9e42d9f85db6f5d03.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iYb3h3iif9hg",
         "source": "https://github.com/localsend/localsend"
@@ -308,11 +308,11 @@
         "size": "4.33MB",
         "system": "Android",
         "mod": "原版",
-        "icon": "https://pic1.imgdb.cn/item/69b15f9be42d9f85db6f6127.png",
+        "icon": "./assets/蓝云_icon.png",
         "intro": "蓝云 是一款为蓝奏云网盘开发的第三方客户端，支持在手机上更方便地上传、下载、管理和解析蓝奏云资源。相比官方网页端，它提供了更多扩展功能，例如文件搜索、直链解析和个性化界面等。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b1604ce42d9f85db6f621e.jpg",
-            "https://pic1.imgdb.cn/item/69b1604be42d9f85db6f621b.jpg"
+            "./assets/69b1604ce42d9f85db6f621e.jpg",
+            "./assets/69b1604be42d9f85db6f621b.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/i8c3c3isbi5e",
         "source": ""
@@ -324,11 +324,11 @@
         "size": "2.51MB",
         "system": "Android",
         "mod": "原版",
-        "icon": "https://pic1.imgdb.cn/item/69b16a38e42d9f85db6f6727.png",
+        "icon": "./assets/R-安装组件_icon.png",
         "intro": "R-安装组件 是一款专为安卓系统设计的应用安装管理工具，定位为 Shizuku 玩机必备软件，与安装狮功能类似，主打静默安装与批量安装，同时提供多种安装增强功能。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b16a39e42d9f85db6f6728.jpg",
-            "https://pic1.imgdb.cn/item/69b16a39e42d9f85db6f6729.jpg"
+            "./assets/69b16a39e42d9f85db6f6728.jpg",
+            "./assets/69b16a39e42d9f85db6f6729.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/ivqGJ3iif90j",
         "source": "https://t.me/joinchat/AE6otyLVOCtlYzhl"
@@ -340,11 +340,11 @@
         "size": "4.71MB",
         "system": "Android",
         "mod": "开源",
-        "icon": "https://pic1.imgdb.cn/item/69b17291e42d9f85db6f6e37.png",
+        "icon": "./assets/ColorBlendr_icon.png",
         "intro": "ColorBlendr 是一款 Android 主题定制应用，主要用于调整系统的 Material You 动态颜色方案（Monet）。通过该工具，用户可以手动修改系统生成的主题色，而不是完全依赖壁纸自动取色。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b1729ae42d9f85db6f6e47.jpg",
-            "https://pic1.imgdb.cn/item/69b1729ae42d9f85db6f6e48.jpg"
+            "./assets/69b1729ae42d9f85db6f6e47.jpg",
+            "./assets/69b1729ae42d9f85db6f6e48.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iGwol3ij5tkf",
         "source": "https://github.com/Mahmud0808/ColorBlendr"
@@ -356,11 +356,11 @@
         "size": "26.35MB",
         "system": "Android",
         "mod": "原版",
-        "icon": "https://pic1.imgdb.cn/item/69b1812ee42d9f85db6f8fba.png",
+        "icon": "./assets/青听音乐_icon.png",
         "intro": "青听音乐 是一款安卓平台主打永久免费、无广告、无损高音质的本地音乐播放器与资源聚合工具，以“纯净聆听”为核心，兼顾本地播放与在线搜索、下载。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b1814de42d9f85db6f9028.jpg",
-            "https://pic1.imgdb.cn/item/69b18146e42d9f85db6f9012.jpg"
+            "./assets/69b1814de42d9f85db6f9028.jpg",
+            "./assets/69b18146e42d9f85db6f9012.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iP2qI3j222od",
         "source": "https://github.com/kejichangqing/QingMusic"
@@ -372,11 +372,11 @@
         "size": "93.15MB",
         "system": "Android",
         "mod": "原版",
-        "icon": "https://pic1.imgdb.cn/item/69b18927e42d9f85db6faa92.webp",
+        "icon": "./assets/Google_Play_商店_icon.png",
         "intro": "Play 商店 是一款由谷歌官方推出的安卓系统原生应用商店，也是全球规模最大、最权威的安卓应用分发平台，为手机、平板、电视、手表等设备提供应用、游戏、影视、书籍等一站式下载与管理服务。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b189b5e42d9f85db6fac7d.jpg",
-            "https://pic1.imgdb.cn/item/69b189b4e42d9f85db6fac79.jpg"
+            "./assets/69b189b5e42d9f85db6fac7d.jpg",
+            "./assets/69b189b4e42d9f85db6fac79.jpg"
         ],
         "url": "https://www.123912.com/s/TUtbTd-VdGtH?pwd=Kv7N",
         "source": ""
@@ -388,11 +388,11 @@
         "size": "6.12MB",
         "system": "Android",
         "mod": "开源",
-        "icon": "https://pic1.imgdb.cn/item/69b19139e42d9f85db6fc67d.png",
+        "icon": "./assets/De1984_icon.png",
         "intro": "De1984 是一款开源隐私与安全工具，主要用来控制应用访问网络和管理系统/用户应用程序，重点是隐私保护与自主控制，而不是简单的广告阻挡。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b19139e42d9f85db6fc67f.jpg",
-            "https://pic1.imgdb.cn/item/69b19139e42d9f85db6fc67e.jpg"
+            "./assets/69b19139e42d9f85db6fc67f.jpg",
+            "./assets/69b19139e42d9f85db6fc67e.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/i4hXd3iihokb",
         "source": "https://github.com/dorumrr/de1984"
@@ -404,11 +404,11 @@
         "size": "12.12MB",
         "system": "Android",
         "mod": "开源",
-        "icon": "https://pic1.imgdb.cn/item/69b1940ce42d9f85db6fc7ee.png",
+        "icon": "./assets/GitHub_Store_icon.png",
         "intro": "GitHub Store 是一款开源、免费的软件应用商店工具，它把 GitHub 上的发布版本转化成像手机应用商店一样的体验，让用户轻松发现、下载、安装并更新开源软件，而不必单独浏览每个仓库的 release 页面。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b1940ce42d9f85db6fc7ef.jpg",
-            "https://pic1.imgdb.cn/item/69b1940ce42d9f85db6fc7f0.jpg"
+            "./assets/69b1940ce42d9f85db6fc7ef.jpg",
+            "./assets/69b1940ce42d9f85db6fc7f0.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/ibnRk3khlx1g",
         "source": "https://github.com/OpenHub-Store/GitHub-Store"
@@ -420,11 +420,11 @@
         "size": "17.63MB",
         "system": "Android",
         "mod": "开源",
-        "icon": "https://pic1.imgdb.cn/item/69b199aae42d9f85db6fca1c.png",
+        "icon": "./assets/AniCh_icon.png",
         "intro": "AniCh 是一款支持超分辨率的在线动漫弹幕APP。多平台，多番剧源，多弹幕，高清无广告。追番看番必备软件。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b199b3e42d9f85db6fca1e.jpg",
-            "https://pic1.imgdb.cn/item/69b199b3e42d9f85db6fca1d.jpg"
+            "./assets/69b199b3e42d9f85db6fca1e.jpg",
+            "./assets/69b199b3e42d9f85db6fca1d.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iNh1u3khdpfe",
         "source": "https://github.com/Sle2p/AniCh"
@@ -436,11 +436,11 @@
         "size": "23.80MB",
         "system": "Android",
         "mod": "开源",
-        "icon": "https://pic1.imgdb.cn/item/69b19c2ae42d9f85db6fcad5.png",
+        "icon": "./assets/PiliPlus_icon.png",
         "intro": "PiliPlus 是一款基于 Flutter 开发的 BiliBili 第三方客户端，定位于轻量、纯净、无广告的 B 站视频浏览和观看工具。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b19c2de42d9f85db6fcad7.jpg",
-            "https://pic1.imgdb.cn/item/69b19c2de42d9f85db6fcad6.jpg"
+            "./assets/69b19c2de42d9f85db6fcad7.jpg",
+            "./assets/69b19c2de42d9f85db6fcad6.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iJ3st3khtjaj",
         "source": "https://github.com/bggRGjQaUbCoE/PiliPlus"
@@ -452,11 +452,11 @@
         "size": "5.11MB",
         "system": "Android",
         "mod": "原版",
-        "icon": "https://pic1.imgdb.cn/item/69b1faa4e42d9f85db714bd4.png",
+        "icon": "./assets/Gemini_icon.png",
         "intro": "Gemini 是由 Google 开发的一款全能型人工智能助手。它不仅是一个聊天机器人，更是集成了 Google 生态系统（如 Gmail、文档、地图、YouTube 等）的智能中枢，旨在通过文字、语音、图像和视频等多种方式辅助你的日常工作、学习和生活。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b1fc79e42d9f85db7151ea.jpg",
-            "https://pic1.imgdb.cn/item/69b1faa5e42d9f85db714bd6.jpg"
+            "./assets/69b1fc79e42d9f85db7151ea.jpg",
+            "./assets/69b1faa5e42d9f85db714bd6.jpg"
         ],
         "url": "https://www.123912.com/s/TUtbTd-Q3GtH?pwd=yNuQ",
         "source": ""
@@ -468,10 +468,10 @@
         "size": "319.04MB",
         "system": "Android",
         "mod": "原版",
-        "icon": "https://pic1.imgdb.cn/item/69b1ff91e42d9f85db715c4b.png",
+        "icon": "./assets/Google_icon.png",
         "intro": "Google 搜索 是 Google 公司开发的一款核心移动应用程序，旨在为用户提供跨平台的智能搜索体验。该应用已经从单纯的“搜索框”进化为一个集生成式 AI、视觉识别和个性化内容于一体的综合信息枢纽。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b1ff92e42d9f85db715c52.jpg"
+            "./assets/69b1ff92e42d9f85db715c52.jpg"
         ],
         "url": "https://www.123912.com/s/TUtbTd-E3GtH?pwd=Sv9v",
         "source": ""
@@ -483,10 +483,10 @@
         "size": "7.46MB",
         "system": "Android",
         "mod": "开源",
-        "icon": "https://pic1.imgdb.cn/item/69b203b4e42d9f85db716ab5.png",
+        "icon": "./assets/Nrfr_icon.png",
         "intro": "Nrfr 是一款强大的 SIM 卡国家码修改工具，无需 Root 权限即可修改 SIM 卡国家码。该应用完全基于 Android 系统原生 API 实现，不依赖 Xposed、Magisk 等任何第三方框架，仅通过调用系统级接口实现功能。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b203b4e42d9f85db716ab6.jpg"
+            "./assets/69b203b4e42d9f85db716ab6.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iH29p3iif8pi",
         "source": "https://github.com/Ackites/Nrfr"
@@ -498,11 +498,11 @@
         "size": "243.75MB",
         "system": "Android",
         "mod": "原版",
-        "icon": "https://pic1.imgdb.cn/item/69b20768e42d9f85db7176f8.png",
+        "icon": "./assets/远航工具箱_icon.png",
         "intro": "远航工具箱 是一款集成多种实用功能的手机工具箱应用，将生活工具、系统工具、开发工具、图像处理、媒体解析等功能整合到一个软件中，用户无需安装多个应用即可完成各种操作。软件整体体积较小、界面简洁，大部分功能免费且支持离线使用。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b20769e42d9f85db7176fa.jpg",
-            "https://pic1.imgdb.cn/item/69b20769e42d9f85db7176fb.jpg"
+            "./assets/69b20769e42d9f85db7176fa.jpg",
+            "./assets/69b20769e42d9f85db7176fb.jpg"
         ],
         "url": "https://www.123912.com/s/TUtbTd-o3GtH?pwd=rImd",
          "source": "https://t.me/hyperosapk"
@@ -514,11 +514,11 @@
         "size": "6.37MB",
         "system": "Android",
         "mod": "原版",
-        "icon": "https://pic1.imgdb.cn/item/69b20f48e42d9f85db719057.png",
+        "icon": "./assets/Flowmix_icon.png",
         "intro": "Flowmix 是一款 Android 全局音频均衡与音效优化工具，主要用于调节手机系统级音频，让音乐、视频或游戏的声音效果更好。它通过对系统输出音频进行处理，实现更精细的音质调节和个性化音效。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b20f49e42d9f85db71905c.jpg",
-            "https://pic1.imgdb.cn/item/69b20f48e42d9f85db719059.jpg"
+            "./assets/69b20f49e42d9f85db71905c.jpg",
+            "./assets/69b20f48e42d9f85db719059.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iRcnR3khlw1a",
         "source": "https://docs.flowmix.ykload.com/"
@@ -530,10 +530,10 @@
         "size": "5.34MB",
         "system": "Android",
         "mod": "开源",
-        "icon": "https://pic1.imgdb.cn/item/69b212fde42d9f85db719f24.png",
+        "icon": "./assets/WiFi_密码管理器_icon.png",
         "intro": "WiFi 密码管理器 是一款简洁的 Android 应用，通过 Shizuku 或 root 权限访问系统 WiFi 配置，查看、管理已保存的 WiFi 网络密码。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b21302e42d9f85db719f39.jpg"
+            "./assets/69b21302e42d9f85db719f39.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iAofr3khlyqh",
         "source": "https://github.com/Khh-vu/wifi-password-manager"
@@ -545,11 +545,11 @@
         "size": "36.46MB",
         "system": "Android",
         "mod": "汉化",
-        "icon": "https://pic1.imgdb.cn/item/69b21ccee42d9f85db71d840.png",
+        "icon": "./assets/microG_服务_icon.png",
         "intro": "microG 服务 是一款自由、开源的 Google Play 服务（GMS）替代框架。​它通过重新实现 Google 的私有库和 API，让用户在不安装完整 Google 框架的情况下，依然能运行依赖 Google 服务的 Android 应用。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b21cd1e42d9f85db71d856.jpg",
-            "https://pic1.imgdb.cn/item/69b21cd1e42d9f85db71d852.jpg"
+            "./assets/69b21cd1e42d9f85db71d856.jpg",
+            "./assets/69b21cd1e42d9f85db71d852.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iBiJr3jf2s4h",
         "source": ""
@@ -561,11 +561,11 @@
         "size": "34.97MB",
         "system": "Android",
         "mod": "原版",
-        "icon": "https://pic1.imgdb.cn/item/69b22279e42d9f85db720c1c.png",
+        "icon": "./assets/Fake_Location_icon.png",
         "intro": "Fake Location 是一款用于模拟手机地理位置（虚拟定位） 的 Android 工具。通过该应用，用户可以把手机的 GPS 位置修改为地图上的任意地点，从而让应用误认为设备位于该位置。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b22279e42d9f85db720c22.jpg",
-            "https://pic1.imgdb.cn/item/69b22279e42d9f85db720c1b.jpg"
+            "./assets/69b22279e42d9f85db720c22.jpg",
+            "./assets/69b22279e42d9f85db720c1b.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/i5qKS3iif86j",
         "source": "https://github.com/Lerist/FakeLocation"
@@ -577,11 +577,11 @@
         "size": "14.69MB",
         "system": "Android",
         "mod": "开源",
-        "icon": "https://pic1.imgdb.cn/item/69b2d574cda91d5fba01d479.png",
+        "icon": "./assets/ShizuWall_icon.png",
         "intro": "ShizuWall 是一款基于 Shizuku 的 Android 防火墙应用，主要用于控制应用联网权限，可以在不 Root、也不使用 VPN 的情况下阻止应用访问互联网。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b2d575cda91d5fba01d47d.jpg",
-            "https://pic1.imgdb.cn/item/69b2d576cda91d5fba01d480.jpg"
+            "./assets/69b2d575cda91d5fba01d47d.jpg",
+            "./assets/69b2d576cda91d5fba01d480.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iKzUE3khly9a",
         "source": "https://github.com/AhmetCanArslan/ShizuWall"
@@ -593,11 +593,11 @@
         "size": "3.51MB",
         "system": "Android",
         "mod": "开源",
-        "icon": "https://pic1.imgdb.cn/item/69b2e665cda91d5fba01f2f2.png",
+        "icon": "./assets/Appteka_icon.png",
         "intro": "Appteka 是一款体积小、无需谷歌服务即可使用的安卓第三方应用商店，主要用于下载国内外应用、历史版本软件以及管理 APK 文件。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b2e665cda91d5fba01f2f1.jpg",
-            "https://pic1.imgdb.cn/item/69b2e665cda91d5fba01f2f3.jpg"
+            "./assets/69b2e665cda91d5fba01f2f1.jpg",
+            "./assets/69b2e665cda91d5fba01f2f3.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/i1FKv3jm1aub",
         "source": "https://github.com/solkin/appteka-android"
@@ -609,11 +609,11 @@
         "size": "15.75MB",
         "system": "Android",
         "mod": "开源",
-        "icon": "https://pic1.imgdb.cn/item/69b30493cda91d5fba01f742.png",
+        "icon": "./assets/音理音理!_icon.png",
         "intro": "音理音理! 是一款主打在线听歌 + 本地音乐播放的手机音乐播放器应用，主要提供海量音乐资源和简洁的听歌体验。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b30496cda91d5fba01f744.jpg",
-            "https://pic1.imgdb.cn/item/69b30496cda91d5fba01f743.jpg"
+            "./assets/69b30496cda91d5fba01f744.jpg",
+            "./assets/69b30496cda91d5fba01f743.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iQGUp3khlvgj",
         "source": "https://github.com/cwuom/NeriPlayer"
@@ -625,11 +625,11 @@
         "size": "14.12MB",
         "system": "Android",
         "mod": "原版",
-        "icon": "https://pic1.imgdb.cn/item/69b3074bcda91d5fba01f76b.png",
+        "icon": "./assets/爱次元壁纸_icon.png",
         "intro": "爱次元壁纸 是一款免费的安卓壁纸应用，汇集了大量高清、4K壁纸资源，包含动漫、游戏、风景、美女等多种类型。用户可以通过该软件浏览、下载并设置手机桌面或锁屏壁纸，让手机界面更加个性化。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b30750cda91d5fba01f76c.jpg",
-            "https://pic1.imgdb.cn/item/69b30750cda91d5fba01f76d.jpg"
+            "./assets/69b30750cda91d5fba01f76c.jpg",
+            "./assets/69b30750cda91d5fba01f76d.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iNhZJ3jgfgch",
         "source": ""
@@ -641,11 +641,11 @@
         "size": "8.14MB",
         "system": "Android",
         "mod": "原版",
-        "icon": "https://pic1.imgdb.cn/item/69b309f6cda91d5fba01f789.png",
+        "icon": "./assets/账号本子_icon.png",
         "intro": "账号本子 是一款主打本地离线存储的账号密码管理工具，支持记录网站账号、APP账号、银行卡信息等数据，并通过加密技术保护隐私。该软件强调不联网、无广告、轻量化设计，主要用于个人隐私信息管理。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b309f7cda91d5fba01f78a.jpg",
-            "https://pic1.imgdb.cn/item/69b309f7cda91d5fba01f78b.jpg"
+            "./assets/69b309f7cda91d5fba01f78a.jpg",
+            "./assets/69b309f7cda91d5fba01f78b.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iQWjH3khlvle",
         "source": "https://uccmawei.com/"
@@ -657,11 +657,11 @@
         "size": "5.16MB",
         "system": "Android",
         "mod": "原版",
-        "icon": "https://pic1.imgdb.cn/item/69b311e1cda91d5fba01f7e6.png",
+        "icon": "./assets/清浊_icon.png",
         "intro": "清浊 是一款轻量级系统工具应用，主要功能是扫描并清理手机中的缓存文件、残留文件和重复文件，以释放存储空间并提升手机运行速度。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b311e1cda91d5fba01f7e8.jpg",
-            "https://pic1.imgdb.cn/item/69b311e1cda91d5fba01f7e7.jpg"
+            "./assets/69b311e1cda91d5fba01f7e8.jpg",
+            "./assets/69b311e1cda91d5fba01f7e7.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iL3QN3kha50b",
         "source": "https://www.dircleaner.com/"
@@ -673,11 +673,11 @@
         "size": "14.64MB",
         "system": "Android",
         "mod": "原版",
-        "icon": "https://pic1.imgdb.cn/item/69b31acecda91d5fba01f82f.png",
+        "icon": "./assets/冰箱_IceBox_icon.png",
         "intro": "冰箱 IceBox 是一款用于管理和冻结 Android 应用的工具。用户可以把不常用但又不想卸载的 App 冻结起来，被冻结的应用就像被卸载一样无法运行、不会后台启动。当需要使用时，只需在冰箱中点击该应用，它会自动解冻并启动，使用完后又会自动冻结。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b31ad0cda91d5fba01f831.jpg",
-            "https://pic1.imgdb.cn/item/69b31acecda91d5fba01f830.jpg"
+            "./assets/69b31ad0cda91d5fba01f831.jpg",
+            "./assets/69b31acecda91d5fba01f830.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iiMLY3ij3yra",
         "source": "https://iceboxdoc.catchingnow.com/"
@@ -689,10 +689,10 @@
         "size": "1.26MB",
         "system": "Android",
         "mod": "莫奈版",
-        "icon": "https://pic1.imgdb.cn/item/69b377b0cda91d5fba026123.png",
+        "icon": "./assets/创建快捷方式_icon.png",
         "intro": "创建快捷方式 是一款非常轻量、纯净的安卓工具应用，安装包小、运行几乎不耗电、不后台驻留、无广告、无内购、无联网权限，专注帮你快速创建应用内任意界面的桌面快捷方式。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b377b0cda91d5fba026124.jpg"
+            "./assets/69b377b0cda91d5fba026124.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/i3gR03iifaqb",
         "source": ""
@@ -704,10 +704,10 @@
         "size": "4.82MB",
         "system": "Android",
         "mod": "汉化",
-        "icon": "https://pic1.imgdb.cn/item/69b38425480be824e3c6c350.png",
+        "icon": "./assets/Permissions_Summary_icon.png",
         "intro": "Permissions Summary 是一款轻量级、开源的 Android 应用，专门帮助用户快速查看手机上哪些已安装应用拥有敏感/危险权限。例如：相机、麦克风、位置、联系人、短信、通话记录等。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b38425480be824e3c6c353.jpg"
+            "./assets/69b38425480be824e3c6c353.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/isgYH3j9xowb",
         "source": ""
@@ -719,11 +719,11 @@
         "size": "45.33MB",
         "system": "Android",
         "mod": "开源",
-        "icon": "https://pic1.imgdb.cn/item/69b38686480be824e3c6caf8.png",
+        "icon": "./assets/FlClash_icon.png",
         "intro": "FlClash 是一款基于 ClashMeta 内核的开源、多平台代理客户端，采用 Flutter 框架开发，界面风格高度类似经典的 Surfboard ，简单直观、Material You 现代设计，无广告、无追踪、完全开源免费。",
         "screenshots": [
-            "https://pic1.imgdb.cn/item/69b38686480be824e3c6cafb.jpg",
-            "https://pic1.imgdb.cn/item/69b38686480be824e3c6cafa.jpg"
+            "./assets/69b38686480be824e3c6cafb.jpg",
+            "./assets/69b38686480be824e3c6cafa.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iPAZh3khu70d",
         "source": "https://github.com/chen08209/FlClash"
