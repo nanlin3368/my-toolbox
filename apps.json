@@ -847,121 +847,153 @@
 
     },
     {
-        "name": "",
-        "pkg": "",
-        "version": "",
-        "size": "",
+        "name": "一指禅",
+        "pkg": "me.app.xad",
+        "version": "3.4.5",
+        "size": "1.74MB",
         "system": "Android",
         "mod": "原版",
-        "icon": "",
-        "intro": "",
+        "icon": "./assets/一指禅_icon.png",
+        "intro": "一指禅 是一款轻量级的安卓系统工具类应用，可以在不获取 Root 权限的情况下自动识别并关闭应用启动广告，让用户直接进入应用界面。它通过系统辅助功能识别广告界面的“跳过”按钮或广告页面，并自动点击，从而实现快速跳过广告的效果。",
         "screenshots": [
-            "",
-            ""
+            "./assets/一指禅_shot_1.jpg",
+            "./assets/一指禅_shot_2.jpg"
         ],
-        "url": "",
+        "url": "https://nanlinyou.lanzoul.com/iDXKq3jnoope",
+        "source": "https://github.com/jdlingyu/onefinger"
+
+    },
+    {
+        "name": "快速瓷砖",
+        "pkg": "com.asdoi.quicktiles",
+        "version": "1.4",
+        "size": "2.07MB",
+        "system": "Android",
+        "mod": "原版",
+        "icon": "./assets/快速瓷砖_icon.png",
+        "intro": "快速瓷砖 是一款免费的 Android 快速设置瓷砖自定义工具，它专为扩展系统下拉通知栏的快速设置面板而设计，让你能一键添加数多种官方没有的自定义快捷开关（瓷砖），操作更高效、无需 Root、无广告、体积仅约 2MB，支持 Android 5.0 以上系统。",
+        "screenshots": [
+            "./assets/快速瓷砖_shot_1.jpg",
+            "./assets/快速瓷砖_shot_2.jpg"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/i7mzx3j4jm6j",
         "source": ""
 
     },
     {
-        "name": "",
-        "pkg": "",
-        "version": "",
-        "size": "",
+        "name": "隐秘参数",
+        "pkg": "com.x1y9.probe",
+        "version": "2.8.7",
+        "size": "442.79KB",
         "system": "Android",
         "mod": "原版",
-        "icon": "",
-        "intro": "",
+        "icon": "./assets/隐秘参数_icon.png",
+        "intro": "隐秘参数 是一款体积很小的手机硬件检测工具，它可以读取手机内部的各种硬件数据，例如 CPU、屏幕、存储、电池等，让用户看到系统中一些平时看不到的“隐藏参数”。很多手机厂商会隐藏部分硬件信息，而这款软件可以把这些数据展示出来，方便用户进行验机、性能测试或设备检测。",
         "screenshots": [
-            "",
-            ""
+            "./assets/隐秘参数_shot_1.jpg"
         ],
-        "url": "",
+        "url": "https://nanlinyou.lanzoul.com/iwarF3in58mf",
         "source": ""
 
     },
     {
-        "name": "",
-        "pkg": "",
-        "version": "",
-        "size": "",
+        "name": "FusionApp",
+        "pkg": "net.fusionapp",
+        "version": "2.0.0-beta4",
+        "size": "8.68MB",
         "system": "Android",
         "mod": "原版",
-        "icon": "",
-        "intro": "",
+        "icon": "./assets/FusionApp_icon.png",
+        "intro": "FusionApp 是一款网页转APP工具 / 低代码开发工具，核心功能是把 网页转换成独立的手机应用，并允许用户对网页界面和功能进行一定程度的自定义改造。",
         "screenshots": [
-            "",
-            ""
+            "./assets/FusionApp_shot_1.jpg",
+            "./assets/FusionApp_shot_2.jpg"
         ],
-        "url": "",
+        "url": "https://nanlinyou.lanzoul.com/iDFWO3imkxyb",
+        "source": "https://www.coolapk.com/u/675594"
+
+    },
+    {
+        "name": "Aurora Store",
+        "pkg": "com.aurora.store",
+        "version": "4.8.1",
+        "size": "8.62MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "./assets/Aurora_Store_icon.png",
+        "intro": "Aurora Store 是一款开源的、非官方的 Google Play 商店客户端。它最核心的价值在于让用户在不需要安装“谷歌三件套”的情况下，也能安全、直接地下载和更新 Google Play 商店中的应用。",
+        "screenshots": [
+            "./assets/Aurora_Store_shot_1.jpg",
+            "./assets/Aurora_Store_shot_2.jpg"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/i4T4R3ixb5sj",
+        "source": "https://gitlab.com/AuroraOSS/AuroraStore"
+
+    },
+    {
+        "name": "用Shizuku激活",
+        "pkg": "com.mihotel.activatebrevent",
+        "version": "1.2",
+        "size": "760.77KB",
+        "system": "Android",
+        "mod": "原版",
+        "icon": "./assets/用Shizuku激活_icon.png",
+        "intro": "用Shizuku激活 是一款免费小巧的安卓辅助工具，专为非 Root 用户设计。它的核心作用是通过 Shizuku 的 ADB 权限，一键激活常用玩机软件，避免每次手机重启后都要连接电脑手动敲长串 ADB命令 的麻烦。",
+        "screenshots": [
+            "./assets/用Shizuku激活_shot_1.png"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/ig3qb3ik471e",
         "source": ""
 
     },
     {
-        "name": "",
-        "pkg": "",
-        "version": "",
-        "size": "",
+        "name": "米窗-全局小窗",
+        "pkg": "com.sunshine.freeform",
+        "version": "2.5.18",
+        "size": "3.10MB",
         "system": "Android",
-        "mod": "原版",
-        "icon": "",
-        "intro": "",
+        "mod": "开源",
+        "icon": "./assets/米窗-全局小窗_icon.png",
+        "intro": "米窗-全局小窗 是一款开源的安卓免费浮窗工具，专为非 MIUI/类原生系统 用户设计。通过 Shizuku/Sui（或可选Root模块）激活后，能让绝大多数App以全局小窗形式运行，完美复刻小米MIUI的自由小窗体验，无需 Root 就能实现多任务悬浮。",
         "screenshots": [
-            "",
-            ""
+            "./assets/米窗-全局小窗_shot_1.jpg",
+            "./assets/米窗-全局小窗_shot_2.jpg"
         ],
-        "url": "",
-        "source": ""
+        "url": "https://nanlinyou.lanzoul.com/ibVtf3iijjtc",
+        "source": "https://github.com/sunshine0523/Mi-Freeform"
 
     },
     {
-        "name": "",
-        "pkg": "",
-        "version": "",
-        "size": "",
+        "name": "照片编辑器",
+        "pkg": "com.iudesk.android.photo.editor",
+        "version": "12.4",
+        "size": "6.21MB",
         "system": "Android",
-        "mod": "原版",
-        "icon": "",
+        "mod": "莫奈版",
+        "icon": "./assets/照片编辑器_icon.png",
         "intro": "",
         "screenshots": [
-            "",
-            ""
+            "./assets/照片编辑器_shot_1.jpg",
+            "./assets/照片编辑器_shot_2.jpg"
         ],
-        "url": "",
-        "source": ""
+        "url": "https://nanlinyou.lanzoul.com/irkFr3iikc9g",
+        "source": "https://github.com/PatrickAlex2019/PhotoEditor"
 
     },
     {
-        "name": "",
-        "pkg": "",
-        "version": "",
-        "size": "",
+        "name": "按键映射器",
+        "pkg": "flar2.homebutton",
+        "version": "3.35",
+        "size": "11.16MB",
         "system": "Android",
-        "mod": "原版",
-        "icon": "",
-        "intro": "",
+        "mod": "高级版",
+        "icon": "./assets/按键映射器_icon.png",
+        "intro": "按键映射器 是一款 Android 按键重映射工具。它允许用户轻松自定义手机、平板、Android TV 或遥控器上的各种物理/电容按钮功能，无需Root（部分高级功能需 ADB 或 Root 辅助），通过单按、双按、长按三种手势分配任意操作。核心亮点是让音量键、Bixby键、耳机键、Home/返回/多任务键、游戏手柄、TV遥控器按键等变成你的“快捷键”，极大提升单手操作效率和个性化体验。",
         "screenshots": [
-            "",
-            ""
+            "./assets/按键映射器_shot_1.jpg",
+            "./assets/按键映射器_shot_2.jpg"
         ],
-        "url": "",
-        "source": ""
-
-    },
-    {
-        "name": "",
-        "pkg": "",
-        "version": "",
-        "size": "",
-        "system": "Android",
-        "mod": "原版",
-        "icon": "",
-        "intro": "",
-        "screenshots": [
-            "",
-            ""
-        ],
-        "url": "",
+        "url": "https://nanlinyou.lanzoul.com/iwyON3in0rwj",
         "source": ""
 
     }
