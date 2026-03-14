@@ -533,7 +533,7 @@
         "icon": "./assets/WiFi_密码管理器_icon.png",
         "intro": "WiFi 密码管理器 是一款简洁的 Android 应用，通过 Shizuku 或 root 权限访问系统 WiFi 配置，查看、管理已保存的 WiFi 网络密码。",
         "screenshots": [
-            "./assets/WiFi_密码管理器"_shot_1.jpg"
+            "./assets/WiFi_密码管理器_shot_1.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iAofr3khlyqh",
         "source": "https://github.com/Khh-vu/wifi-password-manager"
@@ -830,20 +830,20 @@
 
     },
     {
-        "name": "",
-        "pkg": "",
-        "version": "",
-        "size": "",
+        "name": "F-Droid",
+        "pkg": "org.fdroid.fdroid",
+        "version": "1.23.2",
+        "size": "11.85MB",
         "system": "Android",
-        "mod": "原版",
-        "icon": "",
-        "intro": "",
+        "mod": "开源",
+        "icon": "./assets/F-Droid_icon.png",
+        "intro": "F-Droid 是一款开源的 Android 应用商店，专注于提供自由软件的下载和管理。它不同于 Google Play，主要目标是让用户获得 无需广告、无需跟踪、完全开源 的应用。",
         "screenshots": [
-            "",
-            ""
+            "./assets/F-Droid_shot_1.jpg",
+            "./assets/F-Droid_shot_2.jpg"
         ],
-        "url": "",
-        "source": ""
+        "url": "https://nanlinyou.lanzoul.com/iXsNL3j0hsha",
+        "source": "https://gitlab.com/fdroid/fdroidclient"
 
     },
     {
