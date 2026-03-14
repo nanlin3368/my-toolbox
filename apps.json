@@ -755,7 +755,7 @@
         "icon": "./assets/方向控制_icon.png",
         "intro": "方向控制 是一款 Android 屏幕旋转控制工具，可以强制设置手机屏幕的显示方向，例如锁定横屏、竖屏或反向屏幕，并且支持为不同应用单独设置屏幕方向。",
         "screenshots": [
-            "./assets/方向控制_shot_1.jpg”
+            "./assets/方向控制_shot_1.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iuYMj3ij7vpe",
         "source": "https://www.coolapk.com/u/2638279"
@@ -813,19 +813,19 @@
 
     },
     {
-        "name": "",
-        "pkg": "",
-        "version": "",
-        "size": "",
+        "name": "Gboard",
+        "pkg": "com.google.android.inputmethod.latin",
+        "version": "16.8.2.867538971",
+        "size": "72.7MB",
         "system": "Android",
         "mod": "原版",
-        "icon": "",
-        "intro": "",
+        "icon": "./assets/Gboard_icon.png",
+        "intro": "Gboard 是一款由 Google 开发的手机输入法/虚拟键盘应用，适用于 Android 和 iOS 系统。主要用于输入文字、表情、语音等内容。它将 搜索、翻译、语音输入和智能预测 等功能整合到键盘中，让用户在聊天或输入文字时更加方便。",
         "screenshots": [
-            "",
-            ""
+            "./assets/Gboard_shot_1.jpg",
+            "./assets/Gboard_shot_2.jpg"
         ],
-        "url": "",
+        "url": "https://nanlinyou.lanzoul.com/iG5Rh3jarg5g",
         "source": ""
 
     },
