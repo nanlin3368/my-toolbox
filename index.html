@@ -181,11 +181,81 @@
         .app-icon {
             width: 60px;
             height: 60px;
-            border-radius: 13.5px; /* iOS standard: radius = width * 0.225 */
+            border-radius: 13.5px;
             margin-bottom: 9px;
             object-fit: cover;
             box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            /* 与占位块重叠，绝对定位在 .icon-wrap 内 */
+            position: absolute;
+            top: 0; left: 0;
         }
+
+        .app-icon.loaded { opacity: 1; }
+
+        /* 图标容器，相对定位用于叠层 */
+        .icon-wrap {
+            width: 60px;
+            height: 60px;
+            border-radius: 13.5px;
+            margin-bottom: 9px;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        /* 骨架占位：图标 */
+        .icon-placeholder {
+            width: 100%;
+            height: 100%;
+            border-radius: 13.5px;
+            background: var(--fill-1);
+            position: absolute;
+            top: 0; left: 0;
+            overflow: hidden;
+            transition: opacity 0.2s ease;
+        }
+
+        .icon-placeholder::after {
+            content: "";
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.12) 50%, transparent 100%);
+            animation: skeleton-loading 1.4s ease-in-out infinite;
+        }
+
+        [data-theme="dark"] .icon-placeholder::after {
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%);
+        }
+
+        .icon-placeholder.hidden { opacity: 0; pointer-events: none; }
+
+        /* 标题骨架占位 */
+        .title-placeholder {
+            width: 68px;
+            height: 10px;
+            border-radius: 5px;
+            background: var(--fill-1);
+            margin-bottom: 12px;
+            position: relative;
+            overflow: hidden;
+            transition: opacity 0.2s ease;
+        }
+
+        .title-placeholder::after {
+            content: "";
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.12) 50%, transparent 100%);
+            animation: skeleton-loading 1.4s ease-in-out infinite;
+            animation-delay: 0.12s;
+        }
+
+        [data-theme="dark"] .title-placeholder::after {
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%);
+        }
+
+        .title-placeholder.hidden { opacity: 0; pointer-events: none; }
 
         .app-title {
             font-size: 12px;
@@ -470,16 +540,52 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        .screenshot-img {
+        /* 截图外层包裹，用于骨架叠层 */
+        .screenshot-wrap {
+            position: relative;
             height: 185px;
-            border-radius: 12px;
             flex-shrink: 0;
-            border: 0.5px solid var(--card-border);
-            cursor: pointer;
-            transition: transform 0.15s;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--fill-1);
+            min-width: 110px;
         }
 
-        .screenshot-img:active { transform: scale(0.96); }
+        /* 截图骨架闪光层 */
+        .screenshot-wrap::before {
+            content: "";
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.14) 50%, transparent 100%);
+            animation: skeleton-loading 1.4s ease-in-out infinite;
+            z-index: 1;
+            transition: opacity 0.2s ease;
+        }
+
+        [data-theme="dark"] .screenshot-wrap::before {
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.07) 50%, transparent 100%);
+        }
+
+        .screenshot-wrap.loaded::before {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .screenshot-img {
+            height: 185px;
+            border-radius: 0;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: transform 0.15s, opacity 0.25s ease;
+            opacity: 0;
+            position: relative;
+            z-index: 2;
+            display: block;
+        }
+
+        .screenshot-img.loaded { opacity: 1; }
+
+        .screenshot-img:active { transform: scale(0.97); }
 
         .app-intro {
             font-size: 14px;
@@ -582,7 +688,26 @@
             box-shadow: 0 2px 12px rgba(0,0,0,0.14), 0 0 0 0.5px var(--card-border);
         }
 
-        .rotating { transform: rotate(360deg) scale(1.08); }
+        @keyframes spin-half {
+            0%   { transform: rotate(0deg) scale(1); }
+            50%  { transform: rotate(180deg) scale(1.12); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .rotating {
+            animation: spin-half 0.4s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+        }
+
+        @keyframes spin-refresh {
+            0%   { transform: rotate(0deg)   scale(1); }
+            20%  { transform: rotate(110deg) scale(1.15); }
+            65%  { transform: rotate(310deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        #refresh-btn.spinning {
+            animation: spin-refresh 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
 
         .fab-btn:active { transform: scale(0.86) !important; }
 
@@ -827,27 +952,21 @@
 
         async function softRefresh() {
             const btn = document.getElementById('refresh-btn');
-            // 旋转动画
-            btn.style.transition = 'transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
-            btn.style.transform = 'rotate(360deg)';
-            setTimeout(() => {
-                btn.style.transition = 'none';
-                btn.style.transform = 'rotate(0deg)';
-                // 还原 transition
-                requestAnimationFrame(() => {
-                    btn.style.transition = '';
-                });
-            }, 620);
 
-            // 显示骨架屏（不清空，保持背景色稳定）
+            // 用 CSS keyframe 做弹性旋转动画，避免内联 style 冲突
+            btn.classList.remove('spinning');
+            void btn.offsetWidth; // 强制重绘，确保动画重放
+            btn.classList.add('spinning');
+            btn.addEventListener('animationend', () => btn.classList.remove('spinning'), { once: true });
+
+            // 列表淡出，保持背景色稳定不闪屏
             const container = document.getElementById('app-container');
-            container.style.opacity = '0.4';
-            container.style.transition = 'opacity 0.2s';
+            container.style.transition = 'opacity 0.18s ease';
+            container.style.opacity = '0.35';
 
             try {
                 const response = await fetch('apps.json?t=' + Date.now());
                 myApps = await response.json();
-                // 保留当前搜索词过滤
                 const term = document.getElementById('search-input').value.toLowerCase();
                 displayList = term
                     ? myApps.filter(app => app.name.toLowerCase().includes(term))
@@ -881,7 +1000,13 @@
                 const realIndex = myApps.findIndex(a => a.name === app.name);
                 return `
                 <div class="app-card" onclick="openModal(${realIndex})">
-                    <img src="${app.icon}" class="app-icon" loading="lazy">
+                    <div class="icon-wrap">
+                        <div class="icon-placeholder" id="ip-${realIndex}"></div>
+                        <img src="${app.icon}" class="app-icon" loading="lazy"
+                             onload="this.classList.add('loaded');document.getElementById('ip-${realIndex}').classList.add('hidden');document.getElementById('tp-${realIndex}').classList.add('hidden')"
+                             onerror="this.classList.add('loaded');document.getElementById('ip-${realIndex}').classList.add('hidden');document.getElementById('tp-${realIndex}').classList.add('hidden')">
+                    </div>
+                    <div class="title-placeholder" id="tp-${realIndex}"></div>
                     <div class="app-title">${app.name}</div>
                     <div class="download-btn">点击查看</div>
                 </div>`
@@ -941,7 +1066,7 @@ function openModal(index) {
             <div class="pkg-section"><span class="info-label">应用包名</span><div class="pkg-value">${app.pkg}</div></div>
         </div>
         <div class="section-title">📸 应用截图</div>
-        <div class="screenshot-container">${app.screenshots.map((s, idx) => `<img src="${s}" class="screenshot-img" onclick="openPreview(${idx})">`).join('')}</div>
+        <div class="screenshot-container">${app.screenshots.map((s, idx) => `<div class="screenshot-wrap" id="sw-${idx}"><img src="${s}" class="screenshot-img" onclick="openPreview(${idx})" onload="this.classList.add('loaded');document.getElementById('sw-'+${idx}).classList.add('loaded')" onerror="this.classList.add('loaded');document.getElementById('sw-'+${idx}).classList.add('loaded')"></div>`).join('')}</div>
         <div class="section-title">📝 应用介绍</div><div class="app-intro">${app.intro}</div>
         <div class="modal-footer" style="gap: 8px;">
             <button class="footer-btn btn-secondary" style="font-size:12px;" onclick="handleBack()">返回列表</button>
