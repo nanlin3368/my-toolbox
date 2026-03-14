@@ -570,23 +570,25 @@
         @media (min-width: 1024px) { :root { --shot-h: 260px; } }
 
         /* 截图外层包裹，用于骨架叠层 */
+        /* screenshot-wrap：只做骨架背景，不用 overflow:hidden 裁切
+           避免子像素舍入导致图片四角被截断（深色模式下尤其明显） */
         .screenshot-wrap {
             position: relative;
             height: var(--shot-h);
             flex-shrink: 0;
             border-radius: 12px;
-            overflow: hidden;
+            /* 不设 overflow:hidden，圆角由图片自身 border-radius 实现 */
             background: var(--fill-1);
-            /* 默认按手机竖屏 9:19.5 比例给占位宽，JS 加载后修正 */
             width: calc(var(--shot-h) * 9 / 19.5);
             transition: width 0.15s ease;
         }
 
-        /* 截图骨架闪光层 */
+        /* 骨架闪光层同样用 border-radius 限制，不依赖 overflow:hidden */
         .screenshot-wrap::before {
             content: "";
             position: absolute; top: 0; left: 0;
             width: 100%; height: 100%;
+            border-radius: 12px;
             background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.14) 50%, transparent 100%);
             animation: skeleton-loading 1.4s ease-in-out infinite;
             z-index: 1;
@@ -602,11 +604,12 @@
             pointer-events: none;
         }
 
+        /* 图片自身设圆角，无需 wrap overflow:hidden，四角完整显示 */
         .screenshot-img {
             height: var(--shot-h);
             width: auto;
             max-width: none;
-            border-radius: 0;
+            border-radius: 11px;          /* 比 wrap 略小 1px，避免抗锯齿白边 */
             flex-shrink: 0;
             cursor: pointer;
             transition: transform 0.15s, opacity 0.25s ease;
