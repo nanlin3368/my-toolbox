@@ -548,7 +548,8 @@
             border-radius: 12px;
             overflow: hidden;
             background: var(--fill-1);
-            min-width: 110px;
+            /* 宽度由 JS 根据图片真实比例注入，默认给个常见手机截图比例 9:19.5 */
+            width: calc(185px * 9 / 19.5);
         }
 
         /* 截图骨架闪光层 */
@@ -559,13 +560,14 @@
             background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.14) 50%, transparent 100%);
             animation: skeleton-loading 1.4s ease-in-out infinite;
             z-index: 1;
-            transition: opacity 0.2s ease;
+            transition: opacity 0.25s ease;
         }
 
         [data-theme="dark"] .screenshot-wrap::before {
             background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.07) 50%, transparent 100%);
         }
 
+        /* 图片加载完成后：闪光消失，wrap 宽度已由 JS 修正 */
         .screenshot-wrap.loaded::before {
             opacity: 0;
             pointer-events: none;
@@ -573,6 +575,7 @@
 
         .screenshot-img {
             height: 185px;
+            width: auto;
             border-radius: 0;
             flex-shrink: 0;
             cursor: pointer;
@@ -979,6 +982,43 @@
             }
         }
 
+        // 截图加载完成：同步 wrap 宽度 = 真实图片宽度，然后淡入
+        function onScreenshotLoad(img, wrapId) {
+            const wrap = document.getElementById(wrapId);
+            if (!wrap) return;
+            // 用真实自然宽高比计算对应 185px 高时的宽度
+            if (img.naturalWidth && img.naturalHeight) {
+                const w = Math.round(185 * img.naturalWidth / img.naturalHeight);
+                wrap.style.width = w + 'px';
+            }
+            img.classList.add('loaded');
+            wrap.classList.add('loaded');
+        }
+
+        function onScreenshotError(wrapId) {
+            const wrap = document.getElementById(wrapId);
+            if (!wrap) return;
+            wrap.classList.add('loaded');
+            const img = wrap.querySelector('img');
+            if (img) img.classList.add('loaded');
+        }
+
+        // 弹窗打开后，对每张截图做预加载探测，提前修正骨架宽度
+        function preloadScreenshotSizes(screenshots) {
+            screenshots.forEach((src, idx) => {
+                const probe = new Image();
+                probe.onload = function() {
+                    const wrap = document.getElementById('sw-' + idx);
+                    if (!wrap || wrap.classList.contains('loaded')) return;
+                    if (probe.naturalWidth && probe.naturalHeight) {
+                        const w = Math.round(185 * probe.naturalWidth / probe.naturalHeight);
+                        wrap.style.width = w + 'px';
+                    }
+                };
+                probe.src = src;
+            });
+        }
+
         function renderApps() {
             const container = document.getElementById('app-container');
             const countDisplay = document.getElementById('app-count');
@@ -1066,7 +1106,7 @@ function openModal(index) {
             <div class="pkg-section"><span class="info-label">应用包名</span><div class="pkg-value">${app.pkg}</div></div>
         </div>
         <div class="section-title">📸 应用截图</div>
-        <div class="screenshot-container">${app.screenshots.map((s, idx) => `<div class="screenshot-wrap" id="sw-${idx}"><img src="${s}" class="screenshot-img" onclick="openPreview(${idx})" onload="this.classList.add('loaded');document.getElementById('sw-'+${idx}).classList.add('loaded')" onerror="this.classList.add('loaded');document.getElementById('sw-'+${idx}).classList.add('loaded')"></div>`).join('')}</div>
+        <div class="screenshot-container" id="screenshot-list">${app.screenshots.map((s, idx) => `<div class="screenshot-wrap" id="sw-${idx}"><img src="${s}" class="screenshot-img" onclick="openPreview(${idx})" onload="onScreenshotLoad(this, 'sw-'+${idx})" onerror="onScreenshotError('sw-'+${idx})"></div>`).join('')}</div>
         <div class="section-title">📝 应用介绍</div><div class="app-intro">${app.intro}</div>
         <div class="modal-footer" style="gap: 8px;">
             <button class="footer-btn btn-secondary" style="font-size:12px;" onclick="handleBack()">返回列表</button>
@@ -1076,6 +1116,8 @@ function openModal(index) {
     `;
     showElement('modal-overlay');
     window.history.pushState({state: 'modal', page: currentPage}, "");
+    // 弹窗打开后立即预测截图宽度，修正骨架占位尺寸
+    requestAnimationFrame(() => preloadScreenshotSizes(app.screenshots));
 }
         
         function handleBack() { window.history.back(); }
