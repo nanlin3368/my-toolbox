@@ -183,24 +183,7 @@
             box-shadow: 0 1px 6px var(--shadow-1);
         }
 
-        /* Icon with iOS-style rounded corners */
-        .app-icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 11.7px;
-            margin-bottom: 9px;
-            object-fit: cover;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.12);
-            opacity: 0;
-            transition: opacity 0.25s ease;
-            /* 与占位块重叠，绝对定位在 .icon-wrap 内 */
-            position: absolute;
-            top: 0; left: 0;
-        }
-
-        .app-icon.loaded { opacity: 1; }
-
-        /* 图标容器，相对定位用于叠层 */
+        /* 图标容器：overflow:hidden 统一裁切圆角，子元素无需重复设 border-radius */
         .icon-wrap {
             width: 52px;
             height: 52px;
@@ -208,13 +191,33 @@
             margin-bottom: 8px;
             position: relative;
             flex-shrink: 0;
+            overflow: hidden;                      /* 关键：裁切绝对定位的图标 */
+            /* 强制开启 GPU 合成，防止边缘抗锯齿漏白 */
+            -webkit-mask-image: -webkit-radial-gradient(white, black);
+            transform: translateZ(0);
+            box-shadow: 0 1px 5px rgba(0,0,0,0.13);
         }
 
-        /* 骨架占位：图标 */
+        /* Icon 本身不需要再设圆角，由 icon-wrap 统一裁切 */
+        .app-icon {
+            width: 100%;
+            height: 100%;
+            border-radius: 0;                      /* wrap 已裁切，不再重复 */
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            position: absolute;
+            top: 0; left: 0;
+            display: block;
+        }
+
+        .app-icon.loaded { opacity: 1; }
+
+        /* 骨架占位：图标（同样由 icon-wrap 裁切，无需自设圆角） */
         .icon-placeholder {
             width: 100%;
             height: 100%;
-            border-radius: 11.7px;
+            border-radius: 0;
             background: var(--fill-1);
             position: absolute;
             top: 0; left: 0;
@@ -480,11 +483,25 @@
             margin-bottom: 18px;
         }
 
-        .modal-icon {
-            width: 64px; height: 64px;
+        /* 弹窗图标容器：统一裁切，与卡片图标同样方案 */
+        .modal-icon-wrap {
+            width: 64px;
+            height: 64px;
             border-radius: 14px;
             margin-right: 14px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.14);
+            flex-shrink: 0;
+            overflow: hidden;
+            -webkit-mask-image: -webkit-radial-gradient(white, black);
+            transform: translateZ(0);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+
+        .modal-icon {
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+            object-fit: cover;
+            display: block;
         }
 
         .modal-app-name {
@@ -876,8 +893,8 @@
             /* Bigger cards on desktop */
             .app-card { padding: 16px 12px 13px; border-radius: 18px; }
             .icon-wrap { width: 60px; height: 60px; border-radius: 13.5px; }
-            .app-icon  { width: 60px; height: 60px; border-radius: 13.5px; }
-            .icon-placeholder { border-radius: 13.5px; }
+            .app-icon  { width: 100%; height: 100%; border-radius: 0; }
+            .icon-placeholder { border-radius: 0; }
             .app-title { font-size: 12.5px; margin-bottom: 9px; }
             .download-btn { font-size: 12.5px; padding: 5px 15px; }
 
@@ -885,7 +902,8 @@
             .modal-content { max-width: 680px; }
             .modal-inner-pad { padding: 16px 36px 36px; }
             .modal-app-name { font-size: 22px; }
-            .modal-icon { width: 72px; height: 72px; border-radius: 16px; }
+            .modal-icon-wrap { width: 72px; height: 72px; border-radius: 16px; }
+            .modal-icon { width: 100%; height: 100%; border-radius: 0; }
 
             /* Desktop pagination — more prominent */
             .pagination-footer {
@@ -1232,7 +1250,7 @@ function openModal(index) {
         else if (d.indexOf("github.com") !== -1 && (d.endsWith(".apk") || d.endsWith(".zip"))) { downloadText = "GitHub直链"; downloadColor = "#24292f"; }
     }
     document.getElementById('modal-body').innerHTML = `
-        <div class="modal-header"><img src="${app.icon}" class="modal-icon"><div class="modal-app-name">${app.name}</div></div>
+        <div class="modal-header"><div class="modal-icon-wrap"><img src="${app.icon}" class="modal-icon"></div><div class="modal-app-name">${app.name}</div></div>
         <div class="modal-info-box">
             <div class="info-row"><div class="info-left"><span class="info-label">版本</span><span class="info-value">${app.version}</span></div><div class="info-right" style="width:110px"><span class="info-label">大小</span><span class="info-value">${app.size}</span></div></div>
             <div class="info-row"><div class="info-left"><span class="info-label">系统</span><span class="info-value">${app.system}</span></div><div class="info-right" style="width:110px"><span class="info-label">类型</span><span class="info-value">${app.mod || '原版'}</span></div></div>
