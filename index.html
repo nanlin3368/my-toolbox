@@ -26,6 +26,9 @@
             --search-bar-bg: rgba(245, 246, 248, 0.8);
             --pagination-bg: rgba(255, 255, 255, 0.8);
             --accent-color: #5c6bc0;
+            /* 骨架屏变量 */
+            --skel-bg: #eff1f3;
+            --skel-highlight: rgba(255, 255, 255, 0.6);
         }
 
         /* 黑暗模式颜色变量 */
@@ -41,6 +44,8 @@
             --search-bar-bg: rgba(18, 18, 18, 0.8);
             --pagination-bg: rgba(30, 30, 30, 0.8);
             --accent-color: #7986cb;
+            --skel-bg: #2c2c2c;
+            --skel-highlight: rgba(255, 255, 255, 0.05);
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -58,14 +63,13 @@
         .app-title { font-size: 14px; font-weight: bold; margin-bottom: 10px; text-align: center; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-main); }
         .download-btn { width: 100%; background: var(--accent-color); color: white; text-align: center; padding: 8px 0; border-radius: 18px; text-decoration: none; font-size: 11px; font-weight: bold; }
 
-        /* 列表加载动画 */
-        .skeleton { background: var(--card-border); border-radius: 14px; height: 140px; position: relative; overflow: hidden; border: 1px solid var(--card-border); }
-        .skeleton::after {
-            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            animation: skeleton-loading 1.5s infinite;
-        }
+        /* 骨架屏动画 */
+        .skel-container { position: relative; height: 180px; width: 100px; background: var(--skel-bg); border-radius: 10px; overflow: hidden; flex-shrink: 0; border: 1px solid var(--border-color); }
+        .skel-container::after { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, var(--skel-highlight), transparent); animation: skeleton-loading 1.5s infinite; }
         @keyframes skeleton-loading { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+
+        .skeleton { background: var(--card-border); border-radius: 14px; height: 140px; position: relative; overflow: hidden; border: 1px solid var(--card-border); }
+        .skeleton::after { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); animation: skeleton-loading 1.5s infinite; }
 
         .empty-status { grid-column: 1 / -1; text-align: center; padding: 40px 20px; color: var(--text-sub); font-size: 14px; }
 
@@ -93,7 +97,10 @@
         .pkg-value { font-family: monospace; color: var(--text-sub); font-size: 11px; word-break: break-all; margin-top: 4px; }
         .section-title { font-weight: bold; margin: 18px 0 10px 0; font-size: 14px; }
         .screenshot-container { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; }
-        .screenshot-img { height: 180px; border-radius: 10px; flex-shrink: 0; border: 1px solid var(--border-color); cursor: pointer; }
+        /* 截图淡入样式 */
+        .screenshot-img { height: 100%; width: 100%; border-radius: 10px; object-fit: cover; cursor: pointer; opacity: 0; transition: opacity 0.5s ease; }
+        .screenshot-img.loaded { opacity: 1; }
+
         .app-intro { font-size: 13px; color: var(--text-main); line-height: 1.7; background: var(--card-bg); border: 1px solid var(--border-color); padding: 12px; border-radius: 12px; white-space: pre-wrap; opacity: 0.9; }
         .modal-footer { display: flex; gap: 8px; margin-top: 25px; justify-content: space-between; }
         .footer-btn { flex: 1; padding: 12px 0; border-radius: 20px; text-decoration: none; font-weight: bold; font-size: 12px; text-align: center; display: flex; align-items: center; justify-content: center; }
@@ -103,49 +110,11 @@
 
         /* 浮动按钮组样式优化 */
         .fab-group { position: fixed; right: 20px; display: flex; flex-direction: column; gap: 12px; z-index: 99; bottom: 25px; }
-        
-        .fab-btn { 
-            width: 48px; 
-            height: 48px; 
-            color: white; 
-            border-radius: 50%; 
-            border: none; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
-            cursor: pointer; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            font-size: 20px; 
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            background: var(--accent-color);
-            opacity: 0.9;
-        }
-
-        /* 回到顶部按钮优化 */
-        #back-to-top { 
-            background: #5c6bc0; 
-            transform: translateY(20px) scale(0);
-            opacity: 0;
-            pointer-events: none;
-        }
-        #back-to-top.show { 
-            transform: translateY(0) scale(1);
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        /* 主题按钮与刷新按钮背景优化 */
-        #theme-btn, #refresh-btn { 
-            background: rgba(92, 107, 192, 0.8); 
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-        }
-
-        /* 旋转动画类 */
-        .rotating {
-            transform: rotate(360deg) scale(1.1);
-        }
-
+        .fab-btn { width: 48px; height: 48px; color: white; border-radius: 50%; border: none; box-shadow: 0 4px 12px rgba(0,0,0,0.15); cursor: pointer; display: flex; justify-content: center; align-items: center; font-size: 20px; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); background: var(--accent-color); opacity: 0.9; }
+        #back-to-top { background: #5c6bc0; transform: translateY(20px) scale(0); opacity: 0; pointer-events: none; }
+        #back-to-top.show { transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
+        #theme-btn, #refresh-btn { background: rgba(92, 107, 192, 0.8); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+        .rotating { transform: rotate(360deg) scale(1.1); }
         .fab-btn:active { transform: scale(0.85); filter: brightness(1.2); }
 
         /* 大图预览层 */
@@ -155,9 +124,8 @@
         #preview-overlay.active #preview-img { transform: scale(1); opacity: 1; }
         .preview-close { position: absolute; top: 20px; right: 20px; color: white; background: rgba(255,255,255,0.2); width: 42px; height: 42px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 30px; cursor: pointer; z-index: 2100; border: 1px solid rgba(255,255,255,0.3); }
         #preview-counter { position: absolute; bottom: 30px; color: white; background: rgba(0,0,0,0.3); padding: 6px 18px; border-radius: 20px; z-index: 2100; font-size: 14px; font-weight: bold; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1); }
-        
         .nav-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.1); color: white; border: none; padding: 25px 15px; font-size: 30px; cursor: pointer; display: none; }
-        @media (min-width: 768px) { .nav-btn { display: block; } .screenshot-img { height: 240px; } }
+        @media (min-width: 768px) { .nav-btn { display: block; } .skel-container { height: 240px; width: 135px; } }
     </style>
 </head>
 <body>
@@ -208,8 +176,6 @@
         const itemsPerPage = 50;   
         let currentScreenshots = []; let currentImgIndex = 0; let touchStartX = 0;
 
-        // --- 主题与按钮逻辑优化 ---
-        
         function initTheme() {
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-theme', savedTheme);
@@ -220,24 +186,17 @@
             const btn = document.getElementById('theme-btn');
             const currentTheme = document.documentElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            
-            // 触发旋转动画
             btn.classList.add('rotating');
-            
-            // 动画中途切换图标和属性
             setTimeout(() => {
                 document.documentElement.setAttribute('data-theme', newTheme);
                 localStorage.setItem('theme', newTheme);
                 updateThemeIcon(newTheme);
             }, 150);
-
-            // 清除动画类以便下次使用
             setTimeout(() => btn.classList.remove('rotating'), 400);
         }
 
         function updateThemeIcon(theme) {
             const btn = document.getElementById('theme-btn');
-            // 白天显示月亮（点它变黑），黑夜显示太阳（点它变亮）
             btn.innerHTML = theme === 'light' ? '🌙' : '☀️';
         }
 
@@ -247,14 +206,9 @@
 
         window.onscroll = function() {
             const topBtn = document.getElementById("back-to-top");
-            if (window.scrollY > 400) {
-                topBtn.classList.add('show');
-            } else {
-                topBtn.classList.remove('show');
-            }
+            if (window.scrollY > 400) { topBtn.classList.add('show'); } 
+            else { topBtn.classList.remove('show'); }
         };
-
-        // --- 原有业务逻辑 ---
 
         function showElement(id) {
             const el = document.getElementById(id);
@@ -344,49 +298,62 @@
             renderApps();
         }
         
-function openModal(index) {
-    const app = myApps[index];
-    currentScreenshots = app.screenshots;
-    let btnText = "官方网站"; let btnColor = "#5c6bc0"; 
-    if (app.source) {
-        const s = app.source.toLowerCase();
-        if (s.indexOf("github.com") !== -1 || s.indexOf("gitee.com") !== -1 || s.indexOf("gitlab.com") !== -1) { btnText = "查看源码"; btnColor = "#5c6bc0"; }
-        else if (s.indexOf("coolapk.com") !== -1) { btnText = "酷安主页"; btnColor = "#11ab60"; }
-        else if (s.indexOf("bilibili.com") !== -1 || s.indexOf("b23.tv") !== -1) { btnText = "B站主页"; btnColor = "#fb7299"; }
-        else if (s.indexOf("douyin.com") !== -1) { btnText = "抖音主页"; btnColor = "#161823"; }
-        else if (s.indexOf("t.me") !== -1) { btnText = "TG 群聊/频道"; btnColor = "#0088cc"; }
-        else if (s.indexOf("qm.qq.com") !== -1 || s.indexOf("qq.com") !== -1) { btnText = "QQ 群聊"; btnColor = "#12b7f5"; }
-    }
-    const sourceBtn = app.source ? `<a href="${app.source}" target="_blank" class="footer-btn btn-secondary" style="background:var(--modal-info-bg); color:${btnColor}; font-size:12px;">${btnText}</a>` : `<div class="footer-btn" style="visibility:hidden;"></div>`;
-    let downloadText = "立即下载"; let downloadColor = "#5c6bc0";
-    if (app.url) {
-        const d = app.url.toLowerCase();
-        if (d.indexOf("123pan.com") !== -1 || d.indexOf("123912.com") !== -1) { downloadText = "123云盘"; downloadColor = "#2d72f1"; } 
-        else if (d.indexOf("lanzou") !== -1 || d.indexOf("lanzv") !== -1 || d.indexOf("lanzx") !== -1 || d.indexOf("lanzp") !== -1) { downloadText = "蓝奏云"; downloadColor = "#00adff"; }
-        else if (d.indexOf("quark.cn") !== -1) { downloadText = "夸克网盘"; downloadColor = "#00c9b0"; }
-        else if (d.indexOf("alipan.com") !== -1 || d.indexOf("aliyundrive.com") !== -1) { downloadText = "阿里云盘"; downloadColor = "#6356ff"; }
-        else if (d.indexOf("weiyun.com") !== -1) { downloadText = "腾讯微云"; downloadColor = "#3072f6"; }
-        else if (d.indexOf("github.com") !== -1 && (d.endsWith(".apk") || d.endsWith(".zip"))) { downloadText = "GitHub直链"; downloadColor = "#24292f"; }
-    }
-    document.getElementById('modal-body').innerHTML = `
-        <div class="modal-header"><img src="${app.icon}" class="modal-icon"><div class="modal-app-name">${app.name}</div></div>
-        <div class="modal-info-box">
-            <div class="info-row"><div class="info-left"><span class="info-label">版本</span><span class="info-value">${app.version}</span></div><div class="info-right" style="width:110px"><span class="info-label">大小</span><span class="info-value">${app.size}</span></div></div>
-            <div class="info-row"><div class="info-left"><span class="info-label">系统</span><span class="info-value">${app.system}</span></div><div class="info-right" style="width:110px"><span class="info-label">类型</span><span class="info-value">${app.mod || '原版'}</span></div></div>
-            <div class="pkg-section"><span class="info-label">应用包名</span><div class="pkg-value">${app.pkg}</div></div>
-        </div>
-        <div class="section-title">📸 应用截图</div>
-        <div class="screenshot-container">${app.screenshots.map((s, idx) => `<img src="${s}" class="screenshot-img" onclick="openPreview(${idx})">`).join('')}</div>
-        <div class="section-title">📝 应用介绍</div><div class="app-intro">${app.intro}</div>
-        <div class="modal-footer" style="gap: 8px;">
-            <button class="footer-btn btn-secondary" style="font-size:12px;" onclick="handleBack()">返回列表</button>
-            ${sourceBtn} 
-            <a href="${app.url}" target="_blank" class="footer-btn btn-primary" style="background:${downloadColor}; border:none; font-size:12px;">${downloadText}</a>
-        </div>
-    `;
-    showElement('modal-overlay');
-    window.history.pushState({state: 'modal', page: currentPage}, "");
-}
+        function openModal(index) {
+            const app = myApps[index];
+            currentScreenshots = app.screenshots;
+            
+            // --- 原始来源判断逻辑 ---
+            let btnText = "官方网站"; let btnColor = "#5c6bc0"; 
+            if (app.source) {
+                const s = app.source.toLowerCase();
+                if (s.indexOf("github.com") !== -1 || s.indexOf("gitee.com") !== -1 || s.indexOf("gitlab.com") !== -1) { btnText = "查看源码"; btnColor = "#5c6bc0"; }
+                else if (s.indexOf("coolapk.com") !== -1) { btnText = "酷安主页"; btnColor = "#11ab60"; }
+                else if (s.indexOf("bilibili.com") !== -1 || s.indexOf("b23.tv") !== -1) { btnText = "B站主页"; btnColor = "#fb7299"; }
+                else if (s.indexOf("douyin.com") !== -1) { btnText = "抖音主页"; btnColor = "#161823"; }
+                else if (s.indexOf("t.me") !== -1) { btnText = "TG 群聊/频道"; btnColor = "#0088cc"; }
+                else if (s.indexOf("qm.qq.com") !== -1 || s.indexOf("qq.com") !== -1) { btnText = "QQ 群聊"; btnColor = "#12b7f5"; }
+            }
+            const sourceBtn = app.source ? `<a href="${app.source}" target="_blank" class="footer-btn btn-secondary" style="background:var(--modal-info-bg); color:${btnColor}; font-size:12px;">${btnText}</a>` : `<div class="footer-btn" style="visibility:hidden;"></div>`;
+            
+            // --- 原始下载链接判断逻辑 ---
+            let downloadText = "立即下载"; let downloadColor = "#5c6bc0";
+            if (app.url) {
+                const d = app.url.toLowerCase();
+                if (d.indexOf("123pan.com") !== -1 || d.indexOf("123912.com") !== -1) { downloadText = "123云盘"; downloadColor = "#2d72f1"; } 
+                else if (d.indexOf("lanzou") !== -1 || d.indexOf("lanzv") !== -1 || d.indexOf("lanzx") !== -1 || d.indexOf("lanzp") !== -1) { downloadText = "蓝奏云"; downloadColor = "#00adff"; }
+                else if (d.indexOf("quark.cn") !== -1) { downloadText = "夸克网盘"; downloadColor = "#00c9b0"; }
+                else if (d.indexOf("alipan.com") !== -1 || d.indexOf("aliyundrive.com") !== -1) { downloadText = "阿里云盘"; downloadColor = "#6356ff"; }
+                else if (d.indexOf("weiyun.com") !== -1) { downloadText = "腾讯微云"; downloadColor = "#3072f6"; }
+                else if (d.indexOf("github.com") !== -1 && (d.endsWith(".apk") || d.endsWith(".zip"))) { downloadText = "GitHub直链"; downloadColor = "#24292f"; }
+            }
+
+            document.getElementById('modal-body').innerHTML = `
+                <div class="modal-header"><img src="${app.icon}" class="modal-icon"><div class="modal-app-name">${app.name}</div></div>
+                <div class="modal-info-box">
+                    <div class="info-row"><div class="info-left"><span class="info-label">版本</span><span class="info-value">${app.version}</span></div><div class="info-right" style="width:110px"><span class="info-label">大小</span><span class="info-value">${app.size}</span></div></div>
+                    <div class="info-row"><div class="info-left"><span class="info-label">系统</span><span class="info-value">${app.system}</span></div><div class="info-right" style="width:110px"><span class="info-label">类型</span><span class="info-value">${app.mod || '原版'}</span></div></div>
+                    <div class="pkg-section"><span class="info-label">应用包名</span><div class="pkg-value">${app.pkg}</div></div>
+                </div>
+                <div class="section-title">📸 应用截图</div>
+                <div class="screenshot-container">
+                    ${app.screenshots.map((s, idx) => `
+                        <div class="skel-container">
+                            <img src="${s}" class="screenshot-img" 
+                                 onload="this.classList.add('loaded'); this.parentElement.style.background='none';" 
+                                 onclick="openPreview(${idx})">
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="section-title">📝 应用介绍</div><div class="app-intro">${app.intro}</div>
+                <div class="modal-footer" style="gap: 8px;">
+                    <button class="footer-btn btn-secondary" style="font-size:12px;" onclick="handleBack()">返回列表</button>
+                    ${sourceBtn} 
+                    <a href="${app.url}" target="_blank" class="footer-btn btn-primary" style="background:${downloadColor}; border:none; font-size:12px;">${downloadText}</a>
+                </div>
+            `;
+            showElement('modal-overlay');
+            window.history.pushState({state: 'modal', page: currentPage}, "");
+        }
         
         function handleBack() { window.history.back(); }
         function openPreview(index) {
@@ -411,7 +378,6 @@ function openModal(index) {
             if (Math.abs(diff) > 60) changePreview(diff > 0 ? 1 : -1);
         }, {passive: true});
 
-        // 执行初始化
         initTheme();
         loadAppData();
     </script>
