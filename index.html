@@ -84,6 +84,12 @@
         }
 
         /* ---- Header (iOS Large Title style) ---- */
+        .header-inner {
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        /* ---- Header (iOS Large Title style) ---- */
         .header {
             background: var(--search-bar-bg);
             backdrop-filter: saturate(180%) blur(20px);
@@ -540,16 +546,23 @@
             -webkit-overflow-scrolling: touch;
         }
 
+        /* 截图高度用 CSS 变量，方便响应式覆盖 */
+        :root { --shot-h: 160px; }
+        @media (min-width: 480px)  { :root { --shot-h: 200px; } }
+        @media (min-width: 768px)  { :root { --shot-h: 240px; } }
+        @media (min-width: 1024px) { :root { --shot-h: 260px; } }
+
         /* 截图外层包裹，用于骨架叠层 */
         .screenshot-wrap {
             position: relative;
-            height: 185px;
+            height: var(--shot-h);
             flex-shrink: 0;
             border-radius: 12px;
             overflow: hidden;
             background: var(--fill-1);
-            /* 宽度由 JS 根据图片真实比例注入，默认给个常见手机截图比例 9:19.5 */
-            width: calc(185px * 9 / 19.5);
+            /* 默认按手机竖屏 9:19.5 比例给占位宽，JS 加载后修正 */
+            width: calc(var(--shot-h) * 9 / 19.5);
+            transition: width 0.15s ease;
         }
 
         /* 截图骨架闪光层 */
@@ -567,15 +580,15 @@
             background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.07) 50%, transparent 100%);
         }
 
-        /* 图片加载完成后：闪光消失，wrap 宽度已由 JS 修正 */
         .screenshot-wrap.loaded::before {
             opacity: 0;
             pointer-events: none;
         }
 
         .screenshot-img {
-            height: 185px;
+            height: var(--shot-h);
             width: auto;
+            max-width: none;
             border-radius: 0;
             flex-shrink: 0;
             cursor: pointer;
@@ -801,24 +814,142 @@
 
         @media (min-width: 768px) {
             .nav-btn { display: block; }
-            .screenshot-img { height: 240px; }
         }
 
-        /* ---- Tablet / Desktop grid adjustments ---- */
+        /* ════════════════════════════════════════
+           RESPONSIVE — Tablet & Desktop
+        ════════════════════════════════════════ */
+
+        /* ── Tablet 768px ── */
         @media (min-width: 768px) {
-            .header { font-size: 34px; padding: 16px 28px 12px; }
-            .search-container { padding: 10px 28px 8px; }
-            #app-container { padding: 20px 28px; gap: 14px; }
+            body { padding-bottom: 80px; }
+
+            .header {
+                padding: 18px 40px 14px;
+                font-size: 36px;
+            }
+            .header-inner {
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+
+            .search-container { padding: 10px 40px 8px; }
+            #search-input { max-width: 860px; }
+            #app-count { max-width: 860px; }
+
+            #app-container {
+                padding: 20px 40px;
+                gap: 16px;
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+
+            /* Larger modal on tablet */
+            .modal-content { max-width: 600px; }
+            .modal-inner-pad { padding: 12px 28px 28px; }
+
+            /* FAB — slightly larger on tablet */
+            .fab-group { right: 28px; bottom: 32px; gap: 12px; }
+            .fab-btn { width: 46px; height: 46px; font-size: 19px; }
         }
 
+        /* ── Desktop 1024px ── */
         @media (min-width: 1024px) {
-            #app-container { grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); }
+            body { padding-bottom: 60px; }
+
+            .header { padding: 20px 60px 16px; font-size: 38px; }
+
+            .search-container { padding: 12px 60px 10px; }
+            #search-input {
+                max-width: 960px;
+                padding: 10px 16px 10px 40px;
+                font-size: 15px;
+            }
+            #app-count { max-width: 960px; }
+
+            #app-container {
+                padding: 24px 60px;
+                gap: 18px;
+                grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+                max-width: 1600px;
+            }
+
+            /* Bigger cards on desktop */
+            .app-card { padding: 18px 14px 14px; border-radius: 20px; }
+            .icon-wrap { width: 68px; height: 68px; border-radius: 15px; }
+            .app-icon  { width: 68px; height: 68px; border-radius: 15px; }
+            .icon-placeholder { border-radius: 15px; }
+            .app-title { font-size: 13px; margin-bottom: 11px; }
+            .download-btn { font-size: 13px; padding: 6px 16px; }
+
+            /* Wider modal on desktop */
+            .modal-content { max-width: 680px; }
+            .modal-inner-pad { padding: 16px 36px 36px; }
+            .modal-app-name { font-size: 22px; }
+            .modal-icon { width: 72px; height: 72px; border-radius: 16px; }
+
+            /* Desktop pagination — more prominent */
+            .pagination-footer {
+                padding: 7px 10px;
+                min-width: 240px;
+                border-radius: 26px;
+            }
+            .page-btn { font-size: 15px; padding: 8px 20px; }
+            #page-info { font-size: 15px; min-width: 60px; }
+
+            /* FAB on desktop — right-side toolbar feel */
+            .fab-group { right: 36px; bottom: 36px; gap: 12px; }
+            .fab-btn { width: 48px; height: 48px; font-size: 20px; }
+        }
+
+        /* ── Wide Desktop 1440px ── */
+        @media (min-width: 1440px) {
+            .header { padding: 22px 80px 18px; }
+            .search-container { padding: 12px 80px 10px; }
+            #search-input { max-width: 1100px; }
+            #app-count { max-width: 1100px; }
+
+            #app-container {
+                padding: 28px 80px;
+                gap: 20px;
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                max-width: 1800px;
+            }
+
+            .modal-content { max-width: 720px; }
+
+            /* Desktop: show scroll hint on screenshot container */
+            .screenshot-container::-webkit-scrollbar {
+                height: 4px;
+            }
+            .screenshot-container::-webkit-scrollbar-track {
+                background: var(--fill-1);
+                border-radius: 2px;
+            }
+            .screenshot-container::-webkit-scrollbar-thumb {
+                background: var(--fill-2);
+                border-radius: 2px;
+            }
+        }
+
+        /* ── Hover states only on pointer devices (desktop) ── */
+        @media (hover: hover) and (pointer: fine) {
+            .app-card:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 28px var(--shadow-2), 0 0 0 0.5px var(--card-border);
+            }
+            .footer-btn:hover { opacity: 0.82; }
+            .download-btn:hover { background: var(--fill-2); }
+            .screenshot-img:hover { transform: scale(1.02); }
+            .fab-btn:hover { transform: scale(1.08); }
+            #theme-btn:hover, #refresh-btn:hover {
+                box-shadow: 0 4px 20px rgba(0,0,0,0.18), 0 0 0 0.5px var(--card-border);
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="header">实用软件集</div>
+    <div class="header"><div class="header-inner">实用软件集</div></div>
     <div class="search-container">
         <input type="text" id="search-input" placeholder="搜索应用..." oninput="filterApps()">
         <div id="app-count">同步数据中...</div>
@@ -986,9 +1117,10 @@
         function onScreenshotLoad(img, wrapId) {
             const wrap = document.getElementById(wrapId);
             if (!wrap) return;
-            // 用真实自然宽高比计算对应 185px 高时的宽度
+            // 用真实自然宽高比计算对应当前渲染高度的宽度
             if (img.naturalWidth && img.naturalHeight) {
-                const w = Math.round(185 * img.naturalWidth / img.naturalHeight);
+                const h = wrap.offsetHeight || img.offsetHeight || 160;
+                const w = Math.round(h * img.naturalWidth / img.naturalHeight);
                 wrap.style.width = w + 'px';
             }
             img.classList.add('loaded');
@@ -1011,7 +1143,8 @@
                     const wrap = document.getElementById('sw-' + idx);
                     if (!wrap || wrap.classList.contains('loaded')) return;
                     if (probe.naturalWidth && probe.naturalHeight) {
-                        const w = Math.round(185 * probe.naturalWidth / probe.naturalHeight);
+                        const h = wrap.offsetHeight || 160;
+                        const w = Math.round(h * probe.naturalWidth / probe.naturalHeight);
                         wrap.style.width = w + 'px';
                     }
                 };
