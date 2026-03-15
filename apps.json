@@ -9,11 +9,11 @@
         "icon": "./assets/Shizuku_icon.png",
         "intro": "Shizuku 是一款 Android 权限桥接工具，它允许普通应用在不需要 Root 的情况下调用系统级 API，从而实现很多原本只有 Root 才能做到的功能。很多高级工具（如应用冻结、自动化、系统调节）都会依赖它。",
         "screenshots": [
-            "./assets/Shizuku_shot_1.jpg", 
+            "./assets/Shizuku_shot_1.jpg",
             "./assets/Shizuku_shot_2.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iIKDJ3iifbzg",
-        "source": "https://github.com/thedjchi/Shizuku" 
+        "source": "https://github.com/thedjchi/Shizuku"
     },
     {
         "name": "GKD",
@@ -490,8 +490,8 @@
         ],
         "url": "https://nanlinyou.lanzoul.com/iH29p3iif8pi",
         "source": "https://github.com/Ackites/Nrfr"
-     },
-     {
+    },
+    {
         "name": "远航工具箱",
         "pkg": "com.manchuan.tools",
         "version": "9.4.0",
@@ -505,9 +505,9 @@
             "./assets/远航工具箱_shot_2.jpg"
         ],
         "url": "https://www.123912.com/s/TUtbTd-o3GtH?pwd=rImd",
-         "source": "https://t.me/hyperosapk"
-     },
-     {
+        "source": "https://t.me/hyperosapk"
+    },
+    {
         "name": "Flowmix",
         "pkg": "cn.ykload.flowmix",
         "version": "Beta 5 - 10",
@@ -522,8 +522,8 @@
         ],
         "url": "https://nanlinyou.lanzoul.com/iRcnR3khlw1a",
         "source": "https://docs.flowmix.ykload.com/"
-     },
-     {
+    },
+    {
         "name": "WiFi 密码管理器",
         "pkg": "io.github.wifi_password_manager",
         "version": "1.11",
@@ -569,7 +569,7 @@
         ],
         "url": "https://nanlinyou.lanzoul.com/i5qKS3iif86j",
         "source": "https://github.com/Lerist/FakeLocation"
-    },     
+    },
     {
         "name": "ShizuWall",
         "pkg": "com.arslan.shizuwall",
@@ -743,7 +743,6 @@
         ],
         "url": "https://nanlinyou.lanzoul.com/iQV9N3kklv1c",
         "source": "https://github.com/rumboalla/apkupdater"
-
     },
     {
         "name": "方向控制",
@@ -759,7 +758,6 @@
         ],
         "url": "https://nanlinyou.lanzoul.com/iuYMj3ij7vpe",
         "source": "https://www.coolapk.com/u/2638279"
-
     },
     {
         "name": "点击助手",
@@ -776,7 +774,6 @@
         ],
         "url": "https://nanlinyou.lanzoul.com/ivD753kkmt0f",
         "source": ""
-
     },
     {
         "name": "NP管理器",
@@ -793,7 +790,6 @@
         ],
         "url": "https://nanlinyou.lanzoul.com/iWoRw3j6wl1i",
         "source": "http://normalplayer.top/"
-
     },
     {
         "name": "音量君",
@@ -810,7 +806,6 @@
         ],
         "url": "https://nanlinyou.lanzoul.com/iJJju3iitwta",
         "source": "https://www.coolapk.com/u/1408877"
-
     },
     {
         "name": "Gboard",
@@ -827,7 +822,6 @@
         ],
         "url": "https://nanlinyou.lanzoul.com/iG5Rh3jarg5g",
         "source": ""
-
     },
     {
         "name": "F-Droid",
@@ -844,7 +838,6 @@
         ],
         "url": "https://nanlinyou.lanzoul.com/iXsNL3j0hsha",
         "source": "https://gitlab.com/fdroid/fdroidclient"
-
     },
     {
         "name": "一指禅",
@@ -861,7 +854,6 @@
         ],
         "url": "https://nanlinyou.lanzoul.com/iDXKq3jnoope",
         "source": "https://github.com/jdlingyu/onefinger"
-
     },
     {
         "name": "快速瓷砖",
@@ -878,7 +870,6 @@
         ],
         "url": "https://nanlinyou.lanzoul.com/i7mzx3j4jm6j",
         "source": ""
-
     },
     {
         "name": "隐秘参数",
@@ -894,7 +885,6 @@
         ],
         "url": "https://nanlinyou.lanzoul.com/iwarF3in58mf",
         "source": ""
-
     },
     {
         "name": "FusionApp",
@@ -911,7 +901,6 @@
         ],
         "url": "https://nanlinyou.lanzoul.com/iDFWO3imkxyb",
         "source": "https://www.coolapk.com/u/675594"
-
     },
     {
         "name": "Aurora Store",
@@ -928,7 +917,6 @@
         ],
         "url": "https://nanlinyou.lanzoul.com/i4T4R3ixb5sj",
         "source": "https://gitlab.com/AuroraOSS/AuroraStore"
-
     },
     {
         "name": "用Shizuku激活",
@@ -940,11 +928,10 @@
         "icon": "./assets/用Shizuku激活_icon.png",
         "intro": "用Shizuku激活 是一款免费小巧的安卓辅助工具，专为非 Root 用户设计。它的核心作用是通过 Shizuku 的 ADB 权限，一键激活常用玩机软件，避免每次手机重启后都要连接电脑手动敲长串 ADB命令 的麻烦。",
         "screenshots": [
-            "./assets/用Shizuku激活_shot_1.png"
+            "./assets/使用Shizuku激活_shot_1.png"
         ],
         "url": "https://nanlinyou.lanzoul.com/ig3qb3ik471e",
         "source": ""
-
     },
     {
         "name": "米窗-全局小窗",
@@ -961,7 +948,6 @@
         ],
         "url": "https://nanlinyou.lanzoul.com/ibVtf3iijjtc",
         "source": "https://github.com/sunshine0523/Mi-Freeform"
-
     },
     {
         "name": "照片编辑器",
@@ -971,14 +957,13 @@
         "system": "Android",
         "mod": "莫奈版",
         "icon": "./assets/照片编辑器_icon.png",
-        "intro": "",
+        "intro": "照片编辑器 是一款多功能的图片处理与美化工具，用户可以通过各种编辑功能对照片进行优化和创作，例如调整亮度、添加滤镜、拼接照片等，让普通照片变得更美观或更具创意。",
         "screenshots": [
             "./assets/照片编辑器_shot_1.jpg",
             "./assets/照片编辑器_shot_2.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/irkFr3iikc9g",
         "source": "https://github.com/PatrickAlex2019/PhotoEditor"
-
     },
     {
         "name": "按键映射器",
@@ -988,14 +973,172 @@
         "system": "Android",
         "mod": "高级版",
         "icon": "./assets/按键映射器_icon.png",
-        "intro": "按键映射器 是一款 Android 按键重映射工具。它允许用户轻松自定义手机、平板、Android TV 或遥控器上的各种物理/电容按钮功能，无需Root（部分高级功能需 ADB 或 Root 辅助），通过单按、双按、长按三种手势分配任意操作。核心亮点是让音量键、Bixby键、耳机键、Home/返回/多任务键、游戏手柄、TV遥控器按键等变成你的“快捷键”，极大提升单手操作效率和个性化体验。",
+        "intro": "按键映射器 是一款 Android 按键重映射工具。它允许用户轻松自定义手机、平板、Android TV 或遥控器上的各种物理/电容按钮功能，无需Root（部分高级功能需 ADB 或 Root 辅助），通过单按、双按、长按三种手势分配任意操作，极大提升单手操作效率和个性化体验。",
         "screenshots": [
             "./assets/按键映射器_shot_1.jpg",
             "./assets/按键映射器_shot_2.jpg"
         ],
         "url": "https://nanlinyou.lanzoul.com/iwyON3in0rwj",
         "source": ""
-
+    },
+    {
+        "name": "Apktool M",
+        "pkg": "ru.maximoff.apktool",
+        "version": "2.4.0-260312",
+        "size": "15.12MB",
+        "system": "Android",
+        "mod": "原版",
+        "icon": "./assets/Apktool_M_icon.png",
+        "intro": "Apktool M 是一款常 APK 反编译与修改工具，主要用于拆包、修改和重新打包 APK 应用。它在安卓逆向、主题修改和应用汉化等场景中比较常见，属于移动端版本的 APK 工具。",
+        "screenshots": [
+            "./assets/Apktool_M_shot_1.jpg",
+            "./assets/Apktool_M_shot_2.jpg"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/ivWQL3kmym6d",
+        "source": "https://t.me/s/apktool_m"
+    },
+    {
+        "name": "小黑屋",
+        "pkg": "web1n.stopapp",
+        "version": "1.9.18c",
+        "size": "1.82MB",
+        "system": "Android",
+        "mod": "原版",
+        "icon": "./assets/小黑屋_icon.png",
+        "intro": "小黑屋 是一款 Android 系统工具类应用，主要功能是冻结手机中的应用程序，防止它们在后台运行或自动启动，从而节省电量和内存。",
+        "screenshots": [
+            "./assets/小黑屋_shot_1.jpg",
+            "./assets/小黑屋_shot_2.jpg"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/iyJVL3ijez0f",
+        "source": "https://stopapp.https.gs/"
+    },
+    {
+        "name": "短信转发器",
+        "pkg": "cn.ppps.forwarder",
+        "version": "3.5.0.260214",
+        "size": "15.91MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "./assets/短信转发器_icon.png",
+        "intro": "短信转发器是一款自动把手机短信同步到其他设备或平台的工具，常用于验证码同步、远程办公和短信自动化处理。",
+        "screenshots": [
+            "./assets/短信转发器_shot_1.jpg",
+            "./assets/短信转发器_shot_2.jpg"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/iMFxg3iihhwb",
+        "source": "https://github.com/pppscn/SmsForwarder"
+    },
+    {
+        "name": "Accounts",
+        "pkg": "com.rosan.accounts",
+        "version": "1.5.1",
+        "size": "1.56MB",
+        "system": "Android",
+        "mod": "原版",
+        "icon": "./assets/Accounts_icon.png",
+        "intro": "Accounts 是一款用于管理和查看手机账户信息的工具软件。通常配合 Shizuku 和 雹app 使用，以提高设备管理权限激活成功率。",
+        "screenshots": [
+            "./assets/Accounts_shot_1.jpg",
+            "./assets/Accounts_shot_2.jpg"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/ieDO73izz6dg",
+        "source": ""
+    },
+    {
+        "name": "Surfboard",
+        "pkg": "com.getsurfboard",
+        "version": "mobile-2.28.1 (Build 270)",
+        "size": "22.16MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "./assets/Surfboard_icon.png",
+        "intro": "Surfboard 是一款在 Android 平台上非常知名的开源网络代理工具。它以界面美观、功能强大且完全遵循 Surge 配置标准而著称，常被广大用户戏称为“Android 版的 Surge”。",
+        "screenshots": [
+            "./assets/Surfboard_shot_1.jpg",
+            "./assets/Surfboard_shot_2.jpg"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/i2FHl3kncybe",
+        "source": "https://github.com/getsurfboard/surfboard"
+    },
+    {
+        "name": "TgMonet Theme",
+        "pkg": "com.c3r5b8.telegram_monet",
+        "version": "12.4.0",
+        "size": "1.64MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "./assets/TgMonet_Theme_icon.png",
+        "intro": "TgMonet Theme 是一款开源的 Android 个性化工具，主要用于为 Telegram 客户端生成 Material You（Monet）风格主题。它可以根据手机系统的动态配色自动生成 Telegram 主题，让聊天界面颜色与系统壁纸保持一致。",
+        "screenshots": [
+            "./assets/TgMonet_Theme_shot_1.jpg",
+            "./assets/TgMonet_Theme_shot_2.jpg"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/iHnc73knffxa",
+        "source": "https://github.com/mi-g-alex/Telegram-Monet"
+    },
+    {
+        "name": "阅读",
+        "pkg": "io.legato.kazusa",
+        "version": "3.26.7",
+        "size": "14.21MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "./assets/阅读_icon.png",
+        "intro": "legado-with-MD3 是一款基于开源项目“阅读”重构的、采用最新 Material Design 3 设计风格且增强了平板适配与阅读统计功能的现代化电子书阅读器。",
+        "screenshots": [
+            "./assets/阅读_shot_1.jpg",
+            "./assets/阅读_shot_2.jpg"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/iRNTS3ivwlvc",
+        "source": "https://github.com/HapeLee/legado-with-MD3"
+    },
+    {
+        "name": "搜索进化 SearchEVO",
+        "pkg": "com.jwg.searchEVO",
+        "version": "4.2.2",
+        "size": "7.53MB",
+        "system": "Android",
+        "mod": "原版",
+        "icon": "./assets/搜索进化_SearchEVO_icon.png",
+        "intro": "搜索进化 SearchEVO 是一款 Android 平台的全局搜索与效率工具，主要作用是帮助用户在手机上快速搜索应用、联系人、文件以及网页内容，同时提供一些实用的小工具和快捷操作。",
+        "screenshots": [
+            "./assets/搜索进化_SearchEVO_shot_1.jpg",
+            "./assets/搜索进化_SearchEVO_shot_2.jpg"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/iKDXx3iif8jc",
+        "source": "https://www.coolapk.com/u/913898"
+    },
+    {
+        "name": "StarTravel",
+        "pkg": "com.startravel.app",
+        "version": "1.0.2",
+        "size": "4.72MB",
+        "system": "Android",
+        "mod": "原版",
+        "icon": "./assets/StarTravel_icon.png",
+        "intro": "StarTravel 是一款 Android 硬核玩机工具，主页炫酷实时监控 CPU/GPU 频率与多点温度（需搭配同一生态的 Stellar 服务激活），工具页集成充电功率、功耗统计、帧率检测、全局插帧、触屏调节、直驱供电、高温亮度恢复等实用优化功能，专为刷机、游戏调优与硬件诊断玩家设计。",
+        "screenshots": [
+            "./assets/StarTravel_shot_1.jpg",
+            "./assets/StarTravel_shot_2.jpg"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/iGtpR3knpi6b",
+        "source": "https://www.coolapk.com/u/4078404"
+    },
+    {
+        "name": "Amarok",
+        "pkg": "deltazero.amarok",
+        "version": "0.10.1",
+        "size": "7.27MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "./assets/Amarok_icon.png",
+        "intro": "Amarok 是一款基于 Material 3 设计的开源轻量级隐私工具，它通过“瞬间混淆文件头”和“免 Root 隐藏应用”的双重机制，为安卓用户提供了一个极速、优雅且支持通知栏一键切换的隐私内容屏蔽方案。",
+        "screenshots": [
+            "./assets/Amarok_shot_1.jpg",
+            "./assets/Amarok_shot_2.jpg"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/i2yd83kntmbe",
+        "source": "https://github.com/deltazefiro/Amarok-Hider"
     }
-  
 ]
