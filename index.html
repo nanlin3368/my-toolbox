@@ -87,6 +87,14 @@
         .header-inner {
             max-width: 1800px;
             margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .header-title-text {
+            /* 标题文字 */
         }
 
         /* ---- Header (iOS Large Title style) ---- */
@@ -976,11 +984,295 @@
                 box-shadow: 0 4px 20px rgba(0,0,0,0.18), 0 0 0 0.5px var(--card-border);
             }
         }
+
+        /* ════════════════════════════════════════
+           SIDEBAR — iOS 侧滑栏
+        ════════════════════════════════════════ */
+
+        #sidebar-overlay {
+            display: none;
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0);
+            z-index: 500;
+            transition: background 0.35s ease;
+        }
+        #sidebar-overlay.active {
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        #sidebar {
+            position: fixed;
+            top: 0; right: 0;
+            width: min(85vw, 340px);
+            height: 100%;
+            background: var(--bg-color);
+            z-index: 501;
+            transform: translateX(110%);
+            transition: transform 0.38s cubic-bezier(0.32, 0.72, 0, 1),
+                        box-shadow 0.38s ease;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        #sidebar.open {
+            transform: translateX(0);
+            box-shadow: -12px 0 50px rgba(0,0,0,0.2);
+        }
+
+        /* ── 顶部 safe area ── */
+        .sidebar-header {
+            padding: 56px 20px 18px;
+            background: var(--search-bar-bg);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 0.5px solid var(--separator);
+            flex-shrink: 0;
+        }
+
+        .sidebar-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sidebar-title {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+        }
+
+        .sidebar-close {
+            width: 30px; height: 30px;
+            background: var(--fill-1);
+            border: none; border-radius: 50%;
+            color: var(--text-sub);
+            font-size: 14px; font-weight: 700;
+            cursor: pointer; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.15s;
+        }
+        .sidebar-close:hover { background: var(--fill-2); }
+
+        .sidebar-subtitle {
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-top: 4px;
+        }
+
+        /* ── 滚动体 ── */
+        .sidebar-body {
+            flex: 1;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 20px 0 60px;
+        }
+
+        /* ── 分组标签 ── */
+        .sidebar-section-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-sub);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            padding: 0 20px;
+            margin: 0 0 6px;
+        }
+
+        /* ── iOS grouped card ── */
+        .sidebar-group {
+            background: var(--card-bg);
+            margin: 0 16px 20px;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px var(--shadow-1), 0 0 0 0.5px var(--card-border);
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 13px 16px;
+            border-bottom: 0.5px solid var(--separator);
+            cursor: pointer;
+            transition: background 0.15s;
+            color: var(--text-main);
+            text-decoration: none;
+            -webkit-user-select: none; user-select: none;
+        }
+        .sidebar-item:last-child { border-bottom: none; }
+        .sidebar-item:active { background: var(--fill-1); }
+
+        @media (hover: hover) and (pointer: fine) {
+            .sidebar-item:hover { background: var(--fill-1); }
+        }
+
+        .sidebar-item-icon {
+            width: 34px; height: 34px;
+            border-radius: 9px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; flex-shrink: 0;
+        }
+
+        .sidebar-item-text { flex: 1; min-width: 0; }
+        .sidebar-item-title {
+            font-size: 15px; font-weight: 500;
+        }
+        .sidebar-item-desc {
+            font-size: 12px; color: var(--text-sub); margin-top: 1px;
+        }
+        .sidebar-chevron {
+            color: var(--text-tertiary);
+            font-size: 16px; flex-shrink: 0; font-weight: 300;
+        }
+
+        /* ── 博客条目 ── */
+        .blog-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-bottom: 0.5px solid var(--separator);
+            cursor: pointer;
+            transition: background 0.15s;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+        .blog-item:last-child { border-bottom: none; }
+        .blog-item:active { background: var(--fill-1); }
+
+        @media (hover: hover) and (pointer: fine) {
+            .blog-item:hover { background: var(--fill-1); }
+        }
+
+        .blog-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            flex-shrink: 0;
+        }
+
+        .blog-item-info { flex: 1; min-width: 0; }
+        .blog-item-title {
+            font-size: 14px; font-weight: 500;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .blog-item-meta {
+            font-size: 11px; color: var(--text-sub); margin-top: 2px;
+        }
+
+        /* ── 骨架 ── */
+        .blog-skeleton {
+            height: 58px;
+            background: var(--fill-1);
+            border-radius: 14px;
+            margin: 0 16px 8px;
+            position: relative; overflow: hidden;
+        }
+        .blog-skeleton::after {
+            content: "";
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent 0%, var(--fill-2) 50%, transparent 100%);
+            animation: skeleton-loading 1.4s ease-in-out infinite;
+        }
+
+        /* ── 空状态 ── */
+        .sidebar-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-sub); font-size: 13px;
+        }
+        .sidebar-empty-icon { font-size: 40px; margin-bottom: 10px; }
+
+        /* ── Header 按钮：随 header-inner flex 布局，无需绝对定位 ── */
+
+        .header-blog-btn {
+            /* 不用 absolute，改为 flex item 在 header-inner 右侧 */
+            width: 34px; height: 34px;
+            background: var(--fill-1);
+            border: none; border-radius: 9px;
+            color: var(--accent-color);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background 0.15s, transform 0.12s;
+        }
+        .header-blog-btn:hover { background: var(--fill-2); }
+        .header-blog-btn:active { transform: scale(0.9); }
+
+        /* ── Sidebar: Tablet 768px ── */
+        @media (min-width: 768px) {
+            #sidebar { width: min(400px, 38vw); }
+            .sidebar-header { padding: 28px 24px 18px; }
+            .sidebar-group { margin: 0 16px 20px; }
+            .sidebar-title { font-size: 26px; }
+            .sidebar-body { padding: 20px 0 60px; }
+            /* 桌面显示滚动条 */
+            .sidebar-body::-webkit-scrollbar { width: 4px; }
+            .sidebar-body::-webkit-scrollbar-track { background: transparent; }
+            .sidebar-body::-webkit-scrollbar-thumb { background: var(--fill-2); border-radius: 2px; }
+        }
+
+        /* ── Sidebar: Desktop 1024px ── */
+        @media (min-width: 1024px) {
+            .header-blog-btn {
+                width: 38px; height: 38px;
+                border-radius: 11px;
+            }
+            #sidebar { width: 380px; }
+            .sidebar-header { padding: 24px 28px 18px; }
+            .sidebar-title { font-size: 28px; }
+            .sidebar-group { margin: 0 20px 20px; border-radius: 16px; }
+            .sidebar-section-label { padding: 0 24px; }
+            .sidebar-item { padding: 14px 20px; gap: 14px; }
+            .sidebar-item-icon { width: 36px; height: 36px; border-radius: 10px; font-size: 19px; }
+            .sidebar-item-title { font-size: 15px; }
+            .blog-item { padding: 13px 20px; }
+            .blog-item-title { font-size: 14px; }
+            .blog-skeleton { margin: 0 20px 8px; height: 60px; }
+            .sidebar-empty { padding: 50px 24px; font-size: 14px; }
+        }
+
+        /* ── Sidebar: Wide Desktop 1440px ── */
+        @media (min-width: 1440px) {
+            #sidebar { width: 420px; }
+            .sidebar-header { padding: 28px 32px 20px; }
+            .sidebar-group { margin: 0 24px 22px; }
+            .sidebar-section-label { padding: 0 28px; }
+            .sidebar-item { padding: 15px 24px; }
+            .blog-item { padding: 14px 24px; }
+            .blog-skeleton { margin: 0 24px 10px; }
+        }
+
+        /* ── Sidebar hover (desktop only) ── */
+        @media (hover: hover) and (pointer: fine) {
+            .sidebar-item:hover { background: var(--fill-1); }
+            .blog-item:hover { background: var(--fill-1); }
+            .sidebar-close:hover { background: var(--fill-2); transform: scale(1.08); }
+            .header-blog-btn:hover {
+                background: var(--fill-2);
+                transform: translateY(-50%) scale(1.06);
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div class="header"><div class="header-inner">实用软件集</div></div>
+    <div class="header">
+        <div class="header-inner">
+            <span>实用软件集</span>
+            <button class="header-blog-btn" onclick="openSidebar()" title="个人博客" aria-label="打开博客侧栏">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
     <div class="search-container">
         <input type="text" id="search-input" placeholder="搜索应用..." oninput="filterApps()">
         <div id="app-count">同步数据中...</div>
@@ -1309,9 +1601,154 @@ function openModal(index) {
             if (Math.abs(diff) > 60) changePreview(diff > 0 ? 1 : -1);
         }, {passive: true});
 
+
+        // ════════════════════════════════════════
+        //  SIDEBAR — 侧滑栏逻辑
+        // ════════════════════════════════════════
+
+        const BLOGS_JSON_URL = 'blogs.json';  // 后续改为你的 GitHub raw URL
+
+        let sidebarOpen = false;
+        let blogsLoaded = false;
+        let sbTouchStartX = 0, sbTouchStartY = 0;
+
+        function openSidebar() {
+            if (sidebarOpen) return;
+            sidebarOpen = true;
+            const overlay = document.getElementById('sidebar-overlay');
+            const sidebar = document.getElementById('sidebar');
+            overlay.style.display = 'block';
+            requestAnimationFrame(() => {
+                overlay.classList.add('active');
+                sidebar.classList.add('open');
+            });
+            // 防止背景滚动
+            document.body.style.overflow = 'hidden';
+            // 首次打开时加载博客列表
+            if (!blogsLoaded) loadBlogs();
+        }
+
+        function closeSidebar() {
+            if (!sidebarOpen) return;
+            sidebarOpen = false;
+            const overlay = document.getElementById('sidebar-overlay');
+            const sidebar = document.getElementById('sidebar');
+            overlay.classList.remove('active');
+            sidebar.classList.remove('open');
+            setTimeout(() => { overlay.style.display = 'none'; }, 380);
+            document.body.style.overflow = '';
+        }
+
+        // 右边缘滑入手势（从屏幕右侧 40px 内向左滑）
+        document.addEventListener('touchstart', e => {
+            sbTouchStartX = e.touches[0].clientX;
+            sbTouchStartY = e.touches[0].clientY;
+        }, { passive: true });
+
+        document.addEventListener('touchend', e => {
+            const dx = sbTouchStartX - e.changedTouches[0].clientX;
+            const dy = Math.abs(e.changedTouches[0].clientY - sbTouchStartY);
+            // 从右边缘向左划：打开
+            if (!sidebarOpen && sbTouchStartX > window.innerWidth - 40 && dx > 40 && dy < 60) {
+                openSidebar();
+            }
+            // 侧栏打开时向右划：关闭
+            if (sidebarOpen && dx < -50 && dy < 80) {
+                closeSidebar();
+            }
+        }, { passive: true });
+
+        // ESC 关闭
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && sidebarOpen) closeSidebar();
+        });
+
+        // ── 加载 blogs.json ──
+        async function loadBlogs() {
+            const wrap = document.getElementById('blog-list-wrap');
+            const subtitle = document.getElementById('blog-subtitle');
+            try {
+                const res = await fetch(BLOGS_JSON_URL + '?t=' + Date.now());
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const blogs = await res.json();
+                blogsLoaded = true;
+                renderBlogs(blogs);
+                subtitle.textContent = '共 ' + blogs.length + ' 篇文章';
+            } catch (e) {
+                blogsLoaded = false;  // 允许下次重试
+                wrap.innerHTML = `
+                    <div class="sidebar-empty">
+                        <div class="sidebar-empty-icon">📝</div>
+                        尚未配置 blogs.json 或读取失败
+                    </div>`;
+                subtitle.textContent = '暂无文章';
+            }
+        }
+
+        function renderBlogs(blogs) {
+            const wrap = document.getElementById('blog-list-wrap');
+            if (!blogs || !blogs.length) {
+                wrap.innerHTML = '<div class="sidebar-empty"><div class="sidebar-empty-icon">📭</div>暂无文章</div>';
+                return;
+            }
+            const group = document.createElement('div');
+            group.className = 'sidebar-group';
+            group.innerHTML = blogs.map(b => `
+                <a class="blog-item" href="${b.url || '#'}" target="${b.url ? '_blank' : '_self'}" rel="noopener">
+                    <div class="blog-item-dot"></div>
+                    <div class="blog-item-info">
+                        <div class="blog-item-title">${b.title || '无标题'}</div>
+                        <div class="blog-item-meta">${b.date || ''} ${b.desc ? '· ' + b.desc : ''}</div>
+                    </div>
+                    <span class="sidebar-chevron">›</span>
+                </a>`).join('');
+            wrap.innerHTML = '';
+            wrap.appendChild(group);
+        }
+
         // 执行初始化
         initTheme();
         loadAppData();
     </script>
+
+    <!-- ════ SIDEBAR ════ -->
+    <div id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+    <div id="sidebar">
+        <!-- 顶部 -->
+        <div class="sidebar-header">
+            <div class="sidebar-header-row">
+                <div class="sidebar-title">个人博客</div>
+                <button class="sidebar-close" onclick="closeSidebar()">✕</button>
+            </div>
+            <div class="sidebar-subtitle" id="blog-subtitle">读取文章列表中…</div>
+        </div>
+
+        <!-- 内容 -->
+        <div class="sidebar-body" id="sidebar-body">
+            <!-- 导航快捷 -->
+            <div class="sidebar-section-label">导航</div>
+            <div class="sidebar-group">
+                <div class="sidebar-item" onclick="closeSidebar()">
+                    <div class="sidebar-item-icon" style="background:rgba(0,122,255,0.12)">📦</div>
+                    <div class="sidebar-item-text">
+                        <div class="sidebar-item-title">实用软件集</div>
+                        <div class="sidebar-item-desc">返回应用列表</div>
+                    </div>
+                    <span class="sidebar-chevron">›</span>
+                </div>
+            </div>
+
+            <!-- 博客文章列表 -->
+            <div class="sidebar-section-label">文章列表</div>
+            <div id="blog-list-wrap">
+                <!-- 骨架屏占位 -->
+                <div class="blog-skeleton"></div>
+                <div class="blog-skeleton" style="opacity:0.6"></div>
+                <div class="blog-skeleton" style="opacity:0.35"></div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
