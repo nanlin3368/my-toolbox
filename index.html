@@ -1383,6 +1383,11 @@
         }
 
         window.onpopstate = function(event) {
+            // 侧栏最高优先级：返回键关闭侧栏
+            if (sidebarOpen) {
+                closeSidebar(true);   // true = 由 popstate 触发，不再 history.back()
+                return;
+            }
             if (document.getElementById('preview-overlay').classList.contains('active')) {
                 hideElement('preview-overlay');
             } else if (document.getElementById('modal-overlay').classList.contains('active')) {
@@ -1606,7 +1611,19 @@ function openModal(index) {
         //  SIDEBAR — 侧滑栏逻辑
         // ════════════════════════════════════════
 
-        const BLOGS_JSON_URL = 'blogs.json';  // 后续改为你的 GitHub raw URL
+        // blogs.json 路径 —— 与 index.html 同目录，部署后自动读取
+        const BLOGS_JSON_URL = 'blogs.json';
+        // 将 blogs.json 里的 path/url 字段解析为可跳转的完整链接
+        function resolveBlogLink(b) {
+            // 优先用 url 字段，其次用 path 字段
+            const raw = b.url || b.path || '';
+            if (!raw) return '#';
+            // 已经是完整 URL，直接返回
+            if (raw.startsWith('http://') || raw.startsWith('https://')) return raw;
+            // 相对路径：基于当前页面 origin + pathname 目录拼接
+            const base = window.location.href.replace(/\/[^\/]*$/, '/');
+            return base + raw.replace(/^\.?\//, '');
+        }
 
         let sidebarOpen = false;
         let blogsLoaded = false;
@@ -1622,13 +1639,13 @@ function openModal(index) {
                 overlay.classList.add('active');
                 sidebar.classList.add('open');
             });
-            // 防止背景滚动
             document.body.style.overflow = 'hidden';
-            // 首次打开时加载博客列表
             if (!blogsLoaded) loadBlogs();
+            // 推入 history，让返回键能关闭侧栏
+            window.history.pushState({ state: 'sidebar' }, '');
         }
 
-        function closeSidebar() {
+        function closeSidebar(fromPopstate) {
             if (!sidebarOpen) return;
             sidebarOpen = false;
             const overlay = document.getElementById('sidebar-overlay');
@@ -1637,6 +1654,8 @@ function openModal(index) {
             sidebar.classList.remove('open');
             setTimeout(() => { overlay.style.display = 'none'; }, 380);
             document.body.style.overflow = '';
+            // 手动关闭（非返回键）时主动回退 history，保持栈一致
+            if (!fromPopstate) window.history.back();
         }
 
         // 右边缘滑入手势（从屏幕右侧 40px 内向左滑）
@@ -1693,15 +1712,19 @@ function openModal(index) {
             }
             const group = document.createElement('div');
             group.className = 'sidebar-group';
-            group.innerHTML = blogs.map(b => `
-                <a class="blog-item" href="${b.url || '#'}" target="${b.url ? '_blank' : '_self'}" rel="noopener">
+            group.innerHTML = blogs.map(b => {
+                const href = resolveBlogLink(b);
+                const isExternal = href.startsWith('http');
+                return `
+                <a class="blog-item" href="${href}" target="${isExternal ? '_blank' : '_self'}" rel="noopener">
                     <div class="blog-item-dot"></div>
                     <div class="blog-item-info">
                         <div class="blog-item-title">${b.title || '无标题'}</div>
-                        <div class="blog-item-meta">${b.date || ''} ${b.desc ? '· ' + b.desc : ''}</div>
+                        <div class="blog-item-meta">${b.date || ''}${b.desc ? ' · ' + b.desc : ''}</div>
                     </div>
                     <span class="sidebar-chevron">›</span>
-                </a>`).join('');
+                </a>`;
+            }).join('');
             wrap.innerHTML = '';
             wrap.appendChild(group);
         }
@@ -1740,7 +1763,7 @@ function openModal(index) {
             </div>
 
             <!-- 博客文章列表 -->
-            <div class="sidebar-section-label">文章列表</div>
+            <div class="sidebar-section-label">最新文章</div>
             <div id="blog-list-wrap">
                 <!-- 骨架屏占位 -->
                 <div class="blog-skeleton"></div>
