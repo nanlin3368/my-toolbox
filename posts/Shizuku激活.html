@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Shizuku 激活教程</title>
+    <style>
+        :root {
+            --bg: #F2F2F7;
+            --text: #1C1C1E;
+            --accent: #007AFF;
+            --card: #FFFFFF;
+            --code-bg: #1C1C1E;
+            --code-text: #32D74B;
+            --border: rgba(0,0,0,0.1);
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #000000;
+                --text: #FFFFFF;
+                --card: #1C1C1E;
+                --border: rgba(255,255,255,0.1);
+            }
+        }
+        body { font-family: -apple-system, sans-serif; line-height: 1.6; background: var(--bg); color: var(--text); padding: 20px; max-width: 600px; margin: 0 auto; }
+        .nav-back { color: var(--accent); text-decoration: none; display: block; margin-bottom: 20px; font-weight: 500; }
+        h1 { font-size: 24px; font-weight: 800; margin-bottom: 20px; border-left: 5px solid var(--accent); padding-left: 15px; }
+        
+        .step-box { background: var(--card); border-radius: 16px; padding: 20px; margin-bottom: 25px; border: 1px solid var(--border); box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        h2 { font-size: 19px; margin-top: 0; color: var(--text); display: flex; align-items: center; margin-bottom: 15px; }
+        h2::before { content: "Step"; background: var(--accent); color: white; font-size: 12px; padding: 2px 6px; border-radius: 4px; margin-right: 10px; }
+
+        .code-area {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 15px;
+            border-radius: 12px;
+            font-family: "SF Mono", Menlo, monospace;
+            font-size: 13px;
+            margin: 15px 0;
+            word-break: break-all; 
+            white-space: pre-wrap; 
+            border: 1px solid rgba(255,255,255,0.2);
+            line-height: 1.4;
+        }
+
+        ul, ol { padding-left: 20px; margin: 10px 0; }
+        li { margin-bottom: 12px; }
+        b { color: var(--accent); }
+        .warning-tag { background: #FF3B30; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+        .info-tag { background: #007AFF; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+        .wait-tag { background: #FF9500; color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <a href="../index.html" class="nav-back">〈 返回应用列表</a>
+
+    <h1>Shizuku 激活教程</h1>
+
+    <div class="step-box">
+        <h2>一、开启开发者模式（所有方式通用）</h2>
+        <ol>
+            <li>打开手机<b>「设置」</b>。</li>
+            <li>点击<b>「关于手机」</b>（或「关于本机」）。</li>
+            <li>连续快速点击<b>「版本号」</b>7 次，直到提示“你已处于开发者模式”。</li>
+            <li>返回设置首页，搜索<b>「开发者选项」</b> 或在「系统/更多设置」中找到进入。</li>
+        </ol>
+    </div>
+
+    <div class="step-box">
+        <h2>二、关键权限配置</h2>
+        <ul>
+            <li>在开发者选项中，开启<b>「USB 调试」</b>开关。</li>
+            <li><span class="warning-tag">重要</span> 开启<b>「无线调试」</b>（Android 11+）及<b>「禁止权限监控」</b> 或 <b>「USB 调试（安全设置）」</b>（部分 ROM 叫法不同）。若未开启，ADB/无线调试可能报 Permission Denied。</li>
+            <li>Android 14+ 可在快速设置中添加“无线调试”瓦片，便于一键开启（长按通知栏 → 编辑快速设置 → 拖入开发者瓦片）。</li>
+        </ul>
+    </div>
+
+    <div class="step-box">
+        <h2>三、方式一：无线调试激活（推荐 Android 11+ 非 Root 用户）</h2>
+        <p><i>前提：Android 11 及以上，已连接 Wi-Fi。配对码可持久保存，但重启后需重新开启无线调试并启动 Shizuku。</i></p>
+        <ol>
+            <li>打开 <b>Shizuku</b> 应用，点击“通过无线调试启动” → “配对”。</li>
+            <li>跳转到开发者选项 → 开启<b>「无线调试」</b>开关。</li>
+            <li>点击“无线调试”文字进入详情 → 选择<b>「使用配对码配对设备」</b>，记下 6 位配对码。</li>
+            <li>下拉通知栏，在 Shizuku 通知中输入配对码并确认（首次配对成功后可复用）。</li>
+            <li>返回 Shizuku 主界面，点击<b>「启动」</b>。</li>
+            <li><span class="wait-tag">注意</span> 点击后等待 5-10 秒，直到上方显示<b>“Shizuku 正在运行”</b>（可能显示 ADB 标识）。</li>
+        </ol>
+        <p><span class="info-tag">小技巧</span> Android 14+ 可配合 Termux + 脚本实现半自动重启后激活（详见 GitHub 讨论）。</p>
+    </div>
+
+    <div class="step-box">
+        <h2>四、方式二：电脑 ADB 激活（适用于旧版 Android 或无线失败时）</h2>
+        <ol>
+            <li>用数据线连接手机到电脑，选择<b>「传输文件」</b>模式。</li>
+            <li>确保电脑已安装 ADB（平台工具），打开终端（Windows CMD / PowerShell / macOS Terminal）。</li>
+            <li>输入并执行命令（最新版路径，兼容旧版）：</li>
+        </ol>
+        <div class="code-area">adb shell sh /storage/emulated/0/Android/data/moe.shizuku.privileged.api/start.sh</div>
+        <p>或旧版路径：</p>
+        <div class="code-area">adb shell sh /sdcard/Android/data/moe.shizuku.privileged.api/start.sh</div>
+        <p>终端显示 <b>"exit with 0"</b> 即成功。手机 Shizuku 界面稍等即可显示“正在运行”（ADB 标识）。</p>
+        <p><span class="info-tag">提示</span> 首次成功后，可用 `adb tcpip 5555` 转为无线 ADB，后续无需线缆。</p>
+    </div>
+
+    <div class="step-box">
+        <h2>五、方式三：Root 激活（推荐已 Root 用户，最稳定）</h2>
+        <p><i>前提：已 Root（如 Magisk、KernelSU、APatch），Root 管理器正常工作。</i></p>
+        <p>无需电脑、无配对、重启后通常一键恢复（配合后台权限接近开机自启）。</p>
+        <ol>
+            <li>打开 <b>Shizuku</b> 应用。</li>
+            <li>首次弹出 Root 授权（如 Magisk 超级用户），<b>授予权限并选择“始终允许”</b>。</li>
+            <li>主界面直接点击 <b>「启动」</b> 或 <b>「通过 root 启动」</b>（自动识别 Root 模式）。</li>
+            <li>等待几秒，上方变为 <b>“Shizuku 正在运行”</b>（版本号后带 <b>root</b> 标识，UID 0 最高权限）。</li>
+        </ol>
+        <p><span class="info-tag">优势</span> 启动最快、权限最强，重启后点启动即可（无需配对/ADB）。</p>
+        <p><span class="warning-tag">注意</span> 实现接近开机自启：</p>
+        <ul>
+            <li>手机设置 → 应用 → Shizuku → 电池 → 无限制 / 关闭优化 / 允许后台。</li>
+            <li>Root 管理器中允许 Shizuku 后台、不杀进程。</li>
+            <li>部分 ROM 关闭“深度休眠”/“自启动管理”限制。</li>
+            <li>可选：早期 Sui 模块可真·开机自启（现多直接用 root + 后台权限足够）。</li>
+        </ul>
+        <p>失败时：用 Root Checker 测 Root → 重启管理器 → 查看 Shizuku 日志。</p>
+    </div>
+
+    <div class="step-box" style="background: rgba(255, 59, 48, 0.1);">
+        <h2>⚠️ 激活状态为什么会失效？（通用 + Root 特别提醒）</h2>
+        <p>Android 安全/省电机制导致服务易停，常见原因：</p>
+        <ul>
+            <li><b>重启手机：</b>调试/Root 权限重置。非 Root 方式需重新开启无线调试/执行 ADB 命令。<span class="warning-tag">Root 方式通常只需重新点“启动”</span>（后台未被杀前提下）。</li>
+            <li><b>关闭开发者选项 / USB 或无线调试：</b>立即失效（无线/ADB 方式明显）。</li>
+            <li><b>后台被系统杀死：</b>电池优化、激进省电（MIUI/ColorOS/One UI 等常见）。<span class="warning-tag">重要</span> 设置 Shizuku 为无限制后台、关闭优化、锁定任务卡片、允许自启动。</li>
+            <li><b>Root 特别注意：</b>
+                <ul>
+                    <li>Root 管理器杀 Shizuku 进程或拒绝后台。</li>
+                    <li>未“始终允许” Root 权限，或 Root 临时禁用。</li>
+                    <li>激进杀后台 → 加常驻通知、避免冻结工具误杀。</li>
+                </ul>
+                <span class="info-tag">Root 优势</span>：设置好后，重启点启动即恢复；部分用户用模块接近开机自启。</li>
+            <li><b>其他：</b> ROM Bug（Android 16+ 早期版有兼容，已在最新 Shizuku 修复）、版本过旧、模块冲突。建议用最新版（GitHub 下载，当前 \~13.6.x）。</li>
+        </ul>
+        <p><b>快速自救：</b>重启 Shizuku App → 授权 Root（若有）→ 点“启动” → 等待运行。若仍不行，查电池设置 / Root 授权 / 日志。</p>
+    </div>
+
+    <div style="text-align: center; color: gray; font-size: 12px; margin: 40px 0;">
+        © 2026 个人博客 · 教程参考 Shizuku 官方 GitHub / shizuku.rikka.app · 建议下载最新版 Shizuku
+    </div>
+
+</body>
+</html>
