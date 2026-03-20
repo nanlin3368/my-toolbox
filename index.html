@@ -172,12 +172,12 @@
         /* ---- App Grid ---- */
         #app-container {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
-            gap: 1px;
-            padding: 16px 16px 10px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 12px 12px 10px;
             max-width: 1200px;
             margin: 0 auto;
-            gap: 12px;
+            box-sizing: border-box;
         }
 
         /* ---- App Card (iOS Home Screen inspired) ---- */
@@ -973,9 +973,9 @@
             #app-count { max-width: 860px; }
 
             #app-container {
-                padding: 20px 40px;
-                gap: 16px;
-                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                padding: 18px 32px;
+                gap: 14px;
+                grid-template-columns: repeat(4, 1fr);
             }
 
             /* Larger modal on tablet */
@@ -1002,9 +1002,9 @@
             #app-count { max-width: 960px; }
 
             #app-container {
-                padding: 24px 60px;
-                gap: 18px;
-                grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+                padding: 22px 60px;
+                gap: 16px;
+                grid-template-columns: repeat(5, 1fr);
                 max-width: 1600px;
             }
 
@@ -1047,9 +1047,9 @@
             #app-count { max-width: 1100px; }
 
             #app-container {
-                padding: 28px 80px;
-                gap: 20px;
-                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                padding: 24px 80px;
+                gap: 18px;
+                grid-template-columns: repeat(6, 1fr);
                 max-width: 1800px;
             }
 
@@ -1345,8 +1345,8 @@
         .header-blog-btn:hover { background: var(--fill-2); }
         .header-blog-btn:active { transform: scale(0.9); }
 
-        /* ── 齿轮按钮（和博客按钮同款） ── */
-        .header-gear-btn {
+        /* ── 视图切换按钮 ── */
+        .header-view-btn {
             width: 34px; height: 34px;
             background: var(--fill-1);
             border: none; border-radius: 9px;
@@ -1355,161 +1355,28 @@
             cursor: pointer; flex-shrink: 0;
             transition: background 0.15s, transform 0.12s;
         }
-        .header-gear-btn:hover { background: var(--fill-2); }
-        .header-gear-btn:active { transform: scale(0.9); }
-        .header-gear-btn.active { color: var(--accent-color); background: rgba(0,122,255,0.1); }
+        .header-view-btn:hover  { background: var(--fill-2); }
+        .header-view-btn:active { transform: scale(0.9); }
 
-        /* ════ 设置面板 ════ */
-        #settings-overlay {
-            display: none;
-            position: fixed; inset: 0;
-            z-index: 600;
-            background: rgba(0,0,0,0);
-            transition: background 0.28s ease,
-                        backdrop-filter 0.28s ease,
-                        -webkit-backdrop-filter 0.28s ease;
-            backdrop-filter: blur(0px);
-            -webkit-backdrop-filter: blur(0px);
-        }
-        #settings-overlay.active {
-            background: rgba(0,0,0,0.25);
-            backdrop-filter: blur(8px) saturate(150%);
-            -webkit-backdrop-filter: blur(8px) saturate(150%);
-        }
-
-        #settings-panel {
-            position: absolute;
-            top: 62px; right: 12px;
-            width: min(320px, calc(100vw - 24px));
-            background: var(--card-bg);
-            border-radius: 18px;
-            box-shadow: 0 8px 40px rgba(0,0,0,0.18), 0 0 0 0.5px var(--card-border);
-            overflow: hidden;
-            transform: scale(0.88) translateY(-10px);
-            transform-origin: top right;
-            opacity: 0;
-            transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1),
-                        opacity 0.22s ease;
-            pointer-events: none;
-        }
-        #settings-overlay.active #settings-panel {
-            transform: scale(1) translateY(0);
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .settings-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 14px 16px 12px;
-            border-bottom: 0.5px solid var(--separator);
-        }
-        .settings-title {
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--text-main);
-            letter-spacing: -0.2px;
-        }
-        .settings-reset {
-            font-size: 12px;
-            color: var(--accent-color);
-            background: none; border: none;
-            cursor: pointer; padding: 2px 4px;
-            font-family: inherit;
-        }
-        .settings-reset:hover { opacity: 0.7; }
-
-        .settings-body { padding: 10px 14px 14px; }
-
-        .settings-section {
-            margin-bottom: 14px;
-        }
-        .settings-section:last-child { margin-bottom: 0; }
-
-        .settings-section-title {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-sub);
-            text-transform: uppercase;
-            letter-spacing: 0.6px;
-            margin-bottom: 7px;
-            padding: 0 2px;
-        }
-
-        /* 选项按钮组 */
-        .settings-options {
-            display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-        }
-        .settings-opt {
-            flex: 1;
-            min-width: 0;
-            padding: 7px 6px;
-            border-radius: 9px;
-            border: 0.5px solid var(--card-border);
-            background: var(--fill-1);
-            color: var(--text-sub);
-            font-size: 12.5px;
-            font-weight: 500;
-            font-family: inherit;
-            cursor: pointer;
-            text-align: center;
-            white-space: nowrap;
-            transition: background 0.15s, color 0.15s, border-color 0.15s;
-        }
-        .settings-opt:hover { background: var(--fill-2); color: var(--text-main); }
-        .settings-opt.selected {
-            background: var(--accent-color);
-            color: #fff;
-            border-color: var(--accent-color);
-            font-weight: 600;
-        }
-
-        /* 排序下拉 */
-        .settings-select {
-            width: 100%;
-            padding: 8px 10px;
-            border-radius: 9px;
-            border: 0.5px solid var(--card-border);
-            background: var(--fill-1);
-            color: var(--text-main);
-            font-size: 13px;
-            font-family: inherit;
-            cursor: pointer;
-            appearance: none;
-            -webkit-appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(60,60,67,0.5)' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 10px center;
-            padding-right: 28px;
-            outline: none;
-        }
-        [data-theme="dark"] .settings-select {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(235,235,245,0.45)' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-        }
-        .settings-select:focus { border-color: var(--accent-color); }
-
-        /* ════ 布局变体 CSS 变量驱动 ════ */
-
-        /* 风格：列表模式 */
+        /* ══ 列表模式 ══ */
         #app-container.view-list {
             grid-template-columns: 1fr !important;
-            gap: 1px !important;
-            padding-left: 0 !important;
-            padding-right: 0 !important;
+            gap: 0 !important;
+            padding: 8px 0 !important;
         }
         #app-container.view-list .app-card {
             flex-direction: row !important;
             align-items: center !important;
             border-radius: 0 !important;
             padding: 10px 16px !important;
-            gap: 14px;
+            gap: 13px;
             box-shadow: none !important;
             border-bottom: 0.5px solid var(--separator);
+            transform: none !important;
         }
-        #app-container.view-list .app-card:last-child { border-bottom: none !important; }
+        #app-container.view-list .app-card:last-child {
+            border-bottom: none !important;
+        }
         #app-container.view-list .icon-wrap {
             width: 44px !important; height: 44px !important;
             margin-bottom: 0 !important; flex-shrink: 0;
@@ -1517,75 +1384,37 @@
         }
         #app-container.view-list .title-placeholder { display: none !important; }
         #app-container.view-list .app-title {
-            font-size: 14px !important; text-align: left !important;
+            font-size: 14px !important;
+            text-align: left !important;
             flex: 1; margin-bottom: 0 !important;
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
         }
         #app-container.view-list .download-btn {
-            font-size: 12px !important; padding: 4px 12px !important;
+            font-size: 12px !important;
+            padding: 4px 12px !important;
             flex-shrink: 0;
         }
-
-        /* 布局：宽松 */
-        #app-container.layout-loose:not(.view-list) {
-            gap: 18px !important;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)) !important;
+        /* 列表模式桌面端优化 */
+        @media (min-width: 768px) {
+            #app-container.view-list { padding: 8px 32px !important; }
+            #app-container.view-list .app-card { padding: 11px 16px !important; }
+            #app-container.view-list .icon-wrap { width: 46px !important; height: 46px !important; }
         }
-        #app-container.layout-loose:not(.view-list) .app-card {
-            padding: 18px 14px 14px !important;
+        @media (min-width: 1024px) {
+            .header-view-btn { width: 38px; height: 38px; border-radius: 11px; }
+            #app-container.view-list { padding: 8px 60px !important; }
+            #app-container.view-list .app-card { padding: 12px 16px !important; gap: 16px; }
+            #app-container.view-list .icon-wrap { width: 50px !important; height: 50px !important; }
+            #app-container.view-list .app-title { font-size: 15px !important; }
         }
-        #app-container.layout-loose:not(.view-list) .icon-wrap {
-            width: 62px !important; height: 62px !important;
-        }
-
-        /* 布局：紧凑 */
-        #app-container.layout-compact:not(.view-list) {
-            gap: 8px !important;
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)) !important;
-        }
-        #app-container.layout-compact:not(.view-list) .app-card {
-            padding: 11px 8px 9px !important;
-        }
-        #app-container.layout-compact:not(.view-list) .icon-wrap {
-            width: 46px !important; height: 46px !important; margin-bottom: 6px !important;
-        }
-        #app-container.layout-compact:not(.view-list) .app-title {
-            font-size: 11px !important;
-        }
-        #app-container.layout-compact:not(.view-list) .download-btn {
-            font-size: 11.5px !important; padding: 4px 10px !important;
-        }
-
-        /* 尺寸：紧凑 */
-        #app-container.size-compact:not(.view-list) {
-            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important;
-        }
-        #app-container.size-compact:not(.view-list) .icon-wrap {
-            width: 44px !important; height: 44px !important;
-        }
-
-        /* 尺寸：最小 */
-        #app-container.size-mini:not(.view-list) {
-            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)) !important;
-            gap: 6px !important;
-        }
-        #app-container.size-mini:not(.view-list) .app-card {
-            padding: 9px 6px 8px !important; border-radius: 12px !important;
-        }
-        #app-container.size-mini:not(.view-list) .icon-wrap {
-            width: 36px !important; height: 36px !important;
-            border-radius: 8px !important; margin-bottom: 5px !important;
-        }
-        #app-container.size-mini:not(.view-list) .app-title {
-            font-size: 10px !important; margin-bottom: 5px !important;
-        }
-        #app-container.size-mini:not(.view-list) .download-btn {
-            font-size: 10px !important; padding: 3px 8px !important;
+        @media (min-width: 1440px) {
+            #app-container.view-list { padding: 8px 80px !important; }
         }
 
         /* ── Sidebar 响应式 ── */
         @media (min-width: 768px) {
             .header-blog-btn { width: 36px; height: 36px; border-radius: 10px; }
+            .header-view-btn  { width: 36px; height: 36px; border-radius: 10px; }
             #sidebar { width: min(380px, 40vw); }
             .sidebar-header { padding: 22px 22px 16px; }
             .sidebar-title { font-size: 24px; }
@@ -1599,6 +1428,7 @@
 
         @media (min-width: 1024px) {
             .header-blog-btn { width: 38px; height: 38px; border-radius: 11px; }
+            .header-view-btn  { width: 38px; height: 38px; border-radius: 11px; }
             #sidebar { width: 360px; }
             .sidebar-header { padding: 24px 24px 18px; }
             .sidebar-title { font-size: 26px; }
@@ -2057,67 +1887,21 @@
         <div class="header-inner">
             <span>实用软件集</span>
             <div style="display:flex;align-items:center;gap:8px;">
-                <button class="header-gear-btn" id="gear-btn" onclick="toggleSettings(event)" title="布局设置" aria-label="布局设置">
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="3"/>
-                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                <button class="header-view-btn" id="view-btn" onclick="toggleView()" title="切换视图" aria-label="切换网格/列表">
+                    <svg id="view-icon-grid" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                        <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+                    </svg>
+                    <svg id="view-icon-list" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
+                        <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
+                        <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
                     </svg>
                 </button>
                 <button class="header-blog-btn" onclick="openSidebar()" title="个人博客" aria-label="打开博客侧栏">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- ════ 设置面板 ════ -->
-    <div id="settings-overlay" onclick="closeSettings(event)">
-        <div id="settings-panel" onclick="event.stopPropagation()">
-            <div class="settings-header">
-                <span class="settings-title">⚙️ 布局设置</span>
-                <button class="settings-reset" onclick="resetSettings()">恢复默认</button>
-            </div>
-            <div class="settings-body">
-
-                <div class="settings-section">
-                    <div class="settings-section-title">风格</div>
-                    <div class="settings-options">
-                        <button class="settings-opt selected" data-group="view" data-val="grid" onclick="setSetting('view',this)">⊞ 网格</button>
-                        <button class="settings-opt" data-group="view" data-val="list" onclick="setSetting('view',this)">☰ 列表</button>
-                    </div>
-                </div>
-
-                <div class="settings-section" id="setting-layout-section">
-                    <div class="settings-section-title">布局间距</div>
-                    <div class="settings-options">
-                        <button class="settings-opt" data-group="layout" data-val="loose" onclick="setSetting('layout',this)">宽松</button>
-                        <button class="settings-opt selected" data-group="layout" data-val="standard" onclick="setSetting('layout',this)">标准</button>
-                        <button class="settings-opt" data-group="layout" data-val="compact" onclick="setSetting('layout',this)">紧凑</button>
-                    </div>
-                </div>
-
-                <div class="settings-section" id="setting-size-section">
-                    <div class="settings-section-title">图标尺寸</div>
-                    <div class="settings-options">
-                        <button class="settings-opt selected" data-group="size" data-val="standard" onclick="setSetting('size',this)">标准</button>
-                        <button class="settings-opt" data-group="size" data-val="compact" onclick="setSetting('size',this)">紧凑</button>
-                        <button class="settings-opt" data-group="size" data-val="mini" onclick="setSetting('size',this)">最小</button>
-                    </div>
-                </div>
-
-                <div class="settings-section">
-                    <div class="settings-section-title">排序方式</div>
-                    <select class="settings-select" id="sort-select" onchange="setSortOrder(this.value)">
-                        <option value="default">默认顺序</option>
-                        <option value="az">名称 A → Z</option>
-                        <option value="za">名称 Z → A</option>
-                        <option value="size-asc">大小 小 → 大</option>
-                        <option value="size-desc">大小 大 → 小</option>
-                    </select>
-                </div>
-
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+            </button>
             </div>
         </div>
     </div>
@@ -2312,11 +2096,9 @@
                             : 'assets/screenshots/' + s
                     )
                 }));
-                displayList = applySort([...myApps]);
-                currentSort = localStorage.getItem('setting_sort') || 'default';
-                displayList = applySort(displayList);
+                displayList = [...myApps];
                 currentPage = getPageFromUrl();
-                setTimeout(() => { restoreSettings(); renderApps(); }, 500);
+                setTimeout(() => { applyViewMode(); renderApps(); }, 500);
             } catch (e) { document.getElementById('app-count').innerText = "加载失败"; }
         }
 
@@ -2497,151 +2279,40 @@
             bar.innerHTML = html;
         }
 
+        // ── 视图切换（网格 / 列表）──
+        let isListView = (localStorage.getItem('view_mode') === 'list');
+
+        function toggleView() {
+            isListView = !isListView;
+            applyViewMode();
+            localStorage.setItem('view_mode', isListView ? 'list' : 'grid');
+        }
+
+        function applyViewMode() {
+            const container = document.getElementById('app-container');
+            const iconGrid = document.getElementById('view-icon-grid');
+            const iconList = document.getElementById('view-icon-list');
+            const btn = document.getElementById('view-btn');
+            if (isListView) {
+                container.classList.add('view-list');
+                if (iconGrid) iconGrid.style.display = 'none';
+                if (iconList) iconList.style.display = '';
+                if (btn) btn.style.color = 'var(--accent-color)';
+            } else {
+                container.classList.remove('view-list');
+                if (iconGrid) iconGrid.style.display = '';
+                if (iconList) iconList.style.display = 'none';
+                if (btn) btn.style.color = '';
+            }
+        }
+
         function filterApps() {
             const term = document.getElementById('search-input').value.toLowerCase();
-            const filtered = myApps.filter(app => app.name.toLowerCase().includes(term));
-            displayList = applySort(filtered);
+            displayList = myApps.filter(app => app.name.toLowerCase().includes(term));
             currentPage = 1; 
             const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
             window.history.pushState({page: 1}, "", newUrl);
             renderApps();
-        }
-
-        // ════ 设置面板逻辑 ════
-        let settingsOpen = false;
-        let currentSort = 'default';
-
-        function toggleSettings(e) {
-            e.stopPropagation();
-            settingsOpen ? closeSettingsPanel() : openSettingsPanel();
-        }
-        function openSettingsPanel() {
-            settingsOpen = true;
-            const overlay = document.getElementById('settings-overlay');
-            const btn = document.getElementById('gear-btn');
-            overlay.style.display = 'block';
-            requestAnimationFrame(() => overlay.classList.add('active'));
-            btn.classList.add('active');
-        }
-        function closeSettingsPanel() {
-            if (!settingsOpen) return;
-            settingsOpen = false;
-            const overlay = document.getElementById('settings-overlay');
-            const btn = document.getElementById('gear-btn');
-            overlay.classList.remove('active');
-            btn.classList.remove('active');
-            setTimeout(() => { overlay.style.display = 'none'; }, 300);
-        }
-        function closeSettings(e) {
-            if (e.target === document.getElementById('settings-overlay')) closeSettingsPanel();
-        }
-
-        function setSetting(group, btn) {
-            // 更新按钮选中状态
-            btn.closest('.settings-options').querySelectorAll('.settings-opt').forEach(b => b.classList.remove('selected'));
-            btn.classList.add('selected');
-            const val = btn.dataset.val;
-
-            const container = document.getElementById('app-container');
-            if (group === 'view') {
-                container.classList.toggle('view-list', val === 'list');
-                // 列表模式下隐藏布局/尺寸选项
-                document.getElementById('setting-layout-section').style.opacity = val === 'list' ? '0.4' : '1';
-                document.getElementById('setting-layout-section').style.pointerEvents = val === 'list' ? 'none' : '';
-                document.getElementById('setting-size-section').style.opacity = val === 'list' ? '0.4' : '1';
-                document.getElementById('setting-size-section').style.pointerEvents = val === 'list' ? 'none' : '';
-            } else if (group === 'layout') {
-                container.classList.remove('layout-loose', 'layout-compact');
-                if (val !== 'standard') container.classList.add('layout-' + val);
-            } else if (group === 'size') {
-                container.classList.remove('size-compact', 'size-mini');
-                if (val !== 'standard') container.classList.add('size-' + val);
-            }
-            // 持久化
-            localStorage.setItem('setting_' + group, val);
-        }
-
-        function setSortOrder(val) {
-            currentSort = val;
-            localStorage.setItem('setting_sort', val);
-            const term = document.getElementById('search-input').value.toLowerCase();
-            const filtered = myApps.filter(app => app.name.toLowerCase().includes(term));
-            displayList = applySort(filtered);
-            currentPage = 1;
-            renderApps();
-        }
-
-        function applySort(list) {
-            const s = [...list];
-            const parseSize = str => {
-                if (!str) return 0;
-                const n = parseFloat(str);
-                if (str.includes('GB')) return n * 1024;
-                if (str.includes('MB')) return n;
-                if (str.includes('KB')) return n / 1024;
-                return n;
-            };
-            switch (currentSort) {
-                case 'az':       return s.sort((a,b) => a.name.localeCompare(b.name, 'zh'));
-                case 'za':       return s.sort((a,b) => b.name.localeCompare(a.name, 'zh'));
-                case 'size-asc': return s.sort((a,b) => parseSize(a.size) - parseSize(b.size));
-                case 'size-desc':return s.sort((a,b) => parseSize(b.size) - parseSize(a.size));
-                default:         return s;
-            }
-        }
-
-        function resetSettings() {
-            ['view','layout','size','sort'].forEach(k => localStorage.removeItem('setting_' + k));
-            const c = document.getElementById('app-container');
-            c.classList.remove('view-list','layout-loose','layout-compact','size-compact','size-mini');
-            document.querySelectorAll('.settings-opt').forEach(b => {
-                b.classList.toggle('selected',
-                    (b.dataset.group === 'view'   && b.dataset.val === 'grid')     ||
-                    (b.dataset.group === 'layout' && b.dataset.val === 'standard') ||
-                    (b.dataset.group === 'size'   && b.dataset.val === 'standard')
-                );
-            });
-            document.getElementById('sort-select').value = 'default';
-            document.getElementById('setting-layout-section').style.opacity = '1';
-            document.getElementById('setting-layout-section').style.pointerEvents = '';
-            document.getElementById('setting-size-section').style.opacity = '1';
-            document.getElementById('setting-size-section').style.pointerEvents = '';
-            currentSort = 'default';
-            displayList = applySort([...myApps]);
-            currentPage = 1;
-            renderApps();
-        }
-
-        function restoreSettings() {
-            const c = document.getElementById('app-container');
-            const view   = localStorage.getItem('setting_view')   || 'grid';
-            const layout = localStorage.getItem('setting_layout') || 'standard';
-            const size   = localStorage.getItem('setting_size')   || 'standard';
-            const sort   = localStorage.getItem('setting_sort')   || 'default';
-
-            if (view === 'list') {
-                c.classList.add('view-list');
-                document.querySelector('[data-group="view"][data-val="list"]').classList.add('selected');
-                document.querySelector('[data-group="view"][data-val="grid"]').classList.remove('selected');
-                document.getElementById('setting-layout-section').style.opacity = '0.4';
-                document.getElementById('setting-layout-section').style.pointerEvents = 'none';
-                document.getElementById('setting-size-section').style.opacity = '0.4';
-                document.getElementById('setting-size-section').style.pointerEvents = 'none';
-            }
-            if (layout !== 'standard') {
-                c.classList.add('layout-' + layout);
-                document.querySelector('[data-group="layout"][data-val="' + layout + '"]').classList.add('selected');
-                document.querySelector('[data-group="layout"][data-val="standard"]').classList.remove('selected');
-            }
-            if (size !== 'standard') {
-                c.classList.add('size-' + size);
-                document.querySelector('[data-group="size"][data-val="' + size + '"]').classList.add('selected');
-                document.querySelector('[data-group="size"][data-val="standard"]').classList.remove('selected');
-            }
-            if (sort !== 'default') {
-                currentSort = sort;
-                document.getElementById('sort-select').value = sort;
-            }
         }
         
 function openModal(index) {
