@@ -173,18 +173,17 @@
         #app-container {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            padding: 12px 12px 10px;
-            max-width: 1200px;
-            margin: 0 auto;
+            gap: 8px;
+            padding: 10px 10px 8px;
+            width: 100%;
             box-sizing: border-box;
         }
 
         /* ---- App Card (iOS Home Screen inspired) ---- */
         .app-card {
             background: var(--card-bg);
-            border-radius: 16px;
-            padding: 14px 10px 11px;
+            border-radius: 14px;
+            padding: 10px 6% 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -193,6 +192,9 @@
             transition: transform 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.18s ease;
             -webkit-user-select: none;
             user-select: none;
+            min-width: 0;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .app-card:hover {
@@ -207,10 +209,12 @@
 
         /* 图标容器：overflow:hidden 统一裁切圆角，子元素无需重复设 border-radius */
         .icon-wrap {
-            width: 52px;
-            height: 52px;
-            border-radius: 11.7px;
-            margin-bottom: 8px;
+            width: 56%;
+            aspect-ratio: 1 / 1;
+            max-width: 64px;
+            height: auto;
+            border-radius: 22%;
+            margin-bottom: 7px;
             position: relative;
             flex-shrink: 0;
             overflow: hidden;                      /* 关键：裁切绝对定位的图标 */
@@ -289,9 +293,9 @@
         .title-placeholder.hidden { opacity: 0; pointer-events: none; }
 
         .app-title {
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 500;
-            margin-bottom: 8px;
+            margin-bottom: 7px;
             text-align: center;
             width: 100%;
             overflow: hidden;
@@ -304,14 +308,15 @@
         /* iOS "GET" / pill button */
         .download-btn {
             width: auto;
-            min-width: 60px;
+            min-width: 0;
+            max-width: 88%;
             background: var(--fill-1);
             color: var(--accent-color);
             text-align: center;
-            padding: 5px 14px;
+            padding: 4px 10px;
             border-radius: 20px;
             text-decoration: none;
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 600;
             letter-spacing: 0.1px;
             transition: background 0.15s;
@@ -973,10 +978,16 @@
             #app-count { max-width: 860px; }
 
             #app-container {
-                padding: 18px 32px;
+                padding: 16px 32px;
                 gap: 14px;
-                grid-template-columns: repeat(4, 1fr);
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             }
+
+            /* Tablet 卡片恢复固定比例 */
+            .app-card { padding: 14px 10px 12px; border-radius: 15px; }
+            .icon-wrap { width: 52px; aspect-ratio: 1/1; max-width: none; border-radius: 11.7px; margin-bottom: 8px; }
+            .app-title { font-size: 12px; margin-bottom: 8px; }
+            .download-btn { font-size: 12.5px; padding: 5px 14px; max-width: none; }
 
             /* Larger modal on tablet */
             .modal-content { max-width: 600px; }
@@ -1002,15 +1013,15 @@
             #app-count { max-width: 960px; }
 
             #app-container {
-                padding: 22px 60px;
+                padding: 20px 60px;
                 gap: 16px;
-                grid-template-columns: repeat(5, 1fr);
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
                 max-width: 1600px;
             }
 
             /* Bigger cards on desktop */
             .app-card { padding: 16px 12px 13px; border-radius: 18px; }
-            .icon-wrap { width: 60px; height: 60px; border-radius: 13.5px; }
+            .icon-wrap { width: 60px; aspect-ratio: 1/1; max-width: none; border-radius: 13.5px; }
             .app-icon  { width: 100%; height: 100%; border-radius: 0; }
             .icon-placeholder { border-radius: 0; }
             .app-title { font-size: 12.5px; margin-bottom: 9px; }
@@ -1047,9 +1058,9 @@
             #app-count { max-width: 1100px; }
 
             #app-container {
-                padding: 24px 80px;
+                padding: 22px 80px;
                 gap: 18px;
-                grid-template-columns: repeat(6, 1fr);
+                grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
                 max-width: 1800px;
             }
 
