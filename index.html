@@ -348,10 +348,10 @@
             flex-direction: row;
             flex-wrap: nowrap;
             align-items: center;
-            gap: 2px;
+            gap: 4px;
             background: var(--pagination-bg);
-            padding: 4px 5px;
-            border-radius: 22px;
+            padding: 5px 6px;
+            border-radius: 14px;
             box-shadow: 0 4px 24px rgba(0,0,0,0.14), 0 0 0 0.5px rgba(0,0,0,0.06);
             z-index: 90;
             backdrop-filter: saturate(180%) blur(20px);
@@ -359,38 +359,73 @@
             white-space: nowrap;
         }
 
+        /* 首页/尾页/上页/下页 文字按钮 */
         .page-btn {
             background: transparent;
-            color: var(--accent-color);
+            color: var(--text-sub);
             border: none;
-            padding: 8px 14px;
-            border-radius: 18px;
-            font-size: 14px;
-            font-weight: 600;
+            padding: 7px 11px;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 500;
             cursor: pointer;
             font-family: -apple-system, "SF Pro Text", sans-serif;
-            transition: background 0.15s;
+            transition: background 0.15s, color 0.15s;
             white-space: nowrap;
             flex-shrink: 0;
+            line-height: 1;
         }
-
-        .page-btn:hover:not(:disabled) { background: var(--fill-1); }
+        .page-btn:hover:not(:disabled) { background: var(--fill-1); color: var(--text-main); }
         .page-btn:active:not(:disabled) { background: var(--fill-2); }
+        .page-btn:disabled { color: var(--text-tertiary); cursor: not-allowed; }
 
-        .page-btn:disabled {
-            color: var(--text-tertiary);
-            cursor: not-allowed;
-        }
-
-        #page-info {
-            font-weight: 600;
-            font-size: 14px;
-            color: var(--text-main);
-            min-width: 50px;
-            text-align: center;
-            white-space: nowrap;
+        /* 中间数字页码按钮 */
+        .page-num-btn {
+            background: transparent;
+            color: var(--text-sub);
+            border: none;
+            width: 34px;
+            height: 34px;
+            border-radius: 9px;
+            font-size: 13.5px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: -apple-system, "SF Pro Text", sans-serif;
+            transition: background 0.15s, color 0.15s;
             flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
         }
+        .page-num-btn:hover { background: var(--fill-1); color: var(--text-main); }
+        .page-num-btn:active { background: var(--fill-2); }
+        .page-num-btn.active {
+            background: var(--accent-color);
+            color: #fff;
+            font-weight: 700;
+        }
+        .page-num-btn.active:hover { background: var(--accent-color); }
+
+        /* 省略号 */
+        .page-ellipsis {
+            color: var(--text-tertiary);
+            font-size: 13px;
+            padding: 0 2px;
+            flex-shrink: 0;
+            line-height: 34px;
+        }
+
+        /* 分隔线 */
+        .page-sep {
+            width: 0.5px;
+            height: 18px;
+            background: var(--separator);
+            flex-shrink: 0;
+            margin: 0 2px;
+        }
+
+        #page-info { display: none; }
 
         /* ---- Modal (iOS Sheet style) ---- */
         #modal-overlay {
@@ -944,7 +979,7 @@
             .modal-icon-wrap { width: 72px; height: 72px; border-radius: 16px; }
             .modal-icon { width: 100%; height: 100%; border-radius: 0; }
 
-            /* Desktop pagination — more prominent */
+            /* Desktop pagination */
             .pagination-footer {
                 padding: 7px 10px;
                 min-width: 240px;
@@ -1611,11 +1646,7 @@
         <div class="skeleton"></div><div class="skeleton"></div>
     </div>
 
-    <div class="pagination-footer" id="pagination-bar">
-        <button class="page-btn" id="prev-btn" onclick="changePage(-1)">上一页</button>
-        <span id="page-info">1 / 1</span>
-        <button class="page-btn" id="next-btn" onclick="changePage(1)">下一页</button>
-    </div>
+    <div class="pagination-footer" id="pagination-bar" style="display:none"></div>
 
     <div class="fab-group">
         <button id="back-to-top" class="fab-btn" onclick="scrollToTop()" title="回到顶部">
@@ -1881,10 +1912,7 @@
                     <div class="download-btn">点击查看</div>
                 </div>`
             }).join('');
-            document.getElementById('pagination-bar').style.display = 'flex';
-            document.getElementById('page-info').innerText = `${currentPage} / ${totalPages}`;
-            document.getElementById('prev-btn').disabled = (currentPage === 1);
-            document.getElementById('next-btn').disabled = (currentPage === totalPages);
+            renderPagination(currentPage, totalPages);
         }
 
         function changePage(step) {
@@ -1893,6 +1921,58 @@
             window.history.pushState({page: currentPage}, "", newUrl);
             renderApps();
             window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function goToPage(p) {
+            const totalPages = Math.ceil(displayList.length / itemsPerPage);
+            if (p < 1 || p > totalPages) return;
+            currentPage = p;
+            const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?p=' + currentPage;
+            window.history.pushState({page: currentPage}, "", newUrl);
+            renderApps();
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function renderPagination(cur, total) {
+            const bar = document.getElementById('pagination-bar');
+            if (total <= 1) { bar.style.display = 'none'; return; }
+            bar.style.display = 'flex';
+
+            // 计算要显示的页码范围（当前页两侧各 1 页，最多连续 3 个）
+            let pages = [];
+            if (total <= 5) {
+                for (let i = 1; i <= total; i++) pages.push(i);
+            } else {
+                pages = [1];
+                let lo = Math.max(2, cur - 1);
+                let hi = Math.min(total - 1, cur + 1);
+                if (lo > 2) pages.push('...');
+                for (let i = lo; i <= hi; i++) pages.push(i);
+                if (hi < total - 1) pages.push('...');
+                pages.push(total);
+            }
+
+            let html = '';
+            // 首页
+            html += `<button class="page-btn" onclick="goToPage(1)" ${cur===1?'disabled':''}>首页</button>`;
+            html += `<div class="page-sep"></div>`;
+            // 上一页
+            html += `<button class="page-btn" onclick="goToPage(${cur-1})" ${cur===1?'disabled':''}>‹</button>`;
+            // 数字页码
+            pages.forEach(p => {
+                if (p === '...') {
+                    html += `<span class="page-ellipsis">…</span>`;
+                } else {
+                    html += `<button class="page-num-btn ${p===cur?'active':''}" onclick="goToPage(${p})">${p}</button>`;
+                }
+            });
+            // 下一页
+            html += `<button class="page-btn" onclick="goToPage(${cur+1})" ${cur===total?'disabled':''}>›</button>`;
+            html += `<div class="page-sep"></div>`;
+            // 尾页
+            html += `<button class="page-btn" onclick="goToPage(${total})" ${cur===total?'disabled':''}>尾页</button>`;
+
+            bar.innerHTML = html;
         }
 
         function filterApps() {
