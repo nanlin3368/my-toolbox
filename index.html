@@ -40,7 +40,7 @@
             --text-tertiary: rgba(60,60,67,0.3);
             --border-color: rgba(60,60,67,0.18);
             --card-border: rgba(0,0,0,0.06);
-            --separator: rgba(60,60,67,0.29);
+            --separator: rgba(60,60,67,0.1);
             --input-bg: rgba(118,118,128,0.12);
             --modal-info-bg: #F2F2F7;
             --search-bar-bg: rgba(242,242,247,0.82);
@@ -66,7 +66,7 @@
             --text-tertiary: rgba(235,235,245,0.3);
             --border-color: rgba(84,84,88,0.65);
             --card-border: rgba(255,255,255,0.08);
-            --separator: rgba(84,84,88,0.65);
+            --separator: rgba(84,84,88,0.18);
             --input-bg: rgba(118,118,128,0.24);
             --modal-info-bg: #2C2C2E;
             --search-bar-bg: rgba(0,0,0,0.82);
@@ -206,6 +206,25 @@
             transform: scale(0.94);
             box-shadow: 0 1px 6px var(--shadow-1);
         }
+
+        /* ── 卡片/列表项入场动画 ── */
+        @keyframes card-in {
+            from {
+                opacity: 0;
+                transform: translateY(22px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .app-card {
+            animation: card-in 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
+            /* delay 由 JS 内联 style 设置 */
+        }
+        /* 已有 hover/active transform，动画结束后不要被覆盖 */
+        .app-card:hover  { animation: none; transform: translateY(-2px); }
+        .app-card:active { animation: none; transform: scale(0.94); }
 
         /* 图标容器：overflow:hidden 统一裁切圆角，子元素无需重复设 border-radius */
         .icon-wrap {
@@ -2212,10 +2231,31 @@
                 document.getElementById('pagination-bar').style.display = 'none';
                 return;
             }
-            container.innerHTML = pageData.map((app) => {
+
+            // 计算每项 delay
+            // 列表模式：逐条，间隔 38ms，最多前 20 条有动画
+            // 网格模式：按行，间隔 55ms/行，同行同时出现
+            const isList = container.classList.contains('view-list');
+            // 网格列数（根据容器实际宽度估算）
+            const cols = isList ? 1 : Math.round(container.offsetWidth /
+                (container.querySelector ? 999 : 999)) || 3;
+            // 简单取3（移动端），JS 拿不到 CSS 计算列数时用 3
+            const gridCols = isList ? 1 : (() => {
+                const w = window.innerWidth;
+                if (w >= 1440) return 6;
+                if (w >= 1024) return 5;
+                if (w >= 768)  return 4;
+                return 3;
+            })();
+
+            container.innerHTML = pageData.map((app, idx) => {
                 const realIndex = myApps.findIndex(a => a.name === app.name);
+                // 列表：每项自己的 delay；网格：同行一起出现
+                const delayIdx = isList ? idx : Math.floor(idx / gridCols);
+                const maxDelay = 18; // 超过这个 index 不再延迟（避免后面的卡片等太久）
+                const delay = Math.min(delayIdx, maxDelay) * (isList ? 38 : 55);
                 return `
-                <div class="app-card" onclick="openModal(${realIndex})">
+                <div class="app-card" style="animation-delay:${delay}ms" onclick="openModal(${realIndex})">
                     <div class="icon-wrap">
                         <div class="icon-placeholder" id="ip-${realIndex}"></div>
                         <img src="${app.icon}" class="app-icon" loading="lazy"
