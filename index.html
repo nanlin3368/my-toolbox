@@ -1590,6 +1590,8 @@
             gap: 20px;
             background: #f0f4ff;
             overflow: hidden;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
             transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
                         visibility 0.8s;
             opacity: 1;
@@ -1604,54 +1606,42 @@
             pointer-events: none;
         }
 
-        /* ── 彩色光晕背景 ── */
-        .splash-orb {
+        /* ── 彩色光晕背景：用 radial-gradient 模拟柔和光晕，避免 filter:blur 在移动端方块 bug ── */
+        .splash-bg {
             position: absolute;
-            border-radius: 50%;
-            filter: blur(60px);
+            inset: 0;
+            /* 多层 radial-gradient 叠加，模拟光晕效果，无需 filter:blur */
+            background:
+                radial-gradient(ellipse 55% 40% at 15% 18%,  rgba(120,160,255,0.45) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 45% at 88% 82%,  rgba(180,120,255,0.35) 0%, transparent 65%),
+                radial-gradient(ellipse 40% 35% at 8%  72%,  rgba(100,220,180,0.28) 0%, transparent 65%),
+                radial-gradient(ellipse 38% 32% at 88% 28%,  rgba(255,190,100,0.22) 0%, transparent 60%),
+                radial-gradient(ellipse 44% 38% at 50% 88%,  rgba(255,120,160,0.18) 0%, transparent 65%);
             opacity: 0;
-            animation: orb-appear 1.2s ease forwards;
+            animation: bg-appear 1.0s 0.1s ease forwards;
+            will-change: opacity;
         }
-        .splash-orb-1 {
-            width: 280px; height: 280px;
-            background: radial-gradient(circle, rgba(120,160,255,0.55), transparent 70%);
-            top: -60px; left: -60px;
-            animation-delay: 0s;
+        [data-theme="dark"] .splash-bg {
+            background:
+                radial-gradient(ellipse 55% 40% at 15% 18%,  rgba(80,120,255,0.35) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 45% at 88% 82%,  rgba(140,70,255,0.28) 0%, transparent 65%),
+                radial-gradient(ellipse 40% 35% at 8%  72%,  rgba(60,180,140,0.22) 0%, transparent 65%),
+                radial-gradient(ellipse 38% 32% at 88% 28%,  rgba(200,130,40,0.18) 0%, transparent 60%),
+                radial-gradient(ellipse 44% 38% at 50% 88%,  rgba(200,60,90,0.15) 0%, transparent 65%);
         }
-        .splash-orb-2 {
-            width: 240px; height: 240px;
-            background: radial-gradient(circle, rgba(180,130,255,0.45), transparent 70%);
-            bottom: -40px; right: -30px;
-            animation-delay: 0.15s;
+        @keyframes bg-appear {
+            from { opacity: 0; }
+            to   { opacity: 1; }
         }
-        .splash-orb-3 {
-            width: 200px; height: 200px;
-            background: radial-gradient(circle, rgba(100,220,180,0.35), transparent 70%);
-            bottom: 20%; left: -20px;
-            animation-delay: 0.25s;
+        /* 浮动动画用整个 splash-bg 轻微移动，避免逐个 orb 触发合成层 */
+        @keyframes bg-drift {
+            0%   { transform: translate(0px, 0px) scale(1); }
+            33%  { transform: translate(4px, -6px) scale(1.01); }
+            66%  { transform: translate(-3px, 4px) scale(0.99); }
+            100% { transform: translate(0px, 0px) scale(1); }
         }
-        .splash-orb-4 {
-            width: 160px; height: 160px;
-            background: radial-gradient(circle, rgba(255,190,100,0.3), transparent 70%);
-            top: 25%; right: -10px;
-            animation-delay: 0.1s;
-        }
-        .splash-orb-5 {
-            width: 180px; height: 180px;
-            background: radial-gradient(circle, rgba(255,120,160,0.25), transparent 70%);
-            bottom: 10%; left: 30%;
-            animation-delay: 0.3s;
-        }
-        [data-theme="dark"] .splash-orb-1 { background: radial-gradient(circle, rgba(80,120,255,0.4), transparent 70%); }
-        [data-theme="dark"] .splash-orb-2 { background: radial-gradient(circle, rgba(140,80,255,0.35), transparent 70%); }
-        [data-theme="dark"] .splash-orb-3 { background: radial-gradient(circle, rgba(60,180,140,0.3), transparent 70%); }
-        [data-theme="dark"] .splash-orb-4 { background: radial-gradient(circle, rgba(220,140,50,0.25), transparent 70%); }
-        [data-theme="dark"] .splash-orb-5 { background: radial-gradient(circle, rgba(220,60,100,0.2), transparent 70%); }
+        .splash-bg { animation: bg-appear 1.0s 0.1s ease forwards, bg-drift 8s 1.1s ease-in-out infinite; }
 
-        @keyframes orb-appear {
-            from { opacity: 0; transform: scale(0.6); }
-            to   { opacity: 1; transform: scale(1); }
-        }
         @keyframes orb-float {
             0%, 100% { transform: translateY(0px) scale(1); }
             50%       { transform: translateY(-18px) scale(1.05); }
@@ -1755,12 +1745,8 @@
 
     <!-- ════ 开屏动画 ════ -->
     <div id="splash-screen">
-        <!-- 彩色光晕 -->
-        <div class="splash-orb splash-orb-1"></div>
-        <div class="splash-orb splash-orb-2"></div>
-        <div class="splash-orb splash-orb-3"></div>
-        <div class="splash-orb splash-orb-4"></div>
-        <div class="splash-orb splash-orb-5"></div>
+        <!-- 彩色光晕背景（纯 gradient，无 filter:blur，移动端无闪烁） -->
+        <div class="splash-bg"></div>
         <!-- 毛玻璃层 -->
         <div class="splash-glass"></div>
         <!-- 主内容 -->
