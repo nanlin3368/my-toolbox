@@ -1771,18 +1771,31 @@
 
         let _scrollY = 0;
 
+        function _lockScroll() {
+            _scrollY = window.scrollY;
+            document.body.style.position = 'fixed';
+            document.body.style.top = '-' + _scrollY + 'px';
+            document.body.style.left = '0';
+            document.body.style.right = '0';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function _unlockScroll() {
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.left = '';
+            document.body.style.right = '';
+            document.body.style.overflow = '';
+            window.scrollTo({ top: _scrollY, behavior: 'instant' });
+        }
+
         function showElement(id) {
             const el = document.getElementById(id);
             el.style.display = 'flex';
             requestAnimationFrame(() => { el.classList.add('active'); });
-            // 锁定背景滚动
-            if (id === 'modal-overlay' || id === 'preview-overlay') {
-                _scrollY = window.scrollY;
-                document.body.style.position = 'fixed';
-                document.body.style.top = '-' + _scrollY + 'px';
-                document.body.style.left = '0';
-                document.body.style.right = '0';
-                document.body.style.overflow = 'hidden';
+            // 只在 modal 打开时锁定（preview 在 modal 内部叠加，不重复锁）
+            if (id === 'modal-overlay') {
+                _lockScroll();
             }
         }
 
@@ -1790,14 +1803,9 @@
             const el = document.getElementById(id);
             el.classList.remove('active');
             setTimeout(() => { el.style.display = 'none'; }, 350);
-            // 恢复背景滚动
-            if (id === 'modal-overlay' || id === 'preview-overlay') {
-                document.body.style.position = '';
-                document.body.style.top = '';
-                document.body.style.left = '';
-                document.body.style.right = '';
-                document.body.style.overflow = '';
-                window.scrollTo({ top: _scrollY, behavior: 'instant' });
+            // 只有 modal 关闭时才解锁（preview 关闭后 modal 还在，不解锁）
+            if (id === 'modal-overlay') {
+                _unlockScroll();
             }
         }
 
