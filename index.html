@@ -2175,6 +2175,10 @@ function openModal(index) {
         document.addEventListener('touchend', e => {
             const dx = sbTouchStartX - e.changedTouches[0].clientX;
             const dy = Math.abs(e.changedTouches[0].clientY - sbTouchStartY);
+            // 弹窗或截图预览打开时，禁用侧滑手势
+            const modalOpen = document.getElementById('modal-overlay').classList.contains('active');
+            const previewOpen = document.getElementById('preview-overlay').classList.contains('active');
+            if (modalOpen || previewOpen) return;
             // 从右边缘向左划：打开
             if (!sidebarOpen && sbTouchStartX > window.innerWidth - 40 && dx > 40 && dy < 60) {
                 openSidebar();
