@@ -1,0 +1,2244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>实用软件集</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#007AFF">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="实用软件集">
+    <link rel="apple-touch-icon" href="icon.png">
+
+    <style>
+        /* ============================================
+           iOS-STYLE DESIGN SYSTEM
+        ============================================ */
+
+        /* iOS Light Mode */
+        :root {
+            --bg-color: #F2F2F7;
+            --bg-secondary: #FFFFFF;
+            --bg-tertiary: #F2F2F7;
+            --card-bg: #FFFFFF;
+            --grouped-bg: #F2F2F7;
+            --text-main: #000000;
+            --text-secondary: #3C3C43;
+            --text-sub: rgba(60,60,67,0.6);
+            --text-tertiary: rgba(60,60,67,0.3);
+            --border-color: rgba(60,60,67,0.18);
+            --card-border: rgba(0,0,0,0.06);
+            --separator: rgba(60,60,67,0.29);
+            --input-bg: rgba(118,118,128,0.12);
+            --modal-info-bg: #F2F2F7;
+            --search-bar-bg: rgba(242,242,247,0.82);
+            --pagination-bg: rgba(255,255,255,0.85);
+            --accent-color: #007AFF;
+            --accent-secondary: #34C759;
+            --fill-1: rgba(120,120,128,0.2);
+            --fill-2: rgba(120,120,128,0.16);
+            --shadow-1: rgba(0,0,0,0.08);
+            --shadow-2: rgba(0,0,0,0.12);
+        }
+
+        /* iOS Dark Mode */
+        [data-theme="dark"] {
+            --bg-color: #000000;
+            --bg-secondary: #1C1C1E;
+            --bg-tertiary: #2C2C2E;
+            --card-bg: #1C1C1E;
+            --grouped-bg: #000000;
+            --text-main: #FFFFFF;
+            --text-secondary: #EBEBF5;
+            --text-sub: rgba(235,235,245,0.6);
+            --text-tertiary: rgba(235,235,245,0.3);
+            --border-color: rgba(84,84,88,0.65);
+            --card-border: rgba(255,255,255,0.08);
+            --separator: rgba(84,84,88,0.65);
+            --input-bg: rgba(118,118,128,0.24);
+            --modal-info-bg: #2C2C2E;
+            --search-bar-bg: rgba(0,0,0,0.82);
+            --pagination-bg: rgba(28,28,30,0.88);
+            --accent-color: #0A84FF;
+            --accent-secondary: #30D158;
+            --fill-1: rgba(120,120,128,0.36);
+            --fill-2: rgba(120,120,128,0.32);
+            --shadow-1: rgba(0,0,0,0.3);
+            --shadow-2: rgba(0,0,0,0.4);
+        }
+
+        /* ---- Reset & Base ---- */
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: -apple-system, "SF Pro Text", "Helvetica Neue", sans-serif;
+            margin: 0; padding: 0;
+            font-size: 14px;
+            color: var(--text-main);
+            padding-bottom: 80px;
+            transition: background-color 0.3s ease;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ---- Header (iOS Large Title style) ---- */
+        .header-inner {
+            max-width: 1800px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .header-title-text {
+            /* 标题文字 */
+        }
+
+        /* ---- Header (iOS Large Title style) ---- */
+        .header {
+            background: var(--search-bar-bg);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            padding: 14px 20px 10px;
+            text-align: left;
+            font-size: 34px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+            border-bottom: 0.5px solid var(--separator);
+        }
+
+        /* ---- Search Bar (iOS grouped search) ---- */
+        .search-container {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: var(--search-bar-bg);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            padding: 8px 16px 6px;
+            border-bottom: 0.5px solid var(--separator);
+        }
+
+        #search-input {
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+            display: block;
+            padding: 9px 14px 9px 36px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            font-size: 15px;
+            background: var(--input-bg);
+            color: var(--text-main);
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='rgba(60,60,67,0.5)' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cpath d='m21 21-4.35-4.35'%3E%3C/path%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: 12px center;
+        }
+
+        [data-theme="dark"] #search-input {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='rgba(235,235,245,0.5)' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cpath d='m21 21-4.35-4.35'%3E%3C/path%3E%3C/svg%3E");
+        }
+
+        #search-input::placeholder { color: var(--text-sub); }
+
+        #app-count {
+            max-width: 700px;
+            margin: 5px auto 2px;
+            color: var(--text-sub);
+            font-size: 12px;
+            text-align: center;
+            font-weight: 400;
+        }
+
+        /* ---- App Grid ---- */
+        #app-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+            gap: 1px;
+            padding: 16px 16px 10px;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 12px;
+        }
+
+        /* ---- App Card (iOS Home Screen inspired) ---- */
+        .app-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 14px 10px 11px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 0 1px 3px var(--shadow-1), 0 0 0 0.5px var(--card-border);
+            cursor: pointer;
+            transition: transform 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.18s ease;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .app-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--shadow-2), 0 0 0 0.5px var(--card-border);
+        }
+
+        .app-card:active {
+            transform: scale(0.94);
+            box-shadow: 0 1px 6px var(--shadow-1);
+        }
+
+        /* 图标容器：overflow:hidden 统一裁切圆角，子元素无需重复设 border-radius */
+        .icon-wrap {
+            width: 52px;
+            height: 52px;
+            border-radius: 11.7px;
+            margin-bottom: 8px;
+            position: relative;
+            flex-shrink: 0;
+            overflow: hidden;                      /* 关键：裁切绝对定位的图标 */
+            /* 强制开启 GPU 合成，防止边缘抗锯齿漏白 */
+            -webkit-mask-image: -webkit-radial-gradient(white, black);
+            transform: translateZ(0);
+            box-shadow: 0 1px 5px rgba(0,0,0,0.13);
+        }
+
+        /* Icon 本身不需要再设圆角，由 icon-wrap 统一裁切 */
+        .app-icon {
+            width: 100%;
+            height: 100%;
+            border-radius: 0;                      /* wrap 已裁切，不再重复 */
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+            position: absolute;
+            top: 0; left: 0;
+            display: block;
+        }
+
+        .app-icon.loaded { opacity: 1; }
+
+        /* 骨架占位：图标（同样由 icon-wrap 裁切，无需自设圆角） */
+        .icon-placeholder {
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+            background: var(--fill-1);
+            position: absolute;
+            top: 0; left: 0;
+            overflow: hidden;
+            transition: opacity 0.2s ease;
+        }
+
+        .icon-placeholder::after {
+            content: "";
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.12) 50%, transparent 100%);
+            animation: skeleton-loading 1.4s ease-in-out infinite;
+        }
+
+        [data-theme="dark"] .icon-placeholder::after {
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%);
+        }
+
+        .icon-placeholder.hidden { opacity: 0; pointer-events: none; }
+
+        /* 标题骨架占位 */
+        .title-placeholder {
+            width: 60px;
+            height: 10px;
+            border-radius: 5px;
+            background: var(--fill-1);
+            margin-bottom: 12px;
+            position: relative;
+            overflow: hidden;
+            transition: opacity 0.2s ease;
+        }
+
+        .title-placeholder::after {
+            content: "";
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.12) 50%, transparent 100%);
+            animation: skeleton-loading 1.4s ease-in-out infinite;
+            animation-delay: 0.12s;
+        }
+
+        [data-theme="dark"] .title-placeholder::after {
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%);
+        }
+
+        .title-placeholder.hidden { opacity: 0; pointer-events: none; }
+
+        .app-title {
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            text-align: center;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            color: var(--text-main);
+            letter-spacing: -0.1px;
+        }
+
+        /* iOS "GET" / pill button */
+        .download-btn {
+            width: auto;
+            min-width: 60px;
+            background: var(--fill-1);
+            color: var(--accent-color);
+            text-align: center;
+            padding: 5px 14px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.1px;
+            transition: background 0.15s;
+        }
+
+        .app-card:hover .download-btn {
+            background: var(--fill-2);
+        }
+
+        /* ---- Skeleton Loading ---- */
+        .skeleton {
+            background: var(--card-bg);
+            border-radius: 16px;
+            height: 132px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 1px 3px var(--shadow-1), 0 0 0 0.5px var(--card-border);
+        }
+
+        .skeleton::after {
+            content: "";
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent 0%, var(--fill-1) 50%, transparent 100%);
+            animation: skeleton-loading 1.4s ease-in-out infinite;
+        }
+
+        @keyframes skeleton-loading {
+            0%   { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .empty-status {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-sub);
+            font-size: 15px;
+        }
+
+        /* ---- Pagination (iOS tab-bar pill style) ---- */
+        .pagination-footer {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-items: center;
+            gap: 2px;
+            background: var(--pagination-bg);
+            padding: 4px 5px;
+            border-radius: 22px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.14), 0 0 0 0.5px rgba(0,0,0,0.06);
+            z-index: 90;
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            white-space: nowrap;
+        }
+
+        .page-btn {
+            background: transparent;
+            color: var(--accent-color);
+            border: none;
+            padding: 8px 14px;
+            border-radius: 18px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: -apple-system, "SF Pro Text", sans-serif;
+            transition: background 0.15s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .page-btn:hover:not(:disabled) { background: var(--fill-1); }
+        .page-btn:active:not(:disabled) { background: var(--fill-2); }
+
+        .page-btn:disabled {
+            color: var(--text-tertiary);
+            cursor: not-allowed;
+        }
+
+        #page-info {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-main);
+            min-width: 50px;
+            text-align: center;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        /* ---- Modal (iOS Sheet style) ---- */
+        #modal-overlay {
+            display: none;
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0);
+            z-index: 1000;
+            justify-content: center;
+            align-items: flex-end;
+            padding: 0;
+            backdrop-filter: blur(0px);
+            -webkit-backdrop-filter: blur(0px);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @media (min-width: 600px) {
+            #modal-overlay { align-items: center; padding: 20px; }
+        }
+
+        #modal-overlay.active {
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 520px;
+            border-radius: 20px 20px 0 0;
+            max-height: 92vh;
+            /* 不在此处设 overflow，防止 overflow-x 连带裁切截图圆角 */
+            overflow: visible;
+            position: relative;
+            padding: 0;
+            box-shadow: 0 -2px 30px rgba(0,0,0,0.22);
+            transform: translateY(100%);
+            opacity: 1;
+            transition: transform 0.38s cubic-bezier(0.32, 0.72, 0, 1);
+            color: var(--text-main);
+        }
+
+        /* 滚动区单独用内层 div 承载，与圆角裁切隔离 */
+        .modal-scroll {
+            max-height: 92vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 20px 20px 0 0;
+        }
+
+        @media (min-width: 600px) {
+            .modal-content {
+                border-radius: 20px;
+                transform: scale(0.94) translateY(16px);
+                opacity: 0;
+                transition: transform 0.3s cubic-bezier(0.34, 1.3, 0.64, 1), opacity 0.25s ease;
+            }
+            .modal-scroll { border-radius: 20px; }
+        }
+
+        #modal-overlay.active .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        @media (min-width: 600px) {
+            #modal-overlay.active .modal-content {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Drag handle */
+        .modal-content::before {
+            content: "";
+            display: block;
+            width: 36px; height: 5px;
+            background: var(--fill-1);
+            border-radius: 3px;
+            margin: 10px auto 4px;
+        }
+
+        @media (min-width: 600px) {
+            .modal-content::before { display: none; }
+        }
+
+        .modal-inner-pad { padding: 8px 20px 20px; }
+
+        .close-btn {
+            position: absolute;
+            top: 14px; right: 16px;
+            width: 30px; height: 30px;
+            background: var(--fill-1);
+            color: var(--text-sub);
+            cursor: pointer;
+            line-height: 30px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 700;
+            z-index: 100;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.15s;
+        }
+
+        .close-btn:hover { background: var(--fill-2); }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        /* 弹窗图标容器：统一裁切，与卡片图标同样方案 */
+        .modal-icon-wrap {
+            width: 64px;
+            height: 64px;
+            border-radius: 14px;
+            margin-right: 14px;
+            flex-shrink: 0;
+            overflow: hidden;
+            -webkit-mask-image: -webkit-radial-gradient(white, black);
+            transform: translateZ(0);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
+
+        .modal-icon {
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+            object-fit: cover;
+            display: block;
+        }
+
+        .modal-app-name {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+        }
+
+        /* iOS grouped inset table style */
+        .modal-info-box {
+            background: var(--modal-info-bg);
+            border-radius: 12px;
+            padding: 0;
+            margin-bottom: 18px;
+            overflow: hidden;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            border-bottom: 0.5px solid var(--separator);
+        }
+
+        .info-row:last-child { border-bottom: none; }
+
+        .info-left { display: flex; align-items: center; flex: 1; overflow: hidden; }
+        .info-label { color: var(--text-sub); margin-right: 8px; flex-shrink: 0; font-size: 13px; }
+        .info-value { color: var(--text-main); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 13px; }
+
+        .pkg-section {
+            border-top: 0.5px solid var(--separator);
+            padding: 10px 14px;
+        }
+
+        .pkg-value {
+            font-family: "SF Mono", "Menlo", monospace;
+            color: var(--text-sub);
+            font-size: 11px;
+            word-break: break-all;
+            margin-top: 4px;
+            line-height: 1.5;
+        }
+
+        .section-title {
+            font-weight: 600;
+            margin: 20px 0 10px;
+            font-size: 17px;
+            letter-spacing: -0.2px;
+        }
+
+        .screenshot-container {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* 截图高度用 CSS 变量，方便响应式覆盖 */
+        :root { --shot-h: 160px; }
+        @media (min-width: 480px)  { :root { --shot-h: 200px; } }
+        @media (min-width: 768px)  { :root { --shot-h: 240px; } }
+        @media (min-width: 1024px) { :root { --shot-h: 260px; } }
+
+        /* 截图外层包裹，用于骨架叠层 */
+        /* screenshot-wrap：只做骨架背景，不用 overflow:hidden 裁切
+           避免子像素舍入导致图片四角被截断（深色模式下尤其明显） */
+        .screenshot-wrap {
+            position: relative;
+            height: var(--shot-h);
+            flex-shrink: 0;
+            border-radius: 12px;
+            /* 不设 overflow:hidden，圆角由图片自身 border-radius 实现 */
+            background: var(--fill-1);
+            width: calc(var(--shot-h) * 9 / 19.5);
+            transition: width 0.15s ease;
+        }
+
+        /* 骨架闪光层同样用 border-radius 限制，不依赖 overflow:hidden */
+        .screenshot-wrap::before {
+            content: "";
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            border-radius: 12px;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.14) 50%, transparent 100%);
+            animation: skeleton-loading 1.4s ease-in-out infinite;
+            z-index: 1;
+            transition: opacity 0.25s ease;
+        }
+
+        [data-theme="dark"] .screenshot-wrap::before {
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.07) 50%, transparent 100%);
+        }
+
+        .screenshot-wrap.loaded::before {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* 图片自身设圆角，无需 wrap overflow:hidden，四角完整显示 */
+        .screenshot-img {
+            height: var(--shot-h);
+            width: auto;
+            max-width: none;
+            border-radius: 11px;
+            flex-shrink: 0;
+            cursor: pointer;
+            transition: transform 0.15s, opacity 0.25s ease;
+            opacity: 0;
+            position: relative;
+            z-index: 2;
+            display: block;
+            /* 异步解码，不阻塞渲染 */
+            image-rendering: auto;
+        }
+
+        .screenshot-img.loaded { opacity: 1; }
+
+        .screenshot-img:active { transform: scale(0.97); }
+
+        .app-intro {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.75;
+            background: var(--modal-info-bg);
+            padding: 14px;
+            border-radius: 12px;
+            white-space: pre-wrap;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 8px;
+            margin-top: 22px;
+            justify-content: space-between;
+        }
+
+        .footer-btn {
+            flex: 1;
+            padding: 13px 0;
+            border-radius: 14px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.15s, transform 0.15s;
+        }
+
+        .footer-btn:active { transform: scale(0.96); opacity: 0.85; }
+
+        .btn-secondary {
+            background: var(--modal-info-bg);
+            color: var(--accent-color);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--accent-color);
+            color: #fff;
+        }
+
+        /* ---- FAB Group (iOS style) ---- */
+        .fab-group {
+            position: fixed;
+            right: 16px;
+            bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 99;
+        }
+
+        .fab-btn {
+            width: 44px;
+            height: 44px;
+            color: white;
+            border-radius: 50%;
+            border: none;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.18), 0 0 0 0.5px rgba(0,0,0,0.08);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.2s;
+            background: var(--accent-color);
+        }
+
+        .fab-btn:hover {
+            box-shadow: 0 4px 18px rgba(0,0,0,0.22), 0 0 0 0.5px rgba(0,0,0,0.08);
+        }
+
+        #back-to-top {
+            background: var(--accent-color);
+            transform: translateY(16px) scale(0);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #back-to-top.show {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #theme-btn {
+            background: var(--card-bg);
+            color: var(--text-main);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.14), 0 0 0 0.5px var(--card-border);
+            font-size: 16px;
+        }
+
+        #refresh-btn {
+            background: var(--card-bg);
+            color: var(--text-main);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.14), 0 0 0 0.5px var(--card-border);
+        }
+
+        @keyframes spin-half {
+            0%   { transform: rotate(0deg) scale(1); }
+            50%  { transform: rotate(180deg) scale(1.12); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .rotating {
+            animation: spin-half 0.4s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+        }
+
+        @keyframes spin-refresh {
+            0%   { transform: rotate(0deg)   scale(1); }
+            20%  { transform: rotate(110deg) scale(1.15); }
+            65%  { transform: rotate(310deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        #refresh-btn.spinning {
+            animation: spin-refresh 0.75s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .fab-btn:active { transform: scale(0.86) !important; }
+
+        /* ---- Image Preview Overlay ---- */
+        #preview-overlay {
+            display: none;
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            touch-action: none;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(0px);
+            -webkit-backdrop-filter: blur(0px);
+        }
+
+        #preview-overlay.active {
+            background: rgba(0,0,0,0.45);
+            backdrop-filter: blur(28px) saturate(160%);
+            -webkit-backdrop-filter: blur(28px) saturate(160%);
+        }
+
+        #preview-img {
+            max-width: 90%; max-height: 80%;
+            object-fit: contain;
+            border-radius: 14px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+            transform: scale(0.85);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        #preview-overlay.active #preview-img {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .preview-close {
+            position: absolute; top: 18px; right: 18px;
+            color: white;
+            background: rgba(255,255,255,0.18);
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            z-index: 2100;
+            border: 0.5px solid rgba(255,255,255,0.25);
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            pointer-events: none;
+            transition: background 0.15s, opacity 0.28s ease;
+        }
+        .preview-close:hover { background: rgba(255,255,255,0.28); }
+        #preview-overlay.active .preview-close {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #preview-counter {
+            position: absolute; bottom: 30px;
+            color: rgba(255,255,255,0.85);
+            background: rgba(0,0,0,0.4);
+            padding: 5px 16px;
+            border-radius: 20px;
+            z-index: 2100;
+            font-size: 13px;
+            font-weight: 600;
+            backdrop-filter: blur(8px);
+            letter-spacing: 0.5px;
+            opacity: 0;
+            transition: opacity 0.28s ease;
+        }
+        #preview-overlay.active #preview-counter { opacity: 1; }
+
+        .nav-btn {
+            position: absolute; top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.1);
+            color: white; border: none;
+            padding: 22px 14px;
+            font-size: 26px;
+            cursor: pointer;
+            border-radius: 8px;
+            display: none;
+            backdrop-filter: blur(8px);
+            opacity: 0;
+            pointer-events: none;
+            transition: background 0.15s, opacity 0.28s ease;
+        }
+        .nav-btn:hover { background: rgba(255,255,255,0.2); }
+        @media (min-width: 768px) { .nav-btn { display: block; } }
+        #preview-overlay.active .nav-btn {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* ════════════════════════════════════════
+           RESPONSIVE — Tablet & Desktop
+        ════════════════════════════════════════ */
+
+        /* ── Tablet 768px ── */
+        @media (min-width: 768px) {
+            body { padding-bottom: 80px; }
+
+            .header {
+                padding: 18px 40px 14px;
+                font-size: 36px;
+            }
+            .header-inner {
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+
+            .search-container { padding: 10px 40px 8px; }
+            #search-input { max-width: 860px; }
+            #app-count { max-width: 860px; }
+
+            #app-container {
+                padding: 20px 40px;
+                gap: 16px;
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+
+            /* Larger modal on tablet */
+            .modal-content { max-width: 600px; }
+            .modal-inner-pad { padding: 12px 28px 28px; }
+
+            /* FAB — slightly larger on tablet */
+            .fab-group { right: 28px; bottom: 32px; gap: 12px; }
+            .fab-btn { width: 46px; height: 46px; font-size: 19px; }
+        }
+
+        /* ── Desktop 1024px ── */
+        @media (min-width: 1024px) {
+            body { padding-bottom: 60px; }
+
+            .header { padding: 20px 60px 16px; font-size: 38px; }
+
+            .search-container { padding: 12px 60px 10px; }
+            #search-input {
+                max-width: 960px;
+                padding: 10px 16px 10px 40px;
+                font-size: 15px;
+            }
+            #app-count { max-width: 960px; }
+
+            #app-container {
+                padding: 24px 60px;
+                gap: 18px;
+                grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+                max-width: 1600px;
+            }
+
+            /* Bigger cards on desktop */
+            .app-card { padding: 16px 12px 13px; border-radius: 18px; }
+            .icon-wrap { width: 60px; height: 60px; border-radius: 13.5px; }
+            .app-icon  { width: 100%; height: 100%; border-radius: 0; }
+            .icon-placeholder { border-radius: 0; }
+            .app-title { font-size: 12.5px; margin-bottom: 9px; }
+            .download-btn { font-size: 12.5px; padding: 5px 15px; }
+
+            /* Wider modal on desktop */
+            .modal-content { max-width: 680px; }
+            .modal-inner-pad { padding: 16px 36px 36px; }
+            .modal-app-name { font-size: 22px; }
+            .modal-icon-wrap { width: 72px; height: 72px; border-radius: 16px; }
+            .modal-icon { width: 100%; height: 100%; border-radius: 0; }
+
+            /* Desktop pagination — more prominent */
+            .pagination-footer {
+                padding: 7px 10px;
+                min-width: 240px;
+                border-radius: 26px;
+            }
+            .page-btn { font-size: 15px; padding: 8px 20px; }
+            #page-info { font-size: 15px; min-width: 60px; }
+
+            /* FAB on desktop — right-side toolbar feel */
+            .fab-group { right: 32px; bottom: 28px; gap: 12px; }
+            .fab-btn { width: 48px; height: 48px; font-size: 20px; }
+        }
+
+        /* ── Wide Desktop 1440px ── */
+        @media (min-width: 1440px) {
+            .header { padding: 22px 80px 18px; }
+            .search-container { padding: 12px 80px 10px; }
+            #search-input { max-width: 1100px; }
+            #app-count { max-width: 1100px; }
+
+            #app-container {
+                padding: 28px 80px;
+                gap: 20px;
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                max-width: 1800px;
+            }
+
+            .modal-content { max-width: 720px; }
+
+            /* Desktop: show scroll hint on screenshot container */
+            .screenshot-container::-webkit-scrollbar {
+                height: 4px;
+            }
+            .screenshot-container::-webkit-scrollbar-track {
+                background: var(--fill-1);
+                border-radius: 2px;
+            }
+            .screenshot-container::-webkit-scrollbar-thumb {
+                background: var(--fill-2);
+                border-radius: 2px;
+            }
+        }
+
+        /* ── Hover states only on pointer devices (desktop) ── */
+        @media (hover: hover) and (pointer: fine) {
+            .app-card:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 8px 28px var(--shadow-2), 0 0 0 0.5px var(--card-border);
+            }
+            .footer-btn:hover { opacity: 0.82; }
+            .download-btn:hover { background: var(--fill-2); }
+            .screenshot-img:hover { transform: scale(1.02); }
+            .fab-btn:hover { transform: scale(1.08); }
+            #theme-btn:hover, #refresh-btn:hover {
+                box-shadow: 0 4px 20px rgba(0,0,0,0.18), 0 0 0 0.5px var(--card-border);
+            }
+        }
+
+        /* ════════════════════════════════════════
+           SIDEBAR — iOS 侧滑栏
+        ════════════════════════════════════════ */
+
+        #sidebar-overlay {
+            display: none;
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0);
+            z-index: 500;
+            transition: background 0.42s ease,
+                        backdrop-filter 0.42s ease,
+                        -webkit-backdrop-filter 0.42s ease;
+            backdrop-filter: blur(0px) saturate(100%);
+            -webkit-backdrop-filter: blur(0px) saturate(100%);
+        }
+        #sidebar-overlay.active {
+            background: rgba(0,0,0,0.32);
+            backdrop-filter: blur(14px) saturate(160%);
+            -webkit-backdrop-filter: blur(14px) saturate(160%);
+        }
+
+        #sidebar {
+            position: fixed;
+            top: 0; right: 0;
+            width: min(82vw, 320px);
+            height: 100%;
+            background: var(--card-bg);
+            z-index: 501;
+            transform: translateX(110%);
+            transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        #sidebar.open {
+            transform: translateX(0);
+            box-shadow: -20px 0 60px rgba(0,0,0,0.14),
+                        -1px 0 0 var(--card-border);
+        }
+
+        /* ── 顶部 safe area ── */
+        .sidebar-header {
+            padding: 20px 20px 16px;
+            background: var(--search-bar-bg);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 0.5px solid var(--separator);
+            flex-shrink: 0;
+        }
+
+        .sidebar-header-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .sidebar-title {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.4px;
+            color: var(--text-main);
+        }
+
+        .sidebar-close {
+            width: 28px; height: 28px;
+            background: var(--fill-1);
+            border: none; border-radius: 50%;
+            color: var(--text-sub);
+            font-size: 13px; font-weight: 700;
+            cursor: pointer; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.15s, transform 0.12s;
+        }
+        .sidebar-close:active { transform: scale(0.88); }
+
+        /* 统计数据行 */
+        .sidebar-stats {
+            display: flex;
+            background: var(--fill-1);
+            border-radius: 11px;
+            overflow: hidden;
+        }
+        .sidebar-stat-item {
+            flex: 1;
+            text-align: center;
+            padding: 9px 0;
+            border-right: 0.5px solid var(--separator);
+        }
+        .sidebar-stat-item:last-child { border-right: none; }
+        .sidebar-stat-num {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-main);
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+        .sidebar-stat-label {
+            font-size: 11px;
+            color: var(--text-sub);
+            margin-top: 2px;
+        }
+
+        /* ── 滚动体 ── */
+        .sidebar-body {
+            flex: 1;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 20px 0 60px;
+        }
+
+        /* ── 分组标签 ── */
+        .sidebar-section-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-sub);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            padding: 0 20px;
+            margin: 0 0 6px;
+        }
+
+        /* ── iOS grouped card ── */
+        .sidebar-group {
+            background: var(--card-bg);
+            margin: 0 16px 20px;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px var(--shadow-1), 0 0 0 0.5px var(--card-border);
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 13px 16px;
+            border-bottom: 0.5px solid var(--separator);
+            cursor: pointer;
+            transition: background 0.15s;
+            color: var(--text-main);
+            text-decoration: none;
+            -webkit-user-select: none; user-select: none;
+        }
+        .sidebar-item:last-child { border-bottom: none; }
+        .sidebar-item:active { background: var(--fill-1); }
+
+        @media (hover: hover) and (pointer: fine) {
+            .sidebar-item:hover { background: var(--fill-1); }
+        }
+
+        .sidebar-item-icon {
+            width: 34px; height: 34px;
+            border-radius: 9px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; flex-shrink: 0;
+        }
+
+        .sidebar-item-text { flex: 1; min-width: 0; }
+        .sidebar-item-title {
+            font-size: 15px; font-weight: 500;
+        }
+        .sidebar-item-desc {
+            font-size: 12px; color: var(--text-sub); margin-top: 1px;
+        }
+        .sidebar-chevron {
+            color: var(--text-tertiary);
+            font-size: 16px; flex-shrink: 0; font-weight: 300;
+        }
+
+        /* ── 博客条目：轻量列表 ── */
+        .blog-list-inner {
+            padding: 4px 10px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .blog-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 8px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.15s;
+            color: var(--text-main);
+            text-decoration: none;
+            -webkit-user-select: none; user-select: none;
+        }
+        .blog-item:active { background: var(--fill-1); }
+
+        @media (hover: hover) and (pointer: fine) {
+            .blog-item:hover { background: var(--fill-1); }
+        }
+
+        .blog-item-bar {
+            width: 2.5px; height: 22px;
+            border-radius: 2px;
+            background: var(--accent-color);
+            opacity: 0.35;
+            flex-shrink: 0;
+            transition: opacity 0.15s;
+        }
+        .blog-item:hover .blog-item-bar,
+        .blog-item:active .blog-item-bar { opacity: 0.75; }
+
+        .blog-item-info { flex: 1; min-width: 0; }
+        .blog-item-title {
+            font-size: 14px; font-weight: 500;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            line-height: 1.4;
+        }
+        .blog-item-arrow {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            flex-shrink: 0;
+            opacity: 0.4;
+        }
+
+        /* ── 骨架 ── */
+        .blog-skeleton {
+            height: 58px;
+            background: var(--fill-1);
+            border-radius: 14px;
+            margin: 0 16px 8px;
+            position: relative; overflow: hidden;
+        }
+        .blog-skeleton::after {
+            content: "";
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent 0%, var(--fill-2) 50%, transparent 100%);
+            animation: skeleton-loading 1.4s ease-in-out infinite;
+        }
+
+        /* ── 空状态 ── */
+        .sidebar-empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-sub); font-size: 13px;
+        }
+        .sidebar-empty-icon { font-size: 40px; margin-bottom: 10px; }
+
+        /* ── Header 按钮：随 header-inner flex 布局，无需绝对定位 ── */
+
+        .header-blog-btn {
+            /* 不用 absolute，改为 flex item 在 header-inner 右侧 */
+            width: 34px; height: 34px;
+            background: var(--fill-1);
+            border: none; border-radius: 9px;
+            color: var(--accent-color);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background 0.15s, transform 0.12s;
+        }
+        .header-blog-btn:hover { background: var(--fill-2); }
+        .header-blog-btn:active { transform: scale(0.9); }
+
+        /* ── Sidebar 响应式 ── */
+        @media (min-width: 768px) {
+            .header-blog-btn { width: 36px; height: 36px; border-radius: 10px; }
+            #sidebar { width: min(380px, 40vw); }
+            .sidebar-header { padding: 22px 22px 16px; }
+            .sidebar-title { font-size: 24px; }
+            .sidebar-group { margin: 0 16px 18px; }
+            .sidebar-body { padding: 16px 0 60px; }
+            .blog-list-inner { padding: 4px 14px 0; }
+            .sidebar-body::-webkit-scrollbar { width: 3px; }
+            .sidebar-body::-webkit-scrollbar-track { background: transparent; }
+            .sidebar-body::-webkit-scrollbar-thumb { background: var(--fill-2); border-radius: 2px; }
+        }
+
+        @media (min-width: 1024px) {
+            .header-blog-btn { width: 38px; height: 38px; border-radius: 11px; }
+            #sidebar { width: 360px; }
+            .sidebar-header { padding: 24px 24px 18px; }
+            .sidebar-title { font-size: 26px; }
+            .sidebar-group { margin: 0 18px 18px; border-radius: 16px; }
+            .sidebar-section-label { padding: 0 20px; }
+            .sidebar-item { padding: 14px 18px; gap: 14px; }
+            .sidebar-item-icon { width: 36px; height: 36px; border-radius: 10px; font-size: 19px; }
+            .blog-item { padding: 10px 12px; }
+            .blog-item-title { font-size: 14px; }
+            .blog-list-inner { padding: 4px 16px 0; }
+            .blog-skeleton { margin: 0 18px 8px; height: 50px; }
+            .sidebar-empty { padding: 50px 24px; font-size: 14px; }
+        }
+
+        @media (min-width: 1440px) {
+            #sidebar { width: 400px; }
+            .sidebar-header { padding: 26px 28px 20px; }
+            .sidebar-group { margin: 0 22px 20px; }
+            .sidebar-section-label { padding: 0 24px; }
+            .sidebar-item { padding: 15px 22px; }
+            .blog-item { padding: 11px 14px; }
+            .blog-list-inner { padding: 4px 20px 0; }
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .sidebar-item:hover { background: var(--fill-1); }
+            .blog-item:hover { background: var(--fill-1); }
+            .sidebar-close:hover { background: var(--fill-2); transform: scale(1.1); }
+            .header-blog-btn:hover { background: var(--fill-2); transform: scale(1.06); }
+        }
+
+        /* ════════════════════════════════════════
+           DISCLAIMER — 免责声明
+        ════════════════════════════════════════ */
+
+        /* 页脚入口条 */
+        .disclaimer-bar {
+            text-align: center;
+            padding: 16px 20px 30px;
+            color: var(--text-sub);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .disclaimer-bar a,
+        .disclaimer-trigger {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 12px;
+            font-family: inherit;
+            padding: 0;
+        }
+        .disclaimer-trigger:hover { text-decoration: underline; }
+
+        /* 弹窗遮罩 */
+        #disclaimer-overlay {
+            display: none;
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0);
+            z-index: 1000;
+            justify-content: center;
+            align-items: flex-end;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(0px);
+            -webkit-backdrop-filter: blur(0px);
+        }
+        #disclaimer-overlay.active {
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+        @media (min-width: 600px) {
+            #disclaimer-overlay { align-items: center; padding: 20px; }
+        }
+
+        /* 弹窗主体 */
+        .disclaimer-modal {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 560px;
+            border-radius: 20px 20px 0 0;
+            max-height: 88vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 -4px 40px rgba(0,0,0,0.18);
+            transform: translateY(100%);
+            transition: transform 0.38s cubic-bezier(0.32, 0.72, 0, 1);
+            color: var(--text-main);
+            overflow: hidden;
+        }
+        @media (min-width: 600px) {
+            .disclaimer-modal {
+                border-radius: 20px;
+                transform: scale(0.94) translateY(16px);
+                transition: transform 0.3s cubic-bezier(0.34, 1.3, 0.64, 1),
+                            opacity 0.25s ease;
+                opacity: 0;
+            }
+        }
+        #disclaimer-overlay.active .disclaimer-modal {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        @media (min-width: 600px) {
+            #disclaimer-overlay.active .disclaimer-modal {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* 拖动条（移动端） */
+        .disclaimer-modal::before {
+            content: "";
+            display: block;
+            width: 36px; height: 5px;
+            background: var(--fill-1);
+            border-radius: 3px;
+            margin: 10px auto 0;
+            flex-shrink: 0;
+        }
+        @media (min-width: 600px) {
+            .disclaimer-modal::before { display: none; }
+        }
+
+        /* 弹窗头部 */
+        .disclaimer-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 20px 12px;
+            border-bottom: 0.5px solid var(--separator);
+            flex-shrink: 0;
+        }
+        .disclaimer-header-title {
+            font-size: 17px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .disclaimer-close {
+            width: 30px; height: 30px;
+            background: var(--fill-1);
+            border: none; border-radius: 50%;
+            color: var(--text-sub);
+            font-size: 14px; font-weight: 700;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.15s;
+            flex-shrink: 0;
+        }
+        .disclaimer-close:hover { background: var(--fill-2); }
+
+        /* 弹窗滚动内容 */
+        .disclaimer-body {
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 16px 20px 32px;
+            flex: 1;
+        }
+        @media (min-width: 768px) {
+            .disclaimer-body { padding: 20px 28px 36px; }
+            .disclaimer-header { padding: 16px 28px 14px; }
+        }
+
+        /* 章节标题 */
+        .disc-section {
+            margin-bottom: 18px;
+        }
+        .disc-section-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .disc-section-body {
+            font-size: 13px;
+            color: var(--text-sub);
+            line-height: 1.75;
+            background: var(--modal-info-bg);
+            border-radius: 10px;
+            padding: 10px 14px;
+        }
+
+        /* 底部同意按钮 */
+        .disclaimer-footer {
+            padding: 12px 20px 20px;
+            border-top: 0.5px solid var(--separator);
+            flex-shrink: 0;
+        }
+        .disclaimer-agree-btn {
+            width: 100%;
+            background: var(--accent-color);
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            padding: 14px 0;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: opacity 0.15s, transform 0.12s;
+        }
+        .disclaimer-agree-btn:active { transform: scale(0.97); opacity: 0.85; }
+        @media (min-width: 768px) {
+            .disclaimer-footer { padding: 14px 28px 24px; }
+        }
+    </style>
+
+    <!-- ════ SPLASH SCREEN ════ -->
+    <style>
+        #splash-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            background: rgba(255, 255, 255, 0.55);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            transition: opacity 0.65s cubic-bezier(0.4, 0, 0.2, 1),
+                        visibility 0.65s;
+            opacity: 1;
+            visibility: visible;
+        }
+        [data-theme="dark"] #splash-screen {
+            background: rgba(0, 0, 0, 0.55);
+        }
+        #splash-screen.hide {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .splash-avatar-wrap {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 0 0 3.5px rgba(255,255,255,0.85),
+                        0 12px 40px rgba(0,0,0,0.18),
+                        0 2px 8px rgba(0,0,0,0.10);
+            animation: splash-in 0.72s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        .splash-avatar-wrap img {
+            width: 100%; height: 100%;
+            object-fit: cover; display: block;
+        }
+        .splash-text {
+            text-align: center;
+            animation: splash-in 0.72s 0.08s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        .splash-name {
+            font-family: -apple-system, "SF Pro Display", "Helvetica Neue", sans-serif;
+            font-size: 20px; font-weight: 700; letter-spacing: -0.4px;
+            color: #1C1C1E; margin-bottom: 5px;
+        }
+        [data-theme="dark"] .splash-name { color: #F2F2F7; }
+        .splash-desc {
+            font-size: 12.5px; color: rgba(60,60,67,0.55);
+            letter-spacing: 0.3px; line-height: 1.6;
+        }
+        [data-theme="dark"] .splash-desc { color: rgba(235,235,245,0.45); }
+        .splash-bar-wrap {
+            width: 56px; height: 3px;
+            background: rgba(0,0,0,0.08); border-radius: 2px; overflow: hidden;
+            animation: splash-in 0.72s 0.14s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        [data-theme="dark"] .splash-bar-wrap { background: rgba(255,255,255,0.1); }
+        .splash-bar-inner {
+            height: 100%; border-radius: 2px; background: #007AFF;
+            animation: splash-progress 2.2s cubic-bezier(0.4, 0, 0.2, 1) both;
+        }
+        @keyframes splash-in {
+            from { opacity: 0; transform: scale(0.88) translateY(8px); }
+            to   { opacity: 1; transform: scale(1)    translateY(0);   }
+        }
+        @keyframes splash-progress {
+            from { width: 0%; }
+            to   { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ════ 开屏动画 ════ -->
+    <div id="splash-screen">
+        <div class="splash-avatar-wrap">
+            <img src="assets/avatar.webp" alt="闲月" draggable="false">
+        </div>
+        <div class="splash-text">
+            <div class="splash-name">❤️闲月</div>
+            <div class="splash-desc">纯粹收录 · 极简丝滑 · 拒绝臃肿</div>
+        </div>
+        <div class="splash-bar-wrap">
+            <div class="splash-bar-inner"></div>
+        </div>
+    </div>
+
+
+    <div class="header">
+        <div class="header-inner">
+            <span>实用软件集</span>
+            <button class="header-blog-btn" onclick="openSidebar()" title="个人博客" aria-label="打开博客侧栏">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="搜索应用..." oninput="filterApps()">
+        <div id="app-count">同步数据中...</div>
+    </div>
+    
+    <div id="app-container">
+        <div class="skeleton"></div><div class="skeleton"></div>
+        <div class="skeleton"></div><div class="skeleton"></div>
+        <div class="skeleton"></div><div class="skeleton"></div>
+    </div>
+
+    <div class="pagination-footer" id="pagination-bar">
+        <button class="page-btn" id="prev-btn" onclick="changePage(-1)">上一页</button>
+        <span id="page-info">1 / 1</span>
+        <button class="page-btn" id="next-btn" onclick="changePage(1)">下一页</button>
+    </div>
+
+    <div class="fab-group">
+        <button id="back-to-top" class="fab-btn" onclick="scrollToTop()" title="回到顶部">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+        </button>
+        <button id="theme-btn" class="fab-btn" onclick="toggleTheme()" title="切换主题">🌙</button>
+        <button id="refresh-btn" class="fab-btn" onclick="softRefresh()" title="刷新页面">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+                <path d="M21 3v5h-5"/>
+                <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+                <path d="M8 16H3v5"/>
+            </svg>
+        </button>
+    </div>
+
+    <div id="modal-overlay" onclick="handleBack()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-scroll">
+                <span class="close-btn" onclick="handleBack()">✕</span>
+                <div class="modal-inner-pad">
+                    <div id="modal-body"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="preview-overlay" onclick="handlePreviewBack(event)">
+        <div class="preview-close" onclick="handlePreviewBack(event)">&times;</div>
+        <button class="nav-btn" style="left:10px;" onclick="event.stopPropagation();changePreview(-1)">&#10094;</button>
+        <img id="preview-img" src="" onclick="event.stopPropagation()">
+        <button class="nav-btn" style="right:10px;" onclick="event.stopPropagation();changePreview(1)">&#10095;</button>
+        <div id="preview-counter">1/1</div>
+    </div>
+
+    <script>
+        let myApps = [];           
+        let displayList = [];      
+        let currentPage = 1;       
+        const itemsPerPage = 50;   
+        let currentScreenshots = []; let currentImgIndex = 0; let touchStartX = 0;
+
+        // --- 主题与按钮逻辑优化 ---
+        
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateThemeIcon(savedTheme);
+        }
+
+        function toggleTheme() {
+            const btn = document.getElementById('theme-btn');
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            // 触发旋转动画
+            btn.classList.add('rotating');
+            
+            // 动画中途切换图标和属性
+            setTimeout(() => {
+                document.documentElement.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                updateThemeIcon(newTheme);
+            }, 150);
+
+            // 清除动画类以便下次使用
+            setTimeout(() => btn.classList.remove('rotating'), 400);
+        }
+
+        function updateThemeIcon(theme) {
+            const btn = document.getElementById('theme-btn');
+            // 白天显示月亮（点它变黑），黑夜显示太阳（点它变亮）
+            btn.innerHTML = theme === 'light' ? '🌙' : '☀️';
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.onscroll = function() {
+            const topBtn = document.getElementById("back-to-top");
+            if (window.scrollY > 400) {
+                topBtn.classList.add('show');
+            } else {
+                topBtn.classList.remove('show');
+            }
+        };
+
+        // --- 原有业务逻辑 ---
+
+        function showElement(id) {
+            const el = document.getElementById(id);
+            el.style.display = 'flex';
+            requestAnimationFrame(() => { el.classList.add('active'); });
+        }
+
+        function hideElement(id) {
+            const el = document.getElementById(id);
+            el.classList.remove('active');
+            setTimeout(() => { el.style.display = 'none'; }, 350);
+        }
+
+        window.onpopstate = function(event) {
+            // 侧栏最高优先级
+            if (sidebarOpen) { closeSidebar(true); return; }
+            // 免责声明弹窗：强制只能点按钮关闭
+            const disclaimerOverlay = document.getElementById('disclaimer-overlay');
+            if (disclaimerOverlay && disclaimerOverlay.classList.contains('active')) {
+                window.history.pushState({ state: 'disclaimer' }, '');
+                return;
+            }
+            if (document.getElementById('preview-overlay').classList.contains('active')) {
+                hideElement('preview-overlay');
+            } else if (document.getElementById('modal-overlay').classList.contains('active')) {
+                hideElement('modal-overlay');
+            } else if (event.state && event.state.page) {
+                currentPage = event.state.page;
+                renderApps();
+            }
+        };
+
+        function getPageFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            const p = parseInt(params.get('p'));
+            return (isNaN(p) || p < 1) ? 1 : p;
+        }
+
+        async function loadAppData() {
+            try {
+                const response = await fetch('apps.json?t=' + Date.now());
+                myApps = await response.json();
+                // 自动拼接路径：icon → assets/icons/，screenshot → assets/screenshots/
+                myApps = myApps.map(app => ({
+                    ...app,
+                    icon: app.icon
+                        ? (app.icon.startsWith('http') || app.icon.startsWith('assets/')
+                            ? app.icon
+                            : 'assets/icons/' + app.icon)
+                        : '',
+                    screenshots: (app.screenshots || []).map(s =>
+                        s.startsWith('http') || s.startsWith('assets/')
+                            ? s
+                            : 'assets/screenshots/' + s
+                    )
+                }));
+                displayList = [...myApps];
+                currentPage = getPageFromUrl();
+                setTimeout(renderApps, 500); 
+            } catch (e) { document.getElementById('app-count').innerText = "加载失败"; }
+        }
+
+        async function softRefresh() {
+            const btn = document.getElementById('refresh-btn');
+
+            // 用 CSS keyframe 做弹性旋转动画，避免内联 style 冲突
+            btn.classList.remove('spinning');
+            void btn.offsetWidth; // 强制重绘，确保动画重放
+            btn.classList.add('spinning');
+            btn.addEventListener('animationend', () => btn.classList.remove('spinning'), { once: true });
+
+            // 列表淡出，保持背景色稳定不闪屏
+            const container = document.getElementById('app-container');
+            container.style.transition = 'opacity 0.18s ease';
+            container.style.opacity = '0.35';
+
+            try {
+                const response = await fetch('apps.json?t=' + Date.now());
+                myApps = await response.json();
+                const term = document.getElementById('search-input').value.toLowerCase();
+                displayList = term
+                    ? myApps.filter(app => app.name.toLowerCase().includes(term))
+                    : [...myApps];
+                renderApps();
+            } catch (e) {
+                document.getElementById('app-count').innerText = "加载失败";
+            } finally {
+                container.style.opacity = '1';
+            }
+        }
+
+        // 截图加载完成：同步 wrap 宽度 = 真实图片宽度，然后淡入
+        function onScreenshotLoad(img, wrapId) {
+            const wrap = document.getElementById(wrapId);
+            if (!wrap) return;
+            // 用真实自然宽高比计算对应当前渲染高度的宽度
+            if (img.naturalWidth && img.naturalHeight) {
+                const h = wrap.offsetHeight || img.offsetHeight || 160;
+                const w = Math.round(h * img.naturalWidth / img.naturalHeight);
+                wrap.style.width = w + 'px';
+            }
+            img.classList.add('loaded');
+            wrap.classList.add('loaded');
+        }
+
+        function onScreenshotError(wrapId) {
+            const wrap = document.getElementById(wrapId);
+            if (!wrap) return;
+            wrap.classList.add('loaded');
+            const img = wrap.querySelector('img');
+            if (img) img.classList.add('loaded');
+        }
+
+        // 弹窗打开后，对每张截图做预加载探测，提前修正骨架宽度
+        function preloadScreenshotSizes(screenshots) {
+            screenshots.forEach((src, idx) => {
+                const probe = new Image();
+                probe.onload = function() {
+                    const wrap = document.getElementById('sw-' + idx);
+                    if (!wrap || wrap.classList.contains('loaded')) return;
+                    if (probe.naturalWidth && probe.naturalHeight) {
+                        const h = wrap.offsetHeight || 160;
+                        const w = Math.round(h * probe.naturalWidth / probe.naturalHeight);
+                        wrap.style.width = w + 'px';
+                    }
+                };
+                probe.src = src;
+            });
+        }
+
+        function renderApps() {
+            const container = document.getElementById('app-container');
+            const countDisplay = document.getElementById('app-count');
+            const totalPages = Math.ceil(displayList.length / itemsPerPage) || 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+            if (currentPage < 1) currentPage = 1;
+            
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const pageData = displayList.slice(start, end);
+            countDisplay.innerText = `共收录 ${displayList.length} 款应用 (第 ${currentPage}/${totalPages} 页)`;
+            
+            if (pageData.length === 0) {
+                container.innerHTML = '<div class="empty-status">未发现相关应用</div>';
+                document.getElementById('pagination-bar').style.display = 'none';
+                return;
+            }
+            container.innerHTML = pageData.map((app) => {
+                const realIndex = myApps.findIndex(a => a.name === app.name);
+                return `
+                <div class="app-card" onclick="openModal(${realIndex})">
+                    <div class="icon-wrap">
+                        <div class="icon-placeholder" id="ip-${realIndex}"></div>
+                        <img src="${app.icon}" class="app-icon" loading="lazy"
+                             onload="this.classList.add('loaded');document.getElementById('ip-${realIndex}').classList.add('hidden');document.getElementById('tp-${realIndex}').classList.add('hidden')"
+                             onerror="this.classList.add('loaded');document.getElementById('ip-${realIndex}').classList.add('hidden');document.getElementById('tp-${realIndex}').classList.add('hidden')">
+                    </div>
+                    <div class="title-placeholder" id="tp-${realIndex}"></div>
+                    <div class="app-title">${app.name}</div>
+                    <div class="download-btn">点击查看</div>
+                </div>`
+            }).join('');
+            document.getElementById('pagination-bar').style.display = 'flex';
+            document.getElementById('page-info').innerText = `${currentPage} / ${totalPages}`;
+            document.getElementById('prev-btn').disabled = (currentPage === 1);
+            document.getElementById('next-btn').disabled = (currentPage === totalPages);
+        }
+
+        function changePage(step) {
+            currentPage += step;
+            const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?p=' + currentPage;
+            window.history.pushState({page: currentPage}, "", newUrl);
+            renderApps();
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        function filterApps() {
+            const term = document.getElementById('search-input').value.toLowerCase();
+            displayList = myApps.filter(app => app.name.toLowerCase().includes(term));
+            currentPage = 1; 
+            const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            window.history.pushState({page: 1}, "", newUrl);
+            renderApps();
+        }
+        
+function openModal(index) {
+    const app = myApps[index];
+    currentScreenshots = app.screenshots;
+    let btnText = "官方网站"; let btnColor = "#007AFF"; 
+    if (app.source) {
+        const s = app.source.toLowerCase();
+        if (s.indexOf("github.com") !== -1 || s.indexOf("gitee.com") !== -1 || s.indexOf("gitlab.com") !== -1) { btnText = "查看源码"; btnColor = "#007AFF"; }
+        else if (s.indexOf("coolapk.com") !== -1) { btnText = "酷安主页"; btnColor = "#11ab60"; }
+        else if (s.indexOf("bilibili.com") !== -1 || s.indexOf("b23.tv") !== -1) { btnText = "B站主页"; btnColor = "#fb7299"; }
+        else if (s.indexOf("douyin.com") !== -1) { btnText = "抖音主页"; btnColor = "#161823"; }
+        else if (s.indexOf("t.me") !== -1) { btnText = "TG 群聊/频道"; btnColor = "#0088cc"; }
+        else if (s.indexOf("qm.qq.com") !== -1 || s.indexOf("qq.com") !== -1) { btnText = "QQ 群聊"; btnColor = "#12b7f5"; }
+    }
+    const sourceBtn = app.source ? `<a href="${app.source}" target="_blank" class="footer-btn btn-secondary" style="background:var(--modal-info-bg); color:${btnColor}; font-size:12px;">${btnText}</a>` : `<div class="footer-btn" style="visibility:hidden;"></div>`;
+    let downloadText = "立即下载"; let downloadColor = "#007AFF";
+    if (app.url) {
+        const d = app.url.toLowerCase();
+        if (d.indexOf("123pan.com") !== -1 || d.indexOf("123912.com") !== -1) { downloadText = "123云盘"; downloadColor = "#2d72f1"; } 
+        else if (d.indexOf("lanzou") !== -1 || d.indexOf("lanzv") !== -1 || d.indexOf("lanzx") !== -1 || d.indexOf("lanzp") !== -1) { downloadText = "蓝奏云"; downloadColor = "#00adff"; }
+        else if (d.indexOf("quark.cn") !== -1) { downloadText = "夸克网盘"; downloadColor = "#00c9b0"; }
+        else if (d.indexOf("alipan.com") !== -1 || d.indexOf("aliyundrive.com") !== -1) { downloadText = "阿里云盘"; downloadColor = "#6356ff"; }
+        else if (d.indexOf("weiyun.com") !== -1) { downloadText = "腾讯微云"; downloadColor = "#3072f6"; }
+        else if (d.indexOf("github.com") !== -1 && (d.endsWith(".apk") || d.endsWith(".zip"))) { downloadText = "GitHub直链"; downloadColor = "#24292f"; }
+    }
+    document.getElementById('modal-body').innerHTML = `
+        <div class="modal-header"><div class="modal-icon-wrap"><img src="${app.icon}" class="modal-icon"></div><div class="modal-app-name">${app.name}</div></div>
+        <div class="modal-info-box">
+            <div class="info-row"><div class="info-left"><span class="info-label">版本</span><span class="info-value">${app.version}</span></div><div class="info-right" style="width:110px"><span class="info-label">大小</span><span class="info-value">${app.size}</span></div></div>
+            <div class="info-row"><div class="info-left"><span class="info-label">系统</span><span class="info-value">${app.system}</span></div><div class="info-right" style="width:110px"><span class="info-label">类型</span><span class="info-value">${app.mod || '原版'}</span></div></div>
+            <div class="pkg-section"><span class="info-label">应用包名</span><div class="pkg-value">${app.pkg}</div></div>
+        </div>
+        <div class="section-title">📸 应用截图</div>
+        <div class="screenshot-container" id="screenshot-list">${app.screenshots.map((s, idx) => `<div class="screenshot-wrap" id="sw-${idx}"><img src="${s}" class="screenshot-img" loading="lazy" decoding="async" onclick="openPreview(${idx})" onload="onScreenshotLoad(this, 'sw-'+${idx})" onerror="onScreenshotError('sw-'+${idx})"></div>`).join('')}</div>
+        <div class="section-title">📝 应用介绍</div><div class="app-intro">${app.intro}</div>
+        <div class="modal-footer" style="gap: 8px;">
+            <button class="footer-btn btn-secondary" style="font-size:12px;" onclick="handleBack()">返回列表</button>
+            ${sourceBtn} 
+            <a href="${app.url}" target="_blank" class="footer-btn btn-primary" style="background:${downloadColor}; border:none; font-size:12px;">${downloadText}</a>
+        </div>
+    `;
+    showElement('modal-overlay');
+    window.history.pushState({state: 'modal', page: currentPage}, "");
+    // 弹窗打开后立即预测截图宽度，修正骨架占位尺寸
+    requestAnimationFrame(() => preloadScreenshotSizes(app.screenshots));
+}
+        
+        function handleBack() { window.history.back(); }
+        function openPreview(index) {
+            currentImgIndex = index; updatePreviewUI(); showElement('preview-overlay');
+            window.history.pushState({state: 'preview', page: currentPage}, "");
+        }
+        function handlePreviewBack(e) { if (e) e.stopPropagation(); window.history.back(); }
+        function updatePreviewUI() {
+            document.getElementById('preview-img').src = currentScreenshots[currentImgIndex];
+            document.getElementById('preview-counter').innerText = `${currentImgIndex + 1} / ${currentScreenshots.length}`;
+        }
+        function changePreview(step) {
+            if (!currentScreenshots || !currentScreenshots.length) return;
+            currentImgIndex = (currentImgIndex + step + currentScreenshots.length) % currentScreenshots.length;
+            updatePreviewUI();
+        }
+
+        const previewLayer = document.getElementById('preview-overlay');
+        previewLayer.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX, {passive: true});
+        previewLayer.addEventListener('touchend', e => {
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 60) changePreview(diff > 0 ? 1 : -1);
+        }, {passive: true});
+
+
+        // ════════════════════════════════════════
+        //  SIDEBAR — 侧滑栏逻辑
+        // ════════════════════════════════════════
+
+        // blogs.json 路径 —— 与 index.html 同目录，部署后自动读取
+        const BLOGS_JSON_URL = 'blogs.json';
+        // 将 blogs.json 里的 path/url 字段解析为可跳转的完整链接
+        function resolveBlogLink(b) {
+            // 优先用 url 字段，其次用 path 字段
+            const raw = b.url || b.path || '';
+            if (!raw) return '#';
+            // 已经是完整 URL，直接返回
+            if (raw.startsWith('http://') || raw.startsWith('https://')) return raw;
+            // 相对路径：基于当前页面 origin + pathname 目录拼接
+            const base = window.location.href.replace(/\/[^\/]*$/, '/');
+            return base + raw.replace(/^\.?\//, '');
+        }
+
+        let sidebarOpen = false;
+        let blogsLoaded = false;
+        let sbTouchStartX = 0, sbTouchStartY = 0;
+
+        function openSidebar() {
+            if (sidebarOpen) return;
+            sidebarOpen = true;
+            const overlay = document.getElementById('sidebar-overlay');
+            const sidebar = document.getElementById('sidebar');
+            overlay.style.display = 'block';
+            requestAnimationFrame(() => {
+                overlay.classList.add('active');
+                sidebar.classList.add('open');
+            });
+            document.body.style.overflow = 'hidden';
+            if (!blogsLoaded) loadBlogs();
+            const statApps = document.getElementById('stat-apps');
+            if (statApps && myApps.length) statApps.textContent = myApps.length;
+            window.history.pushState({ state: 'sidebar' }, '');
+        }
+
+        function closeSidebar(fromPopstate) {
+            if (!sidebarOpen) return;
+            sidebarOpen = false;
+            const overlay = document.getElementById('sidebar-overlay');
+            const sidebar = document.getElementById('sidebar');
+            overlay.classList.remove('active');
+            sidebar.classList.remove('open');
+            setTimeout(() => { overlay.style.display = 'none'; }, 380);
+            document.body.style.overflow = '';
+            // 手动关闭（非返回键）时主动回退 history，保持栈一致
+            if (!fromPopstate) window.history.back();
+        }
+
+        // 右边缘滑入手势（从屏幕右侧 40px 内向左滑）
+        document.addEventListener('touchstart', e => {
+            sbTouchStartX = e.touches[0].clientX;
+            sbTouchStartY = e.touches[0].clientY;
+        }, { passive: true });
+
+        document.addEventListener('touchend', e => {
+            const dx = sbTouchStartX - e.changedTouches[0].clientX;
+            const dy = Math.abs(e.changedTouches[0].clientY - sbTouchStartY);
+            // 从右边缘向左划：打开
+            if (!sidebarOpen && sbTouchStartX > window.innerWidth - 40 && dx > 40 && dy < 60) {
+                openSidebar();
+            }
+            // 侧栏打开时向右划：关闭
+            if (sidebarOpen && dx < -50 && dy < 80) {
+                closeSidebar();
+            }
+        }, { passive: true });
+
+        // ESC 关闭
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape' && sidebarOpen) closeSidebar();
+        });
+
+        // ── 加载 blogs.json ──
+        async function loadBlogs() {
+            const wrap = document.getElementById('blog-list-wrap');
+            try {
+                const res = await fetch(BLOGS_JSON_URL + '?t=' + Date.now());
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const blogs = await res.json();
+                blogsLoaded = true;
+                renderBlogs(blogs);
+                const statEl = document.getElementById('stat-articles');
+                if (statEl) statEl.textContent = blogs.length;
+            } catch (e) {
+                blogsLoaded = false;
+                wrap.innerHTML = `
+                    <div class="sidebar-empty">
+                        <div class="sidebar-empty-icon">📝</div>
+                        尚未配置 blogs.json 或读取失败
+                    </div>`;
+                const statFail = document.getElementById('stat-articles');
+                if (statFail) statFail.textContent = '0';
+            }
+        }
+
+        function renderBlogs(blogs) {
+            const wrap = document.getElementById('blog-list-wrap');
+            if (!blogs || !blogs.length) {
+                wrap.innerHTML = '<div class="sidebar-empty"><div class="sidebar-empty-icon">📭</div>暂无文章</div>';
+                return;
+            }
+            const list = document.createElement('div');
+            list.className = 'blog-list-inner';
+            list.innerHTML = blogs.map(b => {
+                const href = resolveBlogLink(b);
+                const isExternal = href.startsWith('http');
+                return `
+                <a class="blog-item" href="${href}" target="${isExternal ? '_blank' : '_self'}" rel="noopener">
+                    <div class="blog-item-bar"></div>
+                    <div class="blog-item-info">
+                        <div class="blog-item-title">${b.title || '无标题'}</div>
+                    </div>
+                    <span class="blog-item-arrow">›</span>
+                </a>`;
+            }).join('');
+            wrap.innerHTML = '';
+            wrap.appendChild(list);
+        }
+
+
+        // ════ 免责声明弹窗逻辑 ════
+        function openDisclaimer() {
+            const overlay = document.getElementById('disclaimer-overlay');
+            overlay.style.display = 'flex';
+            requestAnimationFrame(() => overlay.classList.add('active'));
+            document.body.style.overflow = 'hidden';
+            window.history.pushState({ state: 'disclaimer' }, '');
+        }
+
+        function closeDisclaimer(fromPopstate) {
+            const overlay = document.getElementById('disclaimer-overlay');
+            overlay.classList.remove('active');
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                document.body.style.overflow = '';
+            }, 320);
+            if (!fromPopstate) window.history.back();
+        }
+
+        // 执行初始化
+        initTheme();
+        loadAppData();
+
+        // ── 开屏动画：2.5s 后淡出消失 ──
+        (function() {
+            const splash = document.getElementById('splash-screen');
+            if (!splash) return;
+            const dismiss = () => {
+                setTimeout(() => {
+                    splash.classList.add('hide');
+                    splash.addEventListener('transitionend', () => splash.remove(), { once: true });
+                }, 2500);
+            };
+            const img = splash.querySelector('img');
+            if (img && img.complete) { dismiss(); }
+            else if (img) {
+                img.addEventListener('load',  dismiss, { once: true });
+                img.addEventListener('error', dismiss, { once: true });
+            } else { dismiss(); }
+        })();
+    </script>
+
+    <!-- ════ SIDEBAR ════ -->
+    <div id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+    <div id="sidebar">
+        <!-- 顶部 -->
+        <div class="sidebar-header">
+            <div class="sidebar-header-row">
+                <div class="sidebar-title">个人博客</div>
+                <button class="sidebar-close" onclick="closeSidebar()">✕</button>
+            </div>
+            <div class="sidebar-stats">
+                <div class="sidebar-stat-item">
+                    <div class="sidebar-stat-num" id="stat-apps">—</div>
+                    <div class="sidebar-stat-label">应用</div>
+                </div>
+                <div class="sidebar-stat-item">
+                    <div class="sidebar-stat-num" id="stat-articles">—</div>
+                    <div class="sidebar-stat-label">文章</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 内容 -->
+        <div class="sidebar-body" id="sidebar-body">
+            <!-- 博客文章列表 -->
+            <div class="sidebar-section-label">文章列表</div>
+            <div id="blog-list-wrap">
+                <!-- 骨架屏占位 -->
+                <div class="blog-skeleton"></div>
+                <div class="blog-skeleton" style="opacity:0.6"></div>
+                <div class="blog-skeleton" style="opacity:0.35"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ════ 免责声明页脚入口 ════ -->
+    <div class="disclaimer-bar">
+        由 闲月 整理 ❤️ &nbsp;|&nbsp; 纯粹收录 · 极简丝滑 · 拒绝臃肿<br>
+        本站内容仅供学习参考 · 使用前请阅读
+        <button class="disclaimer-trigger" onclick="openDisclaimer()">免责声明</button>
+    </div>
+
+    <!-- ════ 免责声明弹窗 ════ -->
+    <div id="disclaimer-overlay">
+        <div class="disclaimer-modal" onclick="event.stopPropagation()">
+            <div class="disclaimer-header">
+                <div class="disclaimer-header-title">⚠️ 免责声明</div>
+            </div>
+            <div class="disclaimer-body">
+
+                <div class="disc-section">
+                    <div class="disc-section-title">📦 关于软件收录</div>
+                    <div class="disc-section-body">
+                        本站仅对互联网上公开传播的应用程序进行信息整理与收录，提供应用名称、版本、简介及外部下载链接，<strong>不直接存储、托管或分发任何应用安装包（APK）文件</strong>。所有下载链接均指向蓝奏云、123云盘等第三方网盘平台，文件实际存储于上述平台，本站对相关文件的安全性、完整性、合法性及可用性不承担任何责任。链接失效或文件内容变更等情况，亦与本站无关。
+                    </div>
+                </div>
+
+                <div class="disc-section">
+                    <div class="disc-section-title">🔧 关于修改版 / 第三方版本</div>
+                    <div class="disc-section-body">
+                        本站收录的部分内容涉及第三方修改版本，此类内容<strong>仅供个人技术研究与学习交流，严禁用于任何商业用途</strong>。修改版软件可能违反原软件的用户协议，因使用修改版软件导致的账号封禁、数据丢失、设备损坏或其他一切损失，由使用者自行承担全部责任，与本站无关。
+                    </div>
+                </div>
+
+                <div class="disc-section">
+                    <div class="disc-section-title">⚙️ 关于 Root / ADB 等高级操作</div>
+                    <div class="disc-section-body">
+                        本站收录的部分工具涉及 Root 权限、ADB 调试等高风险操作，可能导致设备保修失效、系统不稳定或数据丢失。请在充分了解风险后谨慎操作，本站对由此产生的一切后果不承担任何法律责任。
+                    </div>
+                </div>
+
+                <div class="disc-section">
+                    <div class="disc-section-title">📝 关于博客文章内容</div>
+                    <div class="disc-section-body">
+                        本站发布的技术文章、教程及攻略均基于作者个人实践经验，仅供参考，不构成专业建议。文章内容可能随软件版本更新而过时，本站不保证内容的时效性与准确性。读者按文章操作造成的任何问题，由操作者本人负责。
+                    </div>
+                </div>
+
+                <div class="disc-section">
+                    <div class="disc-section-title">©️ 关于版权与知识产权</div>
+                    <div class="disc-section-body">
+                        本站尊重原创，所有收录内容的版权归原作者及相关权利人所有。若您认为本站收录的内容侵犯了您的合法权益，请及时与我们联系，我们将在核实后第一时间予以删除处理。
+                    </div>
+                </div>
+
+                <div class="disc-section">
+                    <div class="disc-section-title">🔗 关于外部链接</div>
+                    <div class="disc-section-body">
+                        本站提供的所有外部链接（包括但不限于蓝奏云、123云盘、GitHub、B站、酷安、Telegram 等平台）均指向独立的第三方平台。本站无法控制上述平台的内容变更、文件替换、链接失效或安全状况，亦不对其内容作任何形式的背书或保证。用户访问外部链接及下载相关文件所产生的一切风险，由用户自行承担。
+                    </div>
+                </div>
+
+                <div class="disc-section">
+                    <div class="disc-section-title">👤 关于用户责任</div>
+                    <div class="disc-section-body">
+                        访问并使用本站内容，即视为您已阅读并同意本免责声明全部内容。您须确保自己在所在地区使用本站内容符合当地法律法规，因违规使用产生的一切法律责任由用户自行承担，与本站无关。
+                    </div>
+                </div>
+
+                <div class="disc-section">
+                    <div class="disc-section-title">📋 声明变更</div>
+                    <div class="disc-section-body">
+                        本站保留随时修改本免责声明的权利，更新后的声明将直接在本页面生效，不另行通知。建议定期查阅本声明。
+                    </div>
+                </div>
+
+            </div>
+            <div class="disclaimer-footer">
+                <button class="disclaimer-agree-btn" onclick="closeDisclaimer()">我已阅读并了解</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
