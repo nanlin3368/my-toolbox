@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
+    <!-- 防闪屏：最早执行，同步读取主题设置 -->
+    <script>
+        (function(){
+            var t = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', t);
+            // 设置 splash 和 body 底色与主题一致
+            document.documentElement.style.background = t === 'dark' ? '#0a0a12' : '#f0f4ff';
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>实用软件集</title>
@@ -73,14 +82,18 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
-            background-color: var(--bg-color);
+            background-color: #f0f4ff;
             font-family: -apple-system, "SF Pro Text", "Helvetica Neue", sans-serif;
             margin: 0; padding: 0;
             font-size: 14px;
             color: var(--text-main);
             padding-bottom: 80px;
-            transition: background-color 0.3s ease;
             -webkit-font-smoothing: antialiased;
+        }
+        /* 页面加载完后恢复正常背景，由 JS 控制 */
+        body.loaded {
+            background-color: var(--bg-color);
+            transition: background-color 0.3s ease;
         }
 
         /* ---- Header (iOS Large Title style) ---- */
@@ -2376,22 +2389,20 @@ function openModal(index) {
         initTheme();
         loadAppData();
 
-        // ── 开屏动画：2.5s 后淡出消失 ──
+        // ── 开屏动画：展示后淡出消失 ──
         (function() {
             const splash = document.getElementById('splash-screen');
             if (!splash) return;
-            const dismiss = () => {
-                setTimeout(() => {
-                    splash.classList.add('hide');
-                    splash.addEventListener('transitionend', () => splash.remove(), { once: true });
-                }, 2500);
-            };
-            const img = splash.querySelector('img');
-            if (img && img.complete) { dismiss(); }
-            else if (img) {
-                img.addEventListener('load',  dismiss, { once: true });
-                img.addEventListener('error', dismiss, { once: true });
-            } else { dismiss(); }
+            // 直接计时，不阻塞在图片加载上
+            setTimeout(() => {
+                splash.classList.add('hide');
+                // splash 淡出结束后移除，同时恢复 body 正常背景
+                splash.addEventListener('transitionend', () => {
+                    splash.remove();
+                    document.body.classList.add('loaded');
+                    document.documentElement.style.background = '';
+                }, { once: true });
+            }, 2200);
         })();
     </script>
 
