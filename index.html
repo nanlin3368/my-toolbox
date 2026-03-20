@@ -2291,7 +2291,7 @@
         }
 
         // ── 视图切换（网格 / 列表）──
-        let isListView = (localStorage.getItem('view_mode') === 'list');
+        let isListView = (localStorage.getItem('view_mode') !== 'grid');
 
         function toggleView() {
             isListView = !isListView;
