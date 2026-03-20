@@ -1784,6 +1784,20 @@
             try {
                 const response = await fetch('apps.json?t=' + Date.now());
                 myApps = await response.json();
+                // 自动拼接路径：icon → assets/icons/，screenshot → assets/screenshots/
+                myApps = myApps.map(app => ({
+                    ...app,
+                    icon: app.icon
+                        ? (app.icon.startsWith('http') || app.icon.startsWith('assets/')
+                            ? app.icon
+                            : 'assets/icons/' + app.icon)
+                        : '',
+                    screenshots: (app.screenshots || []).map(s =>
+                        s.startsWith('http') || s.startsWith('assets/')
+                            ? s
+                            : 'assets/screenshots/' + s
+                    )
+                }));
                 const term = document.getElementById('search-input').value.toLowerCase();
                 displayList = term
                     ? myApps.filter(app => app.name.toLowerCase().includes(term))
