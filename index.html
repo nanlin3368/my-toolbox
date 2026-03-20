@@ -468,6 +468,8 @@
             backdrop-filter: blur(0px);
             -webkit-backdrop-filter: blur(0px);
             transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            touch-action: none;
+            overscroll-behavior: none;
         }
 
         @media (min-width: 600px) {
@@ -1693,7 +1695,7 @@
         </button>
     </div>
 
-    <div id="modal-overlay" onclick="handleBack()">
+    <div id="modal-overlay" onmousedown="if(event.target===this)handleBack()" ontouchstart="if(event.target===this){event.preventDefault();handleBack();}">
         <div class="modal-content" onclick="event.stopPropagation()">
             <div class="modal-scroll">
                 <span class="close-btn" onclick="handleBack()">✕</span>
@@ -1767,16 +1769,36 @@
 
         // --- 原有业务逻辑 ---
 
+        let _scrollY = 0;
+
         function showElement(id) {
             const el = document.getElementById(id);
             el.style.display = 'flex';
             requestAnimationFrame(() => { el.classList.add('active'); });
+            // 锁定背景滚动
+            if (id === 'modal-overlay' || id === 'preview-overlay') {
+                _scrollY = window.scrollY;
+                document.body.style.position = 'fixed';
+                document.body.style.top = '-' + _scrollY + 'px';
+                document.body.style.left = '0';
+                document.body.style.right = '0';
+                document.body.style.overflow = 'hidden';
+            }
         }
 
         function hideElement(id) {
             const el = document.getElementById(id);
             el.classList.remove('active');
             setTimeout(() => { el.style.display = 'none'; }, 350);
+            // 恢复背景滚动
+            if (id === 'modal-overlay' || id === 'preview-overlay') {
+                document.body.style.position = '';
+                document.body.style.top = '';
+                document.body.style.left = '';
+                document.body.style.right = '';
+                document.body.style.overflow = '';
+                window.scrollTo({ top: _scrollY, behavior: 'instant' });
+            }
         }
 
         window.onpopstate = function(event) {
