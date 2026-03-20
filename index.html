@@ -15,7 +15,8 @@
     <title>实用软件集</title>
     
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#007AFF">
+    <meta name="theme-color" content="#F2F2F7" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#1C1C1E" media="(prefers-color-scheme: dark)">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="实用软件集">
@@ -1897,6 +1898,12 @@
             // 动画中途切换图标和属性
             setTimeout(() => {
                 document.documentElement.setAttribute('data-theme', newTheme);
+                // 同步更新浏览器地址栏颜色
+                document.querySelectorAll('meta[name="theme-color"]').forEach(m => m.remove());
+                const tc = document.createElement('meta');
+                tc.name = 'theme-color';
+                tc.content = newTheme === 'dark' ? '#1C1C1E' : '#F2F2F7';
+                document.head.appendChild(tc);
                 localStorage.setItem('theme', newTheme);
                 updateThemeIcon(newTheme);
             }, 150);
