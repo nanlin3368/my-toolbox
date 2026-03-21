@@ -2135,8 +2135,9 @@
         }
 
         window.onpopstate = function(event) {
-            // 侧栏正在关闭（由叉号/遮罩触发的 history.back），忽略这次 popstate
-            if (_sidebarClosing) { _sidebarClosing = false; return; }
+            // 手动关闭侧栏/免责声明触发的 history.back，忽略这次 popstate
+            if (_sidebarClosing)   { _sidebarClosing = false;   return; }
+            if (_disclaimerClosing){ _disclaimerClosing = false; return; }
             // 侧栏最高优先级
             if (sidebarOpen) { closeSidebar(true); return; }
             // 免责声明弹窗：强制只能点按钮关闭
@@ -2379,7 +2380,6 @@
             const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?p=' + currentPage;
             window.history.pushState({page: currentPage}, "", newUrl);
             renderApps();
-            window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
         function goToPage(p) {
@@ -2389,7 +2389,6 @@
             const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?p=' + currentPage;
             window.history.pushState({page: currentPage}, "", newUrl);
             renderApps();
-            window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
         function renderPagination(cur, total) {
@@ -2559,7 +2558,8 @@ function openModal(index) {
         }
 
         let sidebarOpen = false;
-        let _sidebarClosing = false; // 标记：手动关闭侧栏触发的 history.back，忽略后续 popstate
+        let _sidebarClosing = false;   // 标记：手动关闭侧栏触发的 history.back
+        let _disclaimerClosing = false; // 标记：关闭免责声明触发的 history.back
         let blogsLoaded = false;
         let sbTouchStartX = 0, sbTouchStartY = 0;
 
@@ -2698,7 +2698,10 @@ function openModal(index) {
                 overlay.style.display = 'none';
                 document.body.style.overflow = '';
             }, 320);
-            if (!fromPopstate) window.history.back();
+            if (!fromPopstate) {
+                _disclaimerClosing = true;
+                window.history.back();
+            }
         }
 
         // 执行初始化
