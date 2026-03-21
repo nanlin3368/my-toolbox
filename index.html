@@ -2135,6 +2135,8 @@
         }
 
         window.onpopstate = function(event) {
+            // 侧栏正在关闭（由叉号/遮罩触发的 history.back），忽略这次 popstate
+            if (_sidebarClosing) { _sidebarClosing = false; return; }
             // 侧栏最高优先级
             if (sidebarOpen) { closeSidebar(true); return; }
             // 免责声明弹窗：强制只能点按钮关闭
@@ -2557,6 +2559,7 @@ function openModal(index) {
         }
 
         let sidebarOpen = false;
+        let _sidebarClosing = false; // 标记：手动关闭侧栏触发的 history.back，忽略后续 popstate
         let blogsLoaded = false;
         let sbTouchStartX = 0, sbTouchStartY = 0;
 
@@ -2597,7 +2600,10 @@ function openModal(index) {
             document.body.style.right = '';
             window.scrollTo({ top: _scrollY || 0, behavior: 'instant' });
             // 手动关闭（非返回键）时主动回退 history，保持栈一致
-            if (!fromPopstate) window.history.back();
+            if (!fromPopstate) {
+                _sidebarClosing = true;
+                window.history.back();
+            }
         }
 
         // 右边缘滑入手势（从屏幕右侧 40px 内向左滑）
