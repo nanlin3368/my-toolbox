@@ -2176,45 +2176,80 @@
 
         async function softRefresh() {
             const btn = document.getElementById('refresh-btn');
-
-            // 用 CSS keyframe 做弹性旋转动画，避免内联 style 冲突
             btn.classList.remove('spinning');
-            void btn.offsetWidth; // 强制重绘，确保动画重放
+            void btn.offsetWidth;
             btn.classList.add('spinning');
             btn.addEventListener('animationend', () => btn.classList.remove('spinning'), { once: true });
 
-            // 列表淡出，保持背景色稳定不闪屏
-            const container = document.getElementById('app-container');
-            container.style.transition = 'opacity 0.18s ease';
-            container.style.opacity = '0.35';
-
             try {
                 const response = await fetch('apps.json?t=' + Date.now());
-                myApps = await response.json();
-                // 自动拼接路径：icon → assets/icons/，screenshot → assets/screenshots/
-                myApps = myApps.map(app => ({
+                const fresh = await response.json();
+
+                // 数据处理（路径拼接）
+                const processed = fresh.map(app => ({
                     ...app,
                     icon: app.icon
                         ? (app.icon.startsWith('http') || app.icon.startsWith('assets/')
-                            ? app.icon
-                            : 'assets/icons/' + app.icon)
+                            ? app.icon : 'assets/icons/' + app.icon)
                         : '',
                     screenshots: (app.screenshots || []).map(s =>
                         s.startsWith('http') || s.startsWith('assets/')
-                            ? s
-                            : 'assets/screenshots/' + s
+                            ? s : 'assets/screenshots/' + s
                     )
                 }));
+
+                // 只有数据真正变化才重渲染，避免不必要的 DOM 重建
+                const oldJSON = JSON.stringify(myApps.map(a => a.name));
+                const newJSON = JSON.stringify(processed.map(a => a.name));
+                myApps = processed;
+
                 const term = document.getElementById('search-input').value.toLowerCase();
                 displayList = term
                     ? myApps.filter(app => app.name.toLowerCase().includes(term))
                     : [...myApps];
-                renderApps();
+
+                if (oldJSON !== newJSON) {
+                    // 数据有变化：静默替换，不播入场动画
+                    renderAppsQuiet();
+                }
+                // 数据没变：什么都不做，只转了一下刷新按钮
             } catch (e) {
                 document.getElementById('app-count').innerText = "加载失败";
-            } finally {
-                container.style.opacity = '1';
             }
+        }
+
+        // 静默渲染：和 renderApps 相同，但卡片不带 animating 类（不播入场动画）
+        function renderAppsQuiet() {
+            const container = document.getElementById('app-container');
+            const countDisplay = document.getElementById('app-count');
+            const totalPages = Math.ceil(displayList.length / itemsPerPage) || 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+            if (currentPage < 1) currentPage = 1;
+            const start = (currentPage - 1) * itemsPerPage;
+            const pageData = displayList.slice(start, start + itemsPerPage);
+            countDisplay.innerText = `共收录 ${displayList.length} 款应用 (第 ${currentPage}/${totalPages} 页)`;
+            if (pageData.length === 0) {
+                container.innerHTML = '<div class="empty-status">未发现相关应用</div>';
+                document.getElementById('pagination-bar').style.display = 'none';
+                return;
+            }
+            // 不加 animating 类，卡片直接显示，不触发入场动画
+            container.innerHTML = pageData.map((app) => {
+                const realIndex = myApps.findIndex(a => a.name === app.name);
+                return `
+                <div class="app-card" onclick="openModal(${realIndex})">
+                    <div class="icon-wrap">
+                        <div class="icon-placeholder" id="ip-${realIndex}"></div>
+                        <img src="${app.icon}" class="app-icon" loading="lazy"
+                             onload="this.classList.add('loaded');document.getElementById('ip-${realIndex}').classList.add('hidden');document.getElementById('tp-${realIndex}').classList.add('hidden')"
+                             onerror="this.classList.add('loaded');document.getElementById('ip-${realIndex}').classList.add('hidden');document.getElementById('tp-${realIndex}').classList.add('hidden')">
+                    </div>
+                    <div class="title-placeholder" id="tp-${realIndex}"></div>
+                    <div class="app-title">${app.name}</div>
+                    <div class="download-btn">点击查看</div>
+                </div>`;
+            }).join('');
+            renderPagination(currentPage, totalPages);
         }
 
         // 截图加载完成：同步 wrap 宽度 = 真实图片宽度，然后淡入
@@ -2518,7 +2553,12 @@ function openModal(index) {
                 overlay.classList.add('active');
                 sidebar.classList.add('open');
             });
-            document.body.style.overflow = 'hidden';
+            // 锁定滚动（不用 overflow:hidden，避免关闭时抖动）
+            _scrollY = window.scrollY;
+            document.body.style.position = 'fixed';
+            document.body.style.top = '-' + _scrollY + 'px';
+            document.body.style.left = '0';
+            document.body.style.right = '0';
             if (!blogsLoaded) loadBlogs();
             const statApps = document.getElementById('stat-apps');
             if (statApps && myApps.length) statApps.textContent = myApps.length;
@@ -2533,7 +2573,12 @@ function openModal(index) {
             overlay.classList.remove('active');
             sidebar.classList.remove('open');
             setTimeout(() => { overlay.style.display = 'none'; }, 380);
-            document.body.style.overflow = '';
+            // 恢复滚动位置，精准还原，不触发重排闪动
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.left = '';
+            document.body.style.right = '';
+            window.scrollTo({ top: _scrollY || 0, behavior: 'instant' });
             // 手动关闭（非返回键）时主动回退 history，保持栈一致
             if (!fromPopstate) window.history.back();
         }
