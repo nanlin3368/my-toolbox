@@ -212,6 +212,15 @@
             from { opacity: 0; transform: translateY(20px); }
             to   { opacity: 1; transform: translateY(0); }
         }
+        /* 刷新反馈：卡片轻闪 */
+        @keyframes card-flash {
+            0%   { opacity: 1; }
+            40%  { opacity: 0.45; }
+            100% { opacity: 1; }
+        }
+        .app-card.flashing {
+            animation: card-flash 0.5s ease both;
+        }
         /* 入场动画：JS 在 animationend 后移除 .animating，之后 hover/active 正常工作 */
         .app-card.animating {
             animation: card-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -2211,8 +2220,20 @@
                 if (oldJSON !== newJSON) {
                     // 数据有变化：静默替换，不播入场动画
                     renderAppsQuiet();
+                } else {
+                    // 数据没变：卡片轻闪一下作为"已刷新"反馈
+                    const cards = document.querySelectorAll('#app-container .app-card');
+                    cards.forEach((card, i) => {
+                        card.classList.remove('flashing');
+                        void card.offsetWidth; // 重置动画
+                        card.style.animationDelay = (i * 18) + 'ms';
+                        card.classList.add('flashing');
+                        card.addEventListener('animationend', () => {
+                            card.classList.remove('flashing');
+                            card.style.animationDelay = '';
+                        }, { once: true });
+                    });
                 }
-                // 数据没变：什么都不做，只转了一下刷新按钮
             } catch (e) {
                 document.getElementById('app-count').innerText = "加载失败";
             }
