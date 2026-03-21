@@ -223,7 +223,7 @@
         }
         /* 入场动画：JS 在 animationend 后移除 .animating，之后 hover/active 正常工作 */
         .app-card.animating {
-            animation: card-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+            animation: card-in 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
 
         /* 图标容器：overflow:hidden 统一裁切圆角，子元素无需重复设 border-radius */
@@ -2329,30 +2329,11 @@
                 return;
             }
 
-            // 计算每项 delay
-            // 列表模式：逐条，间隔 38ms，最多前 20 条有动画
-            // 网格模式：按行，间隔 55ms/行，同行同时出现
-            const isList = container.classList.contains('view-list');
-            // 网格列数（根据容器实际宽度估算）
-            const cols = isList ? 1 : Math.round(container.offsetWidth /
-                (container.querySelector ? 999 : 999)) || 3;
-            // 简单取3（移动端），JS 拿不到 CSS 计算列数时用 3
-            const gridCols = isList ? 1 : (() => {
-                const w = window.innerWidth;
-                if (w >= 1440) return 6;
-                if (w >= 1024) return 5;
-                if (w >= 768)  return 4;
-                return 3;
-            })();
-
-            container.innerHTML = pageData.map((app, idx) => {
+            // 翻页/搜索时全部卡片同时淡入，无错开延迟
+            container.innerHTML = pageData.map((app) => {
                 const realIndex = myApps.findIndex(a => a.name === app.name);
-                // 列表：每项自己的 delay；网格：同行一起出现
-                const delayIdx = isList ? idx : Math.floor(idx / gridCols);
-                const maxDelay = 18; // 超过这个 index 不再延迟（避免后面的卡片等太久）
-                const delay = Math.min(delayIdx, maxDelay) * (isList ? 38 : 55);
                 return `
-                <div class="app-card animating" style="animation-delay:${delay}ms" onclick="openModal(${realIndex})">
+                <div class="app-card animating" onclick="openModal(${realIndex})">
                     <div class="icon-wrap">
                         <div class="icon-placeholder" id="ip-${realIndex}"></div>
                         <img src="${app.icon}" class="app-icon" loading="lazy"
