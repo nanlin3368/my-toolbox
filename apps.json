@@ -1644,5 +1644,309 @@
         ],
         "url": "https://nanlinyou.lanzoul.com/irubh3jmp7li",
         "source": "https://github.com/Yu2002s/SplitLanzou"
+    },
+    {
+        "name": "Image Toolbox",
+        "pkg": "ru.tech.imageresizershrinker",
+        "version": "3.7.1",
+        "size": "74.72MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "Image_Toolbox_icon.webp",
+        "intro": "Image Toolbox 是一款功能非常强大的安卓图片处理工具，主打「全能型图像编辑 + 批处理 + 格式转换 + AI工具」，它将高级格式转换、AI 抠图修复、批量压缩与元数据清除等专业功能集成于优雅的 Material You 界面中，且完全离线、无广告，是移动端图片编辑的终极“瑞士军刀”。",
+        "screenshots": [
+            "Image_Toolbox_screen_1.webp",
+            "Image_Toolbox_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/i5oJX3l4vjba",
+        "source": "https://github.com/T8RIN/ImageToolbox"
+    },
+    {
+        "name": "SiYuan",
+        "pkg": "org.b3log.siyuan",
+        "version": "3.6.1",
+        "size": "58.89MV",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "SiYuan_icon.webp",
+        "intro": "SiYuan（思源笔记）是一款开源、隐私优先的个人知识管理系统（PKM）。它深度融合了内容块（Block）、**列表大纲（Outline）以及双向链接（Backlink）**三大核心理念，被广泛认为是 Notion 的本地化、Markdown 增强版替代方案。与市面上常见的云端笔记不同，思源笔记强调“数据所有权”，默认将所有数据存储在用户的本地设备中。",
+        "screenshots": [
+            "SiYuan_screen_1.webp",
+            "SiYuan_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/icGjp3l4vdra",
+        "source": "https://github.com/siyuan-note/siyuan-android"
+    },
+    {
+        "name": "Clash Meta for Android",
+        "pkg": "com.github.metacubex.clash.meta",
+        "version": "2.11.24.Meta",
+        "size": "29.28MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "Clash_Meta_for_Android_icon.webp",
+        "intro": "Clash Meta for Android 是一款基于 Clash Meta 内核的安卓平台网络代理工具客户端，主要用于网络代理、流量分流和隐私保护，是经典 Clash for Android 的升级替代版本，主打高性能、多协议支持和灵活分流。",
+        "screenshots": [
+            "Clash_Meta_for_Android_screen_1.webp",
+            "Clash_Meta_for_Android_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/i2tkx3l4v3zi",
+        "source": "https://github.com/MetaCubeX/ClashMetaForAndroid"
+    },
+    {
+        "name": "译站",
+        "pkg": "com.funny.translation",
+        "version": "2.9.8",
+        "size": "22.71MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "译站_icon.webp",
+        "intro": "译站 是一款开源、纯净且聚合了顶级 AI 大模型的全能翻译工具，它通过一个界面集成了 GPT-4、Claude、DeepSeek 及传统翻译引擎，支持悬浮窗截图、图片和语音翻译，是 Android 端兼具极致隐私与专业翻译能力的“效率神器”。",
+        "screenshots": [
+            "译站_screen_1.webp",
+            "译站_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/i8Ub73il3lif",
+        "source": "https://github.com/FunnySaltyFish/Transtation-KMP"
+    },
+    {
+        "name": "Material Capsule",
+        "pkg": "com.pryshedko.mtisland",
+        "version": "9.9",
+        "size": "28.88M",
+        "system": "Android",
+        "mod": "高级版",
+        "icon": "Material_Capsule_icon.webp",
+        "intro": "Material Capsule 是一款极具现代感、高度可定制的安卓“动态岛”增强工具，它通过优雅的 Material 3 动画将手机摄像头区域转化为集媒体控制、通知提醒和快捷手势于一体的智能交互中心。",
+        "screenshots": [
+            "Material_Capsule_screen_1.webp",
+            "Material_Capsule_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/iBIDq3l4v8gj",
+        "source": ""
+    },
+    {
+        "name": "NotallyX",
+        "pkg": "com.philkes.notallyx",
+        "version": "7.10.0",
+        "size": "13.24MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "NotallyX_icon.webp",
+        "intro": "NotallyX 是一款开源、全本地存储的安卓极简笔记神器，它在保持轻量体积的同时，通过支持附件、子任务和生物识别锁，填补了原生笔记应用在功能与隐私之间的空白。",
+        "screenshots": [
+            "NotallyX_screen_1.webp",
+            "NotallyX_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/iJlan3l4v9mb",
+        "source": "https://github.com/Crustack/NotallyX"
+    },
+    {
+        "name": "Droid-ify",
+        "pkg": "com.looker.droidify",
+        "version": "0.7.1",
+        "size": "5.21MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "Droid-ify_icon.webp",
+        "intro": "Droid-ify 是一款兼具极速同步与 Material You 高颜值设计的第三方 F-Droid 商店，它通过内置多仓库和支持 Shizuku 静默安装，为安卓用户提供了比官方客户端更现代、更高效的开源应用管理体验。",
+        "screenshots": [
+            "Droid-ify_screen_1.webp",
+            "Droid-ify_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/ip1wf3l4v19a",
+        "source": "https://github.com/Droid-ify/client"
+    },
+    {
+        "name": "Obtainium",
+        "pkg": "dev.imranr.obtainium",
+        "version": "1.4.0",
+        "size": "23.29MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "Obtainium_icon.webp",
+        "intro": "Obtainium 是一款专门为 Android 用户设计的开源应用更新管理工具。它的核心定位是它不依赖任何应用商店（如 Google Play 或 F-Droid ），而是让用户直接从软件的源头（Source）获取安装包并进行更新。",
+        "screenshots": [
+            "Obtainium_screen_1.webp",
+            "Obtainium_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/iaXbZ3l4valg",
+        "source": "https://github.com/ImranR98/Obtainium"
+    },
+    {
+        "name": "语燕输入法",
+        "pkg": "com.yuyan.pinyin.online.release",
+        "version": "20251222.16",
+        "size": "55.93MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "语燕输入法_online_icon.webp",
+        "intro": "语燕输入法是一款高颜值、开源且极度隐私的 RIME 安卓前端，它将强大的 RIME 引擎包裹在优雅的 Material You 外壳之下，为用户提供了一个既能高度定制又极具视觉美感的中文输入方案。",
+        "screenshots": [
+            "语燕输入法_screen_1.webp",
+            "语燕输入法_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/i3Pvu3iirh6f",
+        "source": "https://github.com/gurecn/YuyanIme"
+    },
+    {
+        "name": "语燕输入法",
+        "pkg": "com.yuyan.pinyin.offline.release",
+        "version": "20251222.16",
+        "size": "55.93MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "语燕输入法_offline_icon.webp",
+        "intro": "语燕输入法是一款高颜值、开源且极度隐私的 RIME 安卓前端，它将强大的 RIME 引擎包裹在优雅的 Material You 外壳之下，为用户提供了一个既能高度定制又极具视觉美感的中文输入方案。",
+        "screenshots": [
+            "语燕输入法_screen_1.webp",
+            "语燕输入法_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/iQX6z3iirn9e",
+        "source": "https://github.com/gurecn/YuyanIme"
+    },
+    {
+        "name": "TapClick",
+        "pkg": "com.lgh.tapclick",
+        "version": "12.5",
+        "size": "7.29MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "TapClick_icon.webp",
+        "intro": "TapClick 是一款开源的 Android 自动化辅助工具，它通过智能识别和自定义规则，能帮你一键跳过 App 开屏广告并实现各类复杂的自动点击操作，是追求极致安卓体验用户的“去广告神器”。",
+        "screenshots": [
+            "TapClick_screen_1.webp",
+            "TapClick_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/ieQNg3ilab3c",
+        "source": "https://github.com/LGH1996/TapClick"
+    },
+    {
+        "name": "GestureEVO",
+        "pkg": "com.jwg.gesture_evo",
+        "version": "1.6-0319001",
+        "size": "29.08MB",
+        "system": "Android",
+        "mod": "原版",
+        "icon": "GestureEVO_icon.webp",
+        "intro": "GestureEVO 是一款专为 Android 系统 设计的高级手势自定义工具，它以高度自由的手势操作和轮盘功能为核心，帮助用户大幅提升手机的交互效率和个性化体验。",
+        "screenshots": [
+            "GestureEVO_screen_1.webp",
+            "GestureEVO_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/i9HrY3l0ihwh",
+        "source": "https://www.coolapk.com/u/913898"
+    },
+    {
+        "name": "NotiGuy",
+        "pkg": "com.dynamic.notifications",
+        "version": "2.5.8",
+        "size": "7.90MB",
+        "system": "Android",
+        "mod": "高级版",
+        "icon": "NotiGuy_icon.webp",
+        "intro": "NotiGuy 是一款全能型 Android 灵动岛增强神器，它通过将摄像头挖孔转化为交互式按钮和动态通知中心，在提供极致视觉美感的同时，极大地扩展了安卓手机通知系统的功能性。",
+        "screenshots": [
+            "NotiGuy_screen_1.webp",
+            "NotiGuy_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/iDOeB3l4v9sh",
+        "source": ""
+    },
+    {
+        "name": "Namida",
+        "pkg": "com.msob7y.namida",
+        "version": "5.6.1",
+        "size": "44.28MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "Namida_icon.webp",
+        "intro": "Namida 是一款基于 Flutter 开发的开源、跨平台多媒体播放器，以其高颜值、强大的本地库管理能力以及对 YouTube 的深度集成，旨在为用户提供一个统一且美观的音频/视频体验。",
+        "screenshots": [
+            "Namida_screen_1.webp",
+            "Namida_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/i9jwR3iy91gh",
+        "source": "https://github.com/namidaco/namida"
+    },
+    {
+        "name": "AdAway",
+        "pkg": "org.adaway",
+        "version": "6.1.4",
+        "size": "13.31MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "AdAway_icon.webp",
+        "intro": "AdAway 是一款无需 root 权限的 Android 开源广告拦截应用。它与普通的插件式拦截器不同，主要通过修改系统的 Hosts 文件（或利用本地 VPN 模式）来从网络底层阻断广告域名的解析，从而实现全系统的广告屏蔽。",
+        "screenshots": [
+            "AdAway_screen_1.webp",
+            "AdAway_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/iodGX3imi7gf",
+        "source": "https://github.com/AdAway/AdAway"
+    },
+    {
+        "name": "Read You",
+        "pkg": "me.ash.reader",
+        "version": "0.16.1",
+        "size": "10.69MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "Read_You_icon.webp",
+        "intro": "Read You 是一款遵循 Material You 设计语言、极致纯净且开源的 Android RSS 阅读器，致力于为用户提供视觉灵动、交互丝滑且无广告干扰的现代化深度阅读体验。",
+        "screenshots": [
+            "Read_You_screen_1.webp",
+            "Read_You_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/iKYWl3l4vaza",
+        "source": "https://github.com/ReadYouApp/ReadYou"
+    },
+    {
+        "name": "任务栏",
+        "pkg": "com.farmerbb.taskbar",
+        "version": "6.2.2",
+        "size": "2.63MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "任务栏_icon.webp",
+        "intro": "Taskbar 是一款开源、无广告且无需 Root 权限的多功能工具，旨在通过提供类 Windows 的“开始菜单”、最近任务托盘及窗口化管理功能，将 Android 设备（尤其是平板和外接显示器模式）转化为高效的桌面级多任务处理工作站。",
+        "screenshots": [
+            "任务栏_screen_1.webp",
+            "任务栏_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/iFszL3ik24fi",
+        "source": "https://github.com/farmerbb/Taskbar"
+    },
+    {
+        "name": "aShell You",
+        "pkg": "in.hridayan.ashell",
+        "version": "v7.1.0",
+        "size": "9.14MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "aShell_You_icon.webp",
+        "intro": "aShell You 是一款专为 Android 高级用户和开发者设计的轻量级、开源本地 ADB Shell 工具。它的核心功能是让你无需连接电脑，就能直接在手机上执行 ADB（Android Debug Bridge）命令。相比于传统的终端模拟器，它更强调与现代 Android 设计语言（Material You）的融合以及对 Shizuku 的深度支持。",
+        "screenshots": [
+            "aShell_You_screen_1.webp",
+            "aShell_You_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/iOq2M3l7w9ra",
+        "source": "https://github.com/DP-Hridayan/aShellYou"
+    },
+    {
+        "name": "Blocker",
+        "pkg": "com.merxury.blocker",
+        "version": "2.0.5839",
+        "size": "8.91MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "Blocker_icon.webp",
+        "intro": "Blocker 是一款开源的 Android 应用组件控制器，它主要用来精细管理已安装应用的四大组件（Activity、Service、Broadcast Receiver、Content Provider），从而有效打击那些后台偷跑、自启、关联唤醒、狂发推送、偷偷耗电的“流氓行为”。",
+        "screenshots": [
+            "Blocker_screen_1.webp",
+            "Blocker_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/ig0S53l7x9ba",
+        "source": "https://github.com/lihenggui/blocker"
     }
 ]
