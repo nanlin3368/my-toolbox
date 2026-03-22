@@ -2255,7 +2255,7 @@
             }
             // 不加 animating 类，卡片直接显示，不触发入场动画
             container.innerHTML = pageData.map((app) => {
-                const realIndex = myApps.findIndex(a => a.name === app.name);
+                const realIndex = myApps.findIndex(a => a.pkg === app.pkg);
                 return `
                 <div class="app-card" onclick="openModal(${realIndex})">
                     <div class="icon-wrap">
@@ -2331,7 +2331,7 @@
 
             // 翻页/搜索时全部卡片同时淡入，无错开延迟
             container.innerHTML = pageData.map((app) => {
-                const realIndex = myApps.findIndex(a => a.name === app.name);
+                const realIndex = myApps.findIndex(a => a.pkg === app.pkg);
                 return `
                 <div class="app-card animating" onclick="openModal(${realIndex})">
                     <div class="icon-wrap">
