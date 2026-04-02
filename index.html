@@ -5,18 +5,29 @@
     <script>
         (function(){
             var t = localStorage.getItem('theme') || 'light';
+            var darkBg = '#000000';
+            var lightBg = '#F2F2F7';
+            var bg = t === 'dark' ? darkBg : lightBg;
             document.documentElement.setAttribute('data-theme', t);
-            // 设置 splash 和 body 底色与主题一致
-            document.documentElement.style.background = t === 'dark' ? '#0a0a12' : '#f0f4ff';
+            // 同时设置 html 和 body（body 还没解析，用 documentElement 兜底）
+            document.documentElement.style.backgroundColor = bg;
+            // 立即修正浏览器地址栏颜色，不等 JS 主逻辑执行
+            // 移除带 media 条件的双 meta，插入单一精确值
+            document.addEventListener('DOMContentLoaded', function() {
+                document.querySelectorAll('meta[name="theme-color"]').forEach(function(m){ m.remove(); });
+                var tc = document.createElement('meta');
+                tc.name = 'theme-color';
+                tc.content = t === 'dark' ? '#1C1C1E' : '#F2F2F7';
+                document.head.appendChild(tc);
+            });
         })();
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>实用软件集</title>
+    <title>应用档案</title>
     
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#F2F2F7" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#1C1C1E" media="(prefers-color-scheme: dark)">
+    <!-- theme-color 由防闪屏脚本根据已存储主题动态注入，确保与用户选择同步 -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="实用软件集">
@@ -82,8 +93,18 @@
         /* ---- Reset & Base ---- */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
+        /* 禁止所有图片长按保存 / 拖拽 */
+        img {
+            -webkit-user-drag: none;
+            user-drag: none;
+            -webkit-touch-callout: none;
+            pointer-events: none; /* 默认关闭，有交互需求的元素单独开启 */
+        }
+        /* 有点击/交互需求的图片单独恢复 pointer-events */
+        .screenshot-img, #preview-img { pointer-events: auto; }
+
         body {
-            background-color: #f0f4ff;
+            background-color: transparent; /* html 层已由防闪屏脚本设置正确底色 */
             font-family: -apple-system, "SF Pro Text", "Helvetica Neue", sans-serif;
             margin: 0; padding: 0;
             font-size: 14px;
@@ -94,7 +115,6 @@
         /* 页面加载完后恢复正常背景，由 JS 控制 */
         body.loaded {
             background-color: var(--bg-color);
-            transition: background-color 0.3s ease;
         }
 
         /* ---- Header (iOS Large Title style) ---- */
@@ -376,7 +396,7 @@
             font-size: 15px;
         }
 
-        /* ---- Pagination (iOS tab-bar pill style) ---- */
+        /* ---- Pagination (iOS pill — fixed 3-page window) ---- */
         .pagination-footer {
             position: fixed;
             bottom: 20px;
@@ -388,7 +408,7 @@
             align-items: center;
             gap: 3px;
             background: var(--pagination-bg);
-            padding: 5px 7px;
+            padding: 5px 6px;
             border-radius: 16px;
             box-shadow: 0 4px 24px rgba(0,0,0,0.14), 0 0 0 0.5px rgba(0,0,0,0.06);
             z-index: 90;
@@ -420,16 +440,15 @@
         .page-btn:active:not(:disabled) { background: var(--fill-2); }
         .page-btn:disabled { color: var(--text-tertiary); cursor: not-allowed; }
 
-        /* ‹ › 上下页箭头按钮 — 更大更好点击 */
+        /* ‹ › 上下页箭头按钮 */
         .page-arrow-btn {
             background: transparent;
             color: var(--text-main);
             border: none;
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             border-radius: 10px;
-            font-size: 22px;
-            font-weight: 300;
+            font-size: 20px;
             cursor: pointer;
             font-family: -apple-system, "SF Pro Text", sans-serif;
             transition: background 0.15s;
@@ -443,13 +462,13 @@
         .page-arrow-btn:active:not(:disabled) { background: var(--fill-2); }
         .page-arrow-btn:disabled { color: var(--text-tertiary); cursor: not-allowed; }
 
-        /* 中间数字页码按钮 */
+        /* 中间数字页码按钮 — 固定宽度保证3个时总宽不变 */
         .page-num-btn {
             background: transparent;
             color: var(--text-sub);
             border: none;
-            width: 38px;
-            height: 38px;
+            width: 40px;
+            height: 40px;
             border-radius: 10px;
             font-size: 14px;
             font-weight: 500;
@@ -471,24 +490,13 @@
         }
         .page-num-btn.active:hover { background: var(--accent-color); }
 
-        /* 省略号 */
-        .page-ellipsis {
-            color: var(--text-tertiary);
-            font-size: 13px;
-            padding: 0 3px;
-            flex-shrink: 0;
-            height: 38px;
-            display: flex;
-            align-items: center;
-        }
-
         /* 分隔线 */
         .page-sep {
             width: 0.5px;
             height: 20px;
             background: var(--separator);
             flex-shrink: 0;
-            margin: 0 3px;
+            margin: 0 2px;
         }
 
         #page-info { display: none; }
@@ -1055,13 +1063,13 @@
 
             /* Desktop pagination */
             .pagination-footer {
-                padding: 6px 10px;
+                padding: 6px 8px;
                 border-radius: 18px;
                 gap: 4px;
             }
-            .page-btn { font-size: 14px; height: 40px; padding: 0 14px; }
-            .page-arrow-btn { width: 46px; height: 46px; }
-            .page-num-btn { width: 40px; height: 40px; font-size: 14.5px; }
+            .page-btn { font-size: 14px; height: 42px; padding: 0 14px; }
+            .page-arrow-btn { width: 44px; height: 44px; }
+            .page-num-btn { width: 42px; height: 42px; font-size: 15px; border-radius: 10px; }
             #page-info { font-size: 15px; min-width: 60px; }
 
             /* FAB on desktop */
@@ -1358,6 +1366,277 @@
             color: var(--text-sub); font-size: 13px;
         }
         .sidebar-empty-icon { font-size: 40px; margin-bottom: 10px; }
+
+        /* ── 分类手风琴导航 ── */
+        .sidebar-cat-nav {
+            flex-shrink: 0;
+            padding: 0 0 4px;
+        }
+
+        /* 每个分类行 */
+        .sidebar-cat-row {
+            border-bottom: 0.5px solid var(--separator);
+        }
+        .sidebar-cat-row:last-child { border-bottom: none; }
+
+        /* 分类标题按钮 */
+        .sidebar-cat-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+            padding: 15px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: -apple-system, "SF Pro Text", sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-main);
+            text-align: left;
+            transition: background 0.15s;
+            -webkit-user-select: none; user-select: none;
+            box-sizing: border-box;
+        }
+        .sidebar-cat-head:active { background: var(--fill-1); }
+        @media (hover: hover) and (pointer: fine) {
+            .sidebar-cat-head:hover { background: var(--fill-1); }
+        }
+        .sidebar-cat-head-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+            width: 28px;
+            text-align: center;
+        }
+        .sidebar-cat-head-label {
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .sidebar-cat-head-arrow {
+            flex-shrink: 0;
+            width: 18px; height: 18px;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--text-tertiary);
+            transition: transform 0.28s cubic-bezier(0.34, 1.3, 0.64, 1), color 0.2s;
+        }
+        .sidebar-cat-head-arrow svg {
+            width: 14px; height: 14px;
+        }
+        .sidebar-cat-row.open .sidebar-cat-head-arrow {
+            transform: rotate(90deg);
+            color: var(--accent-color);
+        }
+        .sidebar-cat-row.open .sidebar-cat-head {
+            color: var(--accent-color);
+        }
+        .sidebar-cat-row.open .sidebar-cat-head-icon {
+            filter: none;
+        }
+
+        /* 展开的工具内容区 —— 用 JS 动态设置 height，避免 max-height 跳帧 */
+        .sidebar-cat-content {
+            height: 0;
+            overflow: hidden;
+            /* spring 弹出：快入慢收，iOS 同款手感；will-change 开启 GPU 合成层 */
+            transition: height 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.22s ease;
+            opacity: 0;
+            will-change: height, opacity;
+        }
+        .sidebar-cat-row.open .sidebar-cat-content {
+            /* height 由 JS 写入 style，此处只控制 opacity */
+            opacity: 1;
+        }
+        .sidebar-cat-content-inner {
+            padding: 2px 0 10px;
+        }
+
+        /* ── 已废弃：下拉选择器兼容占位 ── */
+        .sidebar-cat-selector { display: none; }
+        .sidebar-cat-dropdown {
+            display: none;
+            max-height: 0;
+            opacity: 0;
+            pointer-events: none;
+            transition: max-height 0.32s cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 0.2s ease;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+        .sidebar-cat-selector.open .sidebar-cat-dropdown {
+            max-height: 360px;
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* 响应式 */
+        @media (min-width: 768px) {
+            .sidebar-cat-head { padding: 16px 22px; font-size: 15px; }
+        }
+        @media (min-width: 1024px) {
+            .sidebar-cat-head { padding: 17px 24px; font-size: 15.5px; }
+        }
+
+        /* ── tab-count badge 不再用于 tab bar，改为 option 用 ── */
+        .tab-count { display: none; }
+
+        /* ── Sidebar Tab 切换栏 ── */
+        .sidebar-tab-bar {
+            display: flex;
+            gap: 6px;
+            padding: 12px 16px 10px;
+            flex-shrink: 0;
+        }
+        .sidebar-tab {
+            flex: 1;
+            padding: 7px 12px;
+            border-radius: 20px;
+            border: none;
+            background: var(--fill-1);
+            color: var(--text-sub);
+            font-size: 12.5px;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: -apple-system, "SF Pro Text", sans-serif;
+            transition: background 0.2s, color 0.2s;
+            -webkit-user-select: none; user-select: none;
+            white-space: nowrap;
+        }
+        .sidebar-tab.active {
+            background: var(--accent-color);
+            color: #fff;
+            font-weight: 600;
+        }
+        .sidebar-tab:not(.active):active { background: var(--fill-2); }
+
+        /* ── 知识文档条目 ── */
+        .post-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 8px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.15s;
+            color: var(--text-main);
+            text-decoration: none;
+            -webkit-user-select: none; user-select: none;
+        }
+        .post-item:active { background: var(--fill-1); }
+        @media (hover: hover) and (pointer: fine) {
+            .post-item:hover { background: var(--fill-1); }
+        }
+        .post-item-bar {
+            width: 2.5px; height: 20px;
+            border-radius: 2px;
+            background: var(--accent-color);
+            opacity: 0.32;
+            flex-shrink: 0;
+            transition: opacity 0.15s;
+        }
+        .post-item:hover .post-item-bar,
+        .post-item:active .post-item-bar { opacity: 0.75; }
+        .post-item-title {
+            flex: 1;
+            font-size: 13.5px; font-weight: 500;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            line-height: 1.4;
+        }
+        .post-item-arrow {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            flex-shrink: 0; opacity: 0.4;
+        }
+
+        /* ── 工具条目：轻量列表 ── */
+        .tool-list-inner {
+            padding: 4px 10px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+        .tool-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 9px 8px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.15s;
+            color: var(--text-main);
+            text-decoration: none;
+            -webkit-user-select: none; user-select: none;
+        }
+        .tool-item:active { background: var(--fill-1); }
+        @media (hover: hover) and (pointer: fine) {
+            .tool-item:hover { background: var(--fill-1); }
+        }
+        .tool-item-icon-wrap {
+            width: 34px; height: 34px;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+            background: var(--fill-1);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .tool-item-icon {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .tool-item-icon-emoji {
+            font-size: 18px;
+        }
+        .tool-item-info { flex: 1; min-width: 0; }
+        .tool-item-title {
+            font-size: 13.5px; font-weight: 500;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .tool-item-desc {
+            font-size: 11.5px; color: var(--text-sub); margin-top: 1px;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .tool-item-arrow {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            flex-shrink: 0; opacity: 0.4;
+        }
+
+        /* ── 分类计数 badge ── */
+        .tab-count {
+            background: rgba(255,255,255,0.22);
+            border-radius: 10px;
+            padding: 1px 5px;
+            font-size: 10.5px;
+            font-weight: 600;
+            min-width: 16px;
+            text-align: center;
+        }
+        .sidebar-tab:not(.active) .tab-count {
+            background: var(--fill-2);
+            color: var(--text-sub);
+        }
+
+        @media (min-width: 768px) {
+            .sidebar-tab-bar { padding: 0 16px 14px; gap: 7px; }
+            .sidebar-tab { font-size: 13px; padding: 7px 14px; }
+            .tool-list-inner { padding: 4px 14px 0; }
+            .tool-item { padding: 10px 10px; }
+            .tool-item-icon-wrap { width: 36px; height: 36px; border-radius: 9px; }
+            .tool-item-title { font-size: 14px; }
+        }
+        @media (min-width: 1024px) {
+            .sidebar-tab-bar { padding: 0 20px 14px; gap: 8px; }
+            .sidebar-tab { font-size: 13.5px; padding: 7px 15px; border-radius: 22px; }
+            .tool-list-inner { padding: 4px 16px 0; }
+            .tool-item { padding: 10px 12px; }
+            .tool-item-icon-wrap { width: 38px; height: 38px; border-radius: 9px; }
+            .tool-item-title { font-size: 14.5px; }
+            .tool-item-desc { font-size: 12px; }
+        }
 
         /* ── Header 按钮：随 header-inner flex 布局，无需绝对定位 ── */
 
@@ -1722,6 +2001,11 @@
             transition: opacity 0.15s, transform 0.12s;
         }
         .disclaimer-agree-btn:active { transform: scale(0.97); opacity: 0.85; }
+        .disclaimer-agree-btn:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            transform: none;
+        }
         @media (min-width: 768px) {
             .disclaimer-footer { padding: 14px 28px 24px; }
         }
@@ -1939,7 +2223,7 @@
         <!-- 主内容 -->
         <div class="splash-content">
             <div class="splash-avatar-wrap">
-                <img src="assets/avatar.webp" alt="闲月" draggable="false">
+                <img src="assets/avatar.webp" alt="闲月" draggable="false" oncontextmenu="return false">
             </div>
             <div class="splash-text">
                 <div class="splash-name">❤️ 闲月</div>
@@ -1966,7 +2250,7 @@
 
     <div class="header">
         <div class="header-inner">
-            <span>实用软件集</span>
+            <span>应用档案</span>
             <div style="display:flex;align-items:center;gap:8px;">
                 <button class="header-view-btn" id="view-btn" onclick="toggleView()" title="切换视图" aria-label="切换网格/列表">
                     <svg id="view-icon-grid" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -1978,7 +2262,7 @@
                         <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
                     </svg>
                 </button>
-                <button class="header-blog-btn" onclick="openSidebar()" title="个人博客" aria-label="打开博客侧栏">
+                <button class="header-blog-btn" onclick="openSidebar()" title="工具导航" aria-label="打开工具导航侧栏">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
                 </svg>
@@ -2028,17 +2312,24 @@
     <div id="preview-overlay" onclick="handlePreviewBack(event)">
         <div class="preview-close" onclick="handlePreviewBack(event)">&times;</div>
         <button class="nav-btn" style="left:10px;" onclick="event.stopPropagation();changePreview(-1)">&#10094;</button>
-        <img id="preview-img" src="" onclick="event.stopPropagation()">
+        <img id="preview-img" src="" onclick="event.stopPropagation()" oncontextmenu="return false" draggable="false">
         <button class="nav-btn" style="right:10px;" onclick="event.stopPropagation();changePreview(1)">&#10095;</button>
         <div id="preview-counter">1/1</div>
     </div>
 
     <script>
-        let myApps = [];           
-        let displayList = [];      
-        let currentPage = 1;       
-        const itemsPerPage = 50;   
+        // ── 按页加载架构：每个 apps_N.json 对应一页 ──
+        // pageCache[n] = { status: 'ok'|'error'|'loading'|'empty', apps: [] }
+        const pageCache = {};
+        let totalPages = 0;        // 通过探测得出（首次并行探测所有文件）
+        let currentPage = 1;
         let currentScreenshots = []; let currentImgIndex = 0; let touchStartX = 0;
+
+        // 搜索模式下的展平列表（跨页搜索用）
+        let searchMode = false;
+        let searchList = [];       // 展平后用于搜索的全量数组（仅搜索时用）
+        let searchPage = 1;
+        const searchPerPage = 50;
 
         // --- 主题与按钮逻辑优化 ---
         
@@ -2046,6 +2337,12 @@
             const savedTheme = localStorage.getItem('theme') || 'light';
             document.documentElement.setAttribute('data-theme', savedTheme);
             updateThemeIcon(savedTheme);
+            // 确保 theme-color 与存储主题同步（防闪屏脚本已在 DOMContentLoaded 设置，这里做兜底）
+            document.querySelectorAll('meta[name="theme-color"]').forEach(m => m.remove());
+            const tc = document.createElement('meta');
+            tc.name = 'theme-color';
+            tc.content = savedTheme === 'dark' ? '#1C1C1E' : '#F2F2F7';
+            document.head.appendChild(tc);
         }
 
         function toggleTheme() {
@@ -2162,30 +2459,84 @@
             return (isNaN(p) || p < 1) ? 1 : p;
         }
 
-        async function loadAppData() {
-            try {
-                const response = await fetch('apps.json?t=' + Date.now());
-                myApps = await response.json();
-                // 自动拼接路径：icon → assets/icons/，screenshot → assets/screenshots/
-                myApps = myApps.map(app => ({
-                    ...app,
-                    icon: app.icon
-                        ? (app.icon.startsWith('http') || app.icon.startsWith('assets/')
-                            ? app.icon
-                            : 'assets/icons/' + app.icon)
-                        : '',
-                    screenshots: (app.screenshots || []).map(s =>
-                        s.startsWith('http') || s.startsWith('assets/')
-                            ? s
-                            : 'assets/screenshots/' + s
-                    )
-                }));
-                displayList = [...myApps];
-                currentPage = getPageFromUrl();
-                setTimeout(() => { applyViewMode(); renderApps(); }, 500);
-            } catch (e) { document.getElementById('app-count').innerText = "加载失败"; }
+        function processAppPaths(apps) {
+            return apps.map(app => ({
+                ...app,
+                icon: app.icon
+                    ? (app.icon.startsWith('http') || app.icon.startsWith('assets/')
+                        ? app.icon
+                        : 'assets/icons/' + app.icon)
+                    : '',
+                screenshots: (app.screenshots || []).map(s =>
+                    s.startsWith('http') || s.startsWith('assets/')
+                        ? s
+                        : 'assets/screenshots/' + s
+                )
+            }));
         }
 
+        // ── 探测总页数：并行尝试 1~N，找到连续的最大值 ──
+        async function detectTotalPages() {
+            const ts = Date.now();
+            // 先快速探测前 20 页，找到第一个 404 为止
+            const MAX_PROBE = 20;
+            const probes = [];
+            for (let i = 1; i <= MAX_PROBE; i++) {
+                probes.push(fetch('data/apps_' + i + '.json?t=' + ts, { method: 'HEAD' }).then(r => ({ i, ok: r.ok })).catch(() => ({ i, ok: false })));
+            }
+            const results = await Promise.all(probes);
+            // 找连续成功的最大页号
+            let max = 0;
+            for (const { i, ok } of results.sort((a, b) => a.i - b.i)) {
+                if (ok && i === max + 1) max = i;
+                else if (!ok && i === max + 1) break;
+            }
+            return max || 1;
+        }
+
+        // ── 加载指定页的 JSON（带缓存，出错只影响该页）──
+        async function fetchPage(pageNum, bustCache) {
+            const cached = pageCache[pageNum];
+            if (cached && cached.status === 'ok' && !bustCache) return cached;
+            if (cached && cached.status === 'loading') return cached; // 防重复请求
+
+            pageCache[pageNum] = { status: 'loading', apps: [] };
+            try {
+                const ts = bustCache ? Date.now() : 0;
+                const url = 'data/apps_' + pageNum + '.json' + (ts ? '?t=' + ts : '');
+                const res = await fetch(url);
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const raw = await res.json();
+                const apps = processAppPaths(raw);
+                pageCache[pageNum] = { status: 'ok', apps };
+            } catch (e) {
+                pageCache[pageNum] = { status: 'error', apps: [], error: e.message };
+            }
+            return pageCache[pageNum];
+        }
+
+        // ── 初始加载 ──
+        async function loadAppData() {
+            const countDisplay = document.getElementById('app-count');
+            countDisplay.innerText = '正在加载…';
+            try {
+                totalPages = await detectTotalPages();
+                if (totalPages === 0) { countDisplay.innerText = '暂无数据'; return; }
+                currentPage = Math.min(getPageFromUrl(), totalPages);
+                setTimeout(async () => {
+                    applyViewMode();
+                    await renderApps();
+                    // 后台静默预加载其他页（不阻塞首屏）
+                    for (let i = 1; i <= totalPages; i++) {
+                        if (i !== currentPage) fetchPage(i, false);
+                    }
+                }, 500);
+            } catch (e) {
+                countDisplay.innerText = '加载失败';
+            }
+        }
+
+        // ── 软刷新：清除当前页缓存后重新加载 ──
         async function softRefresh() {
             const btn = document.getElementById('refresh-btn');
             btn.classList.remove('spinning');
@@ -2193,83 +2544,23 @@
             btn.classList.add('spinning');
             btn.addEventListener('animationend', () => btn.classList.remove('spinning'), { once: true });
 
-            try {
-                const response = await fetch('apps.json?t=' + Date.now());
-                const fresh = await response.json();
-
-                // 数据处理（路径拼接）
-                const processed = fresh.map(app => ({
-                    ...app,
-                    icon: app.icon
-                        ? (app.icon.startsWith('http') || app.icon.startsWith('assets/')
-                            ? app.icon : 'assets/icons/' + app.icon)
-                        : '',
-                    screenshots: (app.screenshots || []).map(s =>
-                        s.startsWith('http') || s.startsWith('assets/')
-                            ? s : 'assets/screenshots/' + s
-                    )
-                }));
-
-                // 只有数据真正变化才重渲染，避免不必要的 DOM 重建
-                const oldJSON = JSON.stringify(myApps.map(a => a.name));
-                const newJSON = JSON.stringify(processed.map(a => a.name));
-                myApps = processed;
-
-                const term = document.getElementById('search-input').value.toLowerCase();
-                displayList = term
-                    ? myApps.filter(app => app.name.toLowerCase().includes(term))
-                    : [...myApps];
-
-                if (oldJSON !== newJSON) {
-                    // 数据有变化：静默替换，不播入场动画
-                    renderAppsQuiet();
-                } else {
-                    // 数据没变：整个列表容器快速闪一下
-                    const container = document.getElementById('app-container');
-                    container.classList.remove('container-flash');
-                    void container.offsetWidth;
-                    container.classList.add('container-flash');
-                    container.addEventListener('animationend', () => {
-                        container.classList.remove('container-flash');
-                    }, { once: true });
-                }
-            } catch (e) {
-                document.getElementById('app-count').innerText = "加载失败";
-            }
-        }
-
-        // 静默渲染：和 renderApps 相同，但卡片不带 animating 类（不播入场动画）
-        function renderAppsQuiet() {
-            const container = document.getElementById('app-container');
-            const countDisplay = document.getElementById('app-count');
-            const totalPages = Math.ceil(displayList.length / itemsPerPage) || 1;
-            if (currentPage > totalPages) currentPage = totalPages;
-            if (currentPage < 1) currentPage = 1;
-            const start = (currentPage - 1) * itemsPerPage;
-            const pageData = displayList.slice(start, start + itemsPerPage);
-            countDisplay.innerText = `共收录 ${displayList.length} 款应用 (第 ${currentPage}/${totalPages} 页)`;
-            if (pageData.length === 0) {
-                container.innerHTML = '<div class="empty-status">未发现相关应用</div>';
-                document.getElementById('pagination-bar').style.display = 'none';
+            if (searchMode) {
+                // 搜索模式：清空全部缓存，重探页数，重建搜索列表
+                for (let k in pageCache) delete pageCache[k];
+                totalPages = await detectTotalPages();
+                await rebuildSearchList();
+                renderSearchResults(false);
                 return;
             }
-            // 不加 animating 类，卡片直接显示，不触发入场动画
-            container.innerHTML = pageData.map((app) => {
-                const realIndex = myApps.findIndex(a => a.pkg === app.pkg);
-                return `
-                <div class="app-card" onclick="openModal(${realIndex})">
-                    <div class="icon-wrap">
-                        <div class="icon-placeholder" id="ip-${realIndex}"></div>
-                        <img src="${app.icon}" class="app-icon" loading="lazy"
-                             onload="this.classList.add('loaded');document.getElementById('ip-${realIndex}').classList.add('hidden');document.getElementById('tp-${realIndex}').classList.add('hidden')"
-                             onerror="this.classList.add('loaded');document.getElementById('ip-${realIndex}').classList.add('hidden');document.getElementById('tp-${realIndex}').classList.add('hidden')">
-                    </div>
-                    <div class="title-placeholder" id="tp-${realIndex}"></div>
-                    <div class="app-title">${app.name}</div>
-                    <div class="download-btn">点击查看</div>
-                </div>`;
-            }).join('');
-            renderPagination(currentPage, totalPages);
+            // 正常模式：仅清当前页缓存
+            delete pageCache[currentPage];
+            await renderApps(true);
+        }
+
+        // ── 静默渲染当前页（无入场动画）──
+        async function renderAppsQuiet() {
+            if (searchMode) { renderSearchResults(false); return; }
+            await renderPageContent(currentPage, false);
         }
 
         // 截图加载完成：同步 wrap 宽度 = 真实图片宽度，然后淡入
@@ -2311,60 +2602,80 @@
             });
         }
 
-        function renderApps() {
+        // ── 渲染某一页（核心函数）──
+        async function renderPageContent(pageNum, animate) {
             const container = document.getElementById('app-container');
             const countDisplay = document.getElementById('app-count');
-            const totalPages = Math.ceil(displayList.length / itemsPerPage) || 1;
-            if (currentPage > totalPages) currentPage = totalPages;
-            if (currentPage < 1) currentPage = 1;
-            
-            const start = (currentPage - 1) * itemsPerPage;
-            const end = start + itemsPerPage;
-            const pageData = displayList.slice(start, end);
-            countDisplay.innerText = `共收录 ${displayList.length} 款应用 (第 ${currentPage}/${totalPages} 页)`;
-            
-            if (pageData.length === 0) {
-                container.innerHTML = '<div class="empty-status">未发现相关应用</div>';
-                document.getElementById('pagination-bar').style.display = 'none';
+
+            // 骨架屏占位
+            container.innerHTML = Array(9).fill('<div class="skeleton"></div>').join('');
+            countDisplay.innerText = `正在加载第 ${pageNum} 页…`;
+
+            const result = await fetchPage(pageNum, false);
+
+            if (result.status === 'error') {
+                container.innerHTML = `<div class="empty-status">第 ${pageNum} 页加载失败，请刷新重试 🔄</div>`;
+                countDisplay.innerText = `第 ${pageNum} 页加载出错`;
+                renderPagination(pageNum, totalPages);
                 return;
             }
 
-            // 翻页/搜索时全部卡片同时淡入，无错开延迟
-            container.innerHTML = pageData.map((app) => {
-                const realIndex = myApps.findIndex(a => a.pkg === app.pkg);
+            const apps = result.apps;
+            if (apps.length === 0) {
+                container.innerHTML = '<div class="empty-status">该页暂无内容</div>';
+                renderPagination(pageNum, totalPages);
+                return;
+            }
+
+            countDisplay.innerText = `第 ${pageNum}/${totalPages} 页，本页 ${apps.length} 款`;
+
+            container.innerHTML = apps.map((app, idx) => {
+                const cardClass = animate ? 'app-card animating' : 'app-card';
+                const uid = `p${pageNum}_${idx}`;
                 return `
-                <div class="app-card animating" onclick="openModal(${realIndex})">
+                <div class="${cardClass}" onclick="openModal(${pageNum},${idx})">
                     <div class="icon-wrap">
-                        <div class="icon-placeholder" id="ip-${realIndex}"></div>
-                        <img src="${app.icon}" class="app-icon" loading="lazy"
-                             onload="this.classList.add('loaded');document.getElementById('ip-${realIndex}').classList.add('hidden');document.getElementById('tp-${realIndex}').classList.add('hidden')"
-                             onerror="this.classList.add('loaded');document.getElementById('ip-${realIndex}').classList.add('hidden');document.getElementById('tp-${realIndex}').classList.add('hidden')">
+                        <div class="icon-placeholder" id="ip-${uid}"></div>
+                        <img src="${app.icon}" class="app-icon" loading="lazy" oncontextmenu="return false" draggable="false"
+                             onload="this.classList.add('loaded');var e=document.getElementById('ip-${uid}');if(e)e.classList.add('hidden');var f=document.getElementById('tp-${uid}');if(f)f.classList.add('hidden')"
+                             onerror="this.classList.add('loaded');var e=document.getElementById('ip-${uid}');if(e)e.classList.add('hidden');var f=document.getElementById('tp-${uid}');if(f)f.classList.add('hidden')">
                     </div>
-                    <div class="title-placeholder" id="tp-${realIndex}"></div>
+                    <div class="title-placeholder" id="tp-${uid}"></div>
                     <div class="app-title">${app.name}</div>
                     <div class="download-btn">点击查看</div>
-                </div>`
+                </div>`;
             }).join('');
-            renderPagination(currentPage, totalPages);
 
-            // 动画结束后移除 animating 类，让 hover/active 正常工作
-            container.querySelectorAll('.app-card.animating').forEach(card => {
-                card.addEventListener('animationend', () => {
-                    card.classList.remove('animating');
-                    card.style.animationDelay = '';
-                }, { once: true });
-            });
+            if (animate) {
+                container.querySelectorAll('.app-card.animating').forEach(card => {
+                    card.addEventListener('animationend', () => {
+                        card.classList.remove('animating');
+                        card.style.animationDelay = '';
+                    }, { once: true });
+                });
+            }
+
+            renderPagination(pageNum, totalPages);
+        }
+
+        // ── 主入口：渲染当前页（正常模式）──
+        async function renderApps(bustCache) {
+            if (searchMode) { renderSearchResults(true); return; }
+            if (bustCache) delete pageCache[currentPage];
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            await renderPageContent(currentPage, true);
         }
 
         function changePage(step) {
-            currentPage += step;
+            const np = currentPage + step;
+            if (np < 1 || np > totalPages) return;
+            currentPage = np;
             const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?p=' + currentPage;
             window.history.pushState({page: currentPage}, "", newUrl);
             renderApps();
         }
 
         function goToPage(p) {
-            const totalPages = Math.ceil(displayList.length / itemsPerPage);
             if (p < 1 || p > totalPages) return;
             currentPage = p;
             const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?p=' + currentPage;
@@ -2372,46 +2683,120 @@
             renderApps();
         }
 
+        // ── 搜索：需跨页加载所有已缓存/可用数据 ──
+        async function rebuildSearchList() {
+            searchList = [];
+            for (let i = 1; i <= totalPages; i++) {
+                const r = await fetchPage(i, false);
+                if (r.status === 'ok') {
+                    r.apps.forEach((app, idx) => searchList.push({ app, pageNum: i, idx }));
+                }
+            }
+        }
+
+        function renderSearchResults(animate) {
+            const term = document.getElementById('search-input').value.toLowerCase();
+            const filtered = searchList.filter(({ app }) => app.name.toLowerCase().includes(term));
+            const container = document.getElementById('app-container');
+            const countDisplay = document.getElementById('app-count');
+            const sTotal = Math.ceil(filtered.length / searchPerPage) || 1;
+            if (searchPage > sTotal) searchPage = sTotal;
+
+            if (filtered.length === 0) {
+                container.innerHTML = '<div class="empty-status">未发现相关应用</div>';
+                document.getElementById('pagination-bar').style.display = 'none';
+                countDisplay.innerText = '无匹配结果';
+                return;
+            }
+
+            const start = (searchPage - 1) * searchPerPage;
+            const pageData = filtered.slice(start, start + searchPerPage);
+            countDisplay.innerText = `找到 ${filtered.length} 款，第 ${searchPage}/${sTotal} 页`;
+
+            container.innerHTML = pageData.map(({ app, pageNum, idx }) => {
+                const cardClass = animate ? 'app-card animating' : 'app-card';
+                const uid = `p${pageNum}_${idx}`;
+                return `
+                <div class="${cardClass}" onclick="openModal(${pageNum},${idx})">
+                    <div class="icon-wrap">
+                        <div class="icon-placeholder" id="ip-${uid}"></div>
+                        <img src="${app.icon}" class="app-icon" loading="lazy" oncontextmenu="return false" draggable="false"
+                             onload="this.classList.add('loaded');var e=document.getElementById('ip-${uid}');if(e)e.classList.add('hidden');var f=document.getElementById('tp-${uid}');if(f)f.classList.add('hidden')"
+                             onerror="this.classList.add('loaded');var e=document.getElementById('ip-${uid}');if(e)e.classList.add('hidden');var f=document.getElementById('tp-${uid}');if(f)f.classList.add('hidden')">
+                    </div>
+                    <div class="title-placeholder" id="tp-${uid}"></div>
+                    <div class="app-title">${app.name}</div>
+                    <div class="download-btn">点击查看</div>
+                </div>`;
+            }).join('');
+
+            if (animate) {
+                container.querySelectorAll('.app-card.animating').forEach(card => {
+                    card.addEventListener('animationend', () => card.classList.remove('animating'), { once: true });
+                });
+            }
+
+            // 搜索模式下分页用内部 searchPage 计数器
+            renderPaginationSearch(searchPage, sTotal);
+        }
+
+        function renderPaginationSearch(cur, total) {
+            const bar = document.getElementById('pagination-bar');
+            if (total <= 1) { bar.style.display = 'none'; return; }
+            bar.style.display = 'flex';
+            let lo = cur - 1, hi = cur + 1;
+            if (lo < 1)     { lo = 1; hi = Math.min(3, total); }
+            if (hi > total) { hi = total; lo = Math.max(total - 2, 1); }
+            const pages = [];
+            for (let i = lo; i <= hi; i++) pages.push(i);
+            let numBtns = pages.map(p =>
+                `<button class="page-num-btn${p === cur ? ' active' : ''}" onclick="goToSearchPage(${p})">${p}</button>`
+            ).join('');
+            bar.innerHTML =
+                `<button class="page-btn" onclick="goToSearchPage(1)" ${cur===1?'disabled':''}>首页</button>` +
+                `<div class="page-sep"></div>` +
+                `<button class="page-arrow-btn" onclick="goToSearchPage(${cur-1})" ${cur===1?'disabled':''}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>` +
+                numBtns +
+                `<button class="page-arrow-btn" onclick="goToSearchPage(${cur+1})" ${cur===total?'disabled':''}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>` +
+                `<div class="page-sep"></div>` +
+                `<button class="page-btn" onclick="goToSearchPage(${total})" ${cur===total?'disabled':''}>尾页</button>`;
+        }
+
+        function goToSearchPage(p) {
+            searchPage = p;
+            window.scrollTo({ top: 0, behavior: 'instant' });
+            renderSearchResults(true);
+        }
+
         function renderPagination(cur, total) {
             const bar = document.getElementById('pagination-bar');
             if (total <= 1) { bar.style.display = 'none'; return; }
             bar.style.display = 'flex';
 
-            // 计算要显示的页码范围（当前页两侧各 1 页，最多连续 3 个）
-            let pages = [];
-            if (total <= 5) {
-                for (let i = 1; i <= total; i++) pages.push(i);
-            } else {
-                pages = [1];
-                let lo = Math.max(2, cur - 1);
-                let hi = Math.min(total - 1, cur + 1);
-                if (lo > 2) pages.push('...');
-                for (let i = lo; i <= hi; i++) pages.push(i);
-                if (hi < total - 1) pages.push('...');
-                pages.push(total);
-            }
+            // ── 中间始终显示 3 个连续页码，当前页居中
+            // 计算窗口起点：尽量让当前页在中间，但不超出 1~total 范围
+            let lo = cur - 1;
+            let hi = cur + 1;
+            // 边界修正
+            if (lo < 1)     { lo = 1;           hi = Math.min(3, total); }
+            if (hi > total) { hi = total;        lo = Math.max(total - 2, 1); }
+            // 不足3页时正常显示所有页
+            const pages = [];
+            for (let i = lo; i <= hi; i++) pages.push(i);
 
-            let html = '';
-            // 首页
-            html += `<button class="page-btn" onclick="goToPage(1)" ${cur===1?'disabled':''}>首页</button>`;
-            html += `<div class="page-sep"></div>`;
-            // 上一页
-            html += `<button class="page-arrow-btn" onclick="goToPage(${cur-1})" ${cur===1?'disabled':''}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>`;
-            // 数字页码
-            pages.forEach(p => {
-                if (p === '...') {
-                    html += `<span class="page-ellipsis">…</span>`;
-                } else {
-                    html += `<button class="page-num-btn ${p===cur?'active':''}" onclick="goToPage(${p})">${p}</button>`;
-                }
-            });
-            // 下一页
-            html += `<button class="page-arrow-btn" onclick="goToPage(${cur+1})" ${cur===total?'disabled':''}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>`;
-            html += `<div class="page-sep"></div>`;
-            // 尾页
-            html += `<button class="page-btn" onclick="goToPage(${total})" ${cur===total?'disabled':''}>尾页</button>`;
+            // 构建 HTML
+            let numBtns = pages.map(p =>
+                `<button class="page-num-btn${p === cur ? ' active' : ''}" onclick="goToPage(${p})">${p}</button>`
+            ).join('');
 
-            bar.innerHTML = html;
+            bar.innerHTML =
+                `<button class="page-btn" onclick="goToPage(1)" ${cur===1?'disabled':''}>首页</button>` +
+                `<div class="page-sep"></div>` +
+                `<button class="page-arrow-btn" onclick="goToPage(${cur-1})" ${cur===1?'disabled':''}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>` +
+                numBtns +
+                `<button class="page-arrow-btn" onclick="goToPage(${cur+1})" ${cur===total?'disabled':''}><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>` +
+                `<div class="page-sep"></div>` +
+                `<button class="page-btn" onclick="goToPage(${total})" ${cur===total?'disabled':''}>尾页</button>`;
         }
 
         // ── 视图切换（网格 / 列表）──
@@ -2441,48 +2826,112 @@
             }
         }
 
-        function filterApps() {
-            const term = document.getElementById('search-input').value.toLowerCase();
-            displayList = myApps.filter(app => app.name.toLowerCase().includes(term));
-            currentPage = 1; 
-            const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-            window.history.pushState({page: 1}, "", newUrl);
-            renderApps();
+        async function filterApps() {
+            const term = document.getElementById('search-input').value.toLowerCase().trim();
+            if (!term) {
+                // 退出搜索模式，回到正常分页
+                searchMode = false;
+                searchList = [];
+                searchPage = 1;
+                const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?p=' + currentPage;
+                window.history.pushState({page: currentPage}, "", newUrl);
+                await renderPageContent(currentPage, true);
+                return;
+            }
+            // 进入搜索模式：先用已有缓存立刻显示，后台继续加载未缓存的页
+            searchMode = true;
+            searchPage = 1;
+            // 用已缓存的数据立刻构建 searchList
+            searchList = [];
+            for (let i = 1; i <= totalPages; i++) {
+                const r = pageCache[i];
+                if (r && r.status === 'ok') {
+                    r.apps.forEach((app, idx) => searchList.push({ app, pageNum: i, idx }));
+                }
+            }
+            renderSearchResults(true);
+            // 后台加载剩余未缓存的页，加载完毕刷新结果
+            const pending = [];
+            for (let i = 1; i <= totalPages; i++) {
+                if (!pageCache[i] || pageCache[i].status !== 'ok') {
+                    pending.push(fetchPage(i, false).then(() => {
+                        if (searchMode) {
+                            // 重建并刷新
+                            searchList = [];
+                            for (let j = 1; j <= totalPages; j++) {
+                                const r2 = pageCache[j];
+                                if (r2 && r2.status === 'ok') {
+                                    r2.apps.forEach((app, idx2) => searchList.push({ app, pageNum: j, idx: idx2 }));
+                                }
+                            }
+                            renderSearchResults(false);
+                        }
+                    }));
+                }
+            }
         }
         
-function openModal(index) {
-    const app = myApps[index];
+function openModal(pageNum, idx) {
+    const cached = pageCache[pageNum];
+    if (!cached || cached.status !== 'ok') return;
+    const app = cached.apps[idx];
+    if (!app) return;
     currentScreenshots = app.screenshots;
     let btnText = "官方网站"; let btnColor = "#007AFF"; 
     if (app.source) {
         const s = app.source.toLowerCase();
-        if (s.indexOf("github.com") !== -1 || s.indexOf("gitee.com") !== -1 || s.indexOf("gitlab.com") !== -1) { btnText = "查看源码"; btnColor = "#A655F7"; }
-        else if (s.indexOf("coolapk.com") !== -1) { btnText = "酷安主页"; btnColor = "#11ab60"; }
-        else if (s.indexOf("bilibili.com") !== -1 || s.indexOf("b23.tv") !== -1) { btnText = "B站主页"; btnColor = "#fb7299"; }
-        else if (s.indexOf("douyin.com") !== -1) { btnText = "抖音主页"; btnColor = "#161823"; }
-        else if (s.indexOf("t.me") !== -1) { btnText = "TG 群聊/频道"; btnColor = "#0088cc"; }
-        else if (s.indexOf("qm.qq.com") !== -1 || s.indexOf("qq.com") !== -1) { btnText = "QQ 群聊"; btnColor = "#12b7f5"; }
+        if (s.indexOf("github.com") !== -1 || s.indexOf("gitee.com") !== -1 || s.indexOf("gitlab.com") !== -1) { btnText = "查看源码"; btnColor = "#8957E5"; }
+        else if (s.indexOf("coolapk.com") !== -1) { btnText = "酷安主页"; btnColor = "#0FB567"; }
+        else if (s.indexOf("bilibili.com") !== -1 || s.indexOf("b23.tv") !== -1) { btnText = "B站主页"; btnColor = "#FB7299"; }
+        else if (s.indexOf("douyin.com") !== -1) { btnText = "抖音主页"; btnColor = "#121212"; }
+        else if (s.indexOf("t.me") !== -1) { btnText = "TG 群聊/频道"; btnColor = "#24A1DE"; }
+        else if (s.indexOf("qm.qq.com") !== -1 || s.indexOf("qq.com") !== -1) { btnText = "QQ 群聊"; btnColor = "#12B7F5"; }
+        else if (s.indexOf("weixin.qq.com") !== -1 || s.indexOf("wx.qq.com") !== -1 || s.indexOf("weixin") !== -1 || s.indexOf("wechat") !== -1) { btnText = "微信"; btnColor = "#07C160"; }
+        else if (s.indexOf("xiaohongshu.com") !== -1 || s.indexOf("xhslink.com") !== -1) { btnText = "小红书"; btnColor = "#FF2442"; }
+        else if (s.indexOf("kuaishou.com") !== -1 || s.indexOf("gifshow.com") !== -1 || s.indexOf("ksapp.com") !== -1) { btnText = "快手主页"; btnColor = "#FF4906"; }
+        else if (s.indexOf("weibo.com") !== -1 || s.indexOf("weibo.cn") !== -1) { btnText = "微博主页"; btnColor = "#E6162D"; }
+        else if (s.indexOf("zhihu.com") !== -1) { btnText = "知乎主页"; btnColor = "#0084FF"; }
+        else if (s.indexOf("tieba.baidu.com") !== -1) { btnText = "百度贴吧"; btnColor = "#4E6EF2"; }
+        else if (s.indexOf("douban.com") !== -1) { btnText = "豆瓣主页"; btnColor = "#22AC38"; }
+        else if (s.indexOf("youtube.com") !== -1 || s.indexOf("youtu.be") !== -1) { btnText = "YouTube"; btnColor = "#FF0000"; }
+        else if (s.indexOf("reddit.com") !== -1 || s.indexOf("redd.it") !== -1) { btnText = "Reddit"; btnColor = "#FF4500"; }
+        else if (s.indexOf("discord.com") !== -1 || s.indexOf("discord.gg") !== -1) { btnText = "Discord"; btnColor = "#5865F2"; }
+        else if (s.indexOf("twitter.com") !== -1 || s.indexOf("x.com") !== -1) { btnText = "X / Twitter"; btnColor = "#000000"; }
+        else if (s.indexOf("tiktok.com") !== -1) { btnText = "TikTok"; btnColor = "#010101"; }
+        else if (s.indexOf("instagram.com") !== -1) { btnText = "Instagram"; btnColor = "#E1306C"; }
+        else if (s.indexOf("facebook.com") !== -1 || s.indexOf("fb.com") !== -1) { btnText = "Facebook"; btnColor = "#1877F2"; }
+        else if (s.indexOf("whatsapp.com") !== -1 || s.indexOf("wa.me") !== -1) { btnText = "WhatsApp"; btnColor = "#25D366"; }
+        else if (s.indexOf("threads.net") !== -1) { btnText = "Threads"; btnColor = "#101010"; }
     }
     const sourceBtn = app.source ? `<a href="${app.source}" target="_blank" class="footer-btn btn-secondary" style="background:var(--modal-info-bg); color:${btnColor}; font-size:12px;">${btnText}</a>` : `<div class="footer-btn" style="visibility:hidden;"></div>`;
     let downloadText = "立即下载"; let downloadColor = "#007AFF";
     if (app.url) {
         const d = app.url.toLowerCase();
-        if (d.indexOf("123pan.com") !== -1 || d.indexOf("123912.com") !== -1) { downloadText = "123云盘"; downloadColor = "#2d72f1"; } 
-        else if (d.indexOf("lanzou") !== -1 || d.indexOf("lanzv") !== -1 || d.indexOf("lanzx") !== -1 || d.indexOf("lanzp") !== -1) { downloadText = "蓝奏云"; downloadColor = "#00adff"; }
+        if (d.indexOf("123pan.com") !== -1 || d.indexOf("123912.com") !== -1) { downloadText = "123云盘"; downloadColor = "#0064FF"; } 
+        else if (d.indexOf("lanzou") !== -1 || d.indexOf("lanzv") !== -1 || d.indexOf("lanzx") !== -1 || d.indexOf("lanzp") !== -1) { downloadText = "蓝奏云"; downloadColor = "#398BFC"; }
+        else if (d.indexOf("github.com") !== -1 && (d.endsWith(".apk") || d.endsWith(".zip"))) { downloadText = "GitHub直链"; downloadColor = "#238636"; }
+        else if (d.indexOf("alist") !== -1) { downloadText = "AList"; downloadColor = "#3D8BFF"; }
+        else if (d.indexOf("pan.baidu.com") !== -1 || d.indexOf("yun.baidu.com") !== -1) { downloadText = "百度网盘"; downloadColor = "#2468F2"; }
+        else if (d.indexOf("pan.xunlei.com") !== -1 || d.indexOf("yunpan.xunlei.com") !== -1) { downloadText = "迅雷云盘"; downloadColor = "#0B6CF5"; }
+        else if (d.indexOf("cloud.189.cn") !== -1 || d.indexOf("e.189.cn") !== -1) { downloadText = "天翼云盘"; downloadColor = "#E2001A"; }
+        else if (d.indexOf("caiyun.139.com") !== -1 || d.indexOf("yun.139.com") !== -1) { downloadText = "移动云盘"; downloadColor = "#00B252"; }
         else if (d.indexOf("quark.cn") !== -1) { downloadText = "夸克网盘"; downloadColor = "#00c9b0"; }
         else if (d.indexOf("alipan.com") !== -1 || d.indexOf("aliyundrive.com") !== -1) { downloadText = "阿里云盘"; downloadColor = "#6356ff"; }
         else if (d.indexOf("weiyun.com") !== -1) { downloadText = "腾讯微云"; downloadColor = "#3072f6"; }
-        else if (d.indexOf("github.com") !== -1 && (d.endsWith(".apk") || d.endsWith(".zip"))) { downloadText = "GitHub直链"; downloadColor = "#24292f"; }
+        else if (d.indexOf("drive.google.com") !== -1) { downloadText = "Google Drive"; downloadColor = "#1A73E8"; }
+        else if (d.indexOf("mediafire.com") !== -1) { downloadText = "MediaFire"; downloadColor = "#1DAAE8"; }
+        else if (d.indexOf("mypikpak.com") !== -1 || d.indexOf("pikpak.com") !== -1) { downloadText = "PikPak"; downloadColor = "#2B6EFB"; }
+        else if (d.indexOf("mega.nz") !== -1 || d.indexOf("mega.co.nz") !== -1) { downloadText = "Mega"; downloadColor = "#D9272E"; }
     }
     document.getElementById('modal-body').innerHTML = `
-        <div class="modal-header"><div class="modal-icon-wrap"><img src="${app.icon}" class="modal-icon"></div><div class="modal-app-name">${app.name}</div></div>
+        <div class="modal-header"><div class="modal-icon-wrap"><img src="${app.icon}" class="modal-icon" oncontextmenu="return false" draggable="false"></div><div class="modal-app-name">${app.name}</div></div>
         <div class="modal-info-box">
             <div class="info-row"><div class="info-left"><span class="info-label">版本</span><span class="info-value">${app.version}</span></div><div class="info-right" style="width:110px"><span class="info-label">大小</span><span class="info-value">${app.size}</span></div></div>
             <div class="info-row"><div class="info-left"><span class="info-label">系统</span><span class="info-value">${app.system}</span></div><div class="info-right" style="width:110px"><span class="info-label">类型</span><span class="info-value">${app.mod || '原版'}</span></div></div>
             <div class="pkg-section"><span class="info-label">应用包名</span><div class="pkg-value">${app.pkg}</div></div>
         </div>
         <div class="section-title">📸 应用截图</div>
-        <div class="screenshot-container" id="screenshot-list">${app.screenshots.map((s, idx) => `<div class="screenshot-wrap" id="sw-${idx}"><img src="${s}" class="screenshot-img" loading="lazy" decoding="async" onclick="openPreview(${idx})" onload="onScreenshotLoad(this, 'sw-'+${idx})" onerror="onScreenshotError('sw-'+${idx})"></div>`).join('')}</div>
+        <div class="screenshot-container" id="screenshot-list">${app.screenshots.map((s, idx) => `<div class="screenshot-wrap" id="sw-${idx}"><img src="${s}" class="screenshot-img" loading="lazy" decoding="async" onclick="openPreview(${idx})" onload="onScreenshotLoad(this, 'sw-'+${idx})" onerror="onScreenshotError('sw-'+${idx})" oncontextmenu="return false" draggable="false"></div>`).join('')}</div>
         <div class="section-title">📝 应用介绍</div><div class="app-intro">${app.intro}</div>
         <div class="modal-footer" style="gap: 8px;">
             <button class="footer-btn btn-secondary" style="font-size:12px;" onclick="handleBack()">返回列表</button>
@@ -2524,25 +2973,104 @@ function openModal(index) {
         //  SIDEBAR — 侧滑栏逻辑
         // ════════════════════════════════════════
 
-        // blogs.json 路径 —— 与 index.html 同目录，部署后自动读取
-        const BLOGS_JSON_URL = 'blogs.json';
-        // 将 blogs.json 里的 path/url 字段解析为可跳转的完整链接
-        function resolveBlogLink(b) {
-            // 优先用 url 字段，其次用 path 字段
-            const raw = b.url || b.path || '';
-            if (!raw) return '#';
-            // 已经是完整 URL，直接返回
-            if (raw.startsWith('http://') || raw.startsWith('https://')) return raw;
-            // 相对路径：基于当前页面 origin + pathname 目录拼接
-            const base = window.location.href.replace(/\/[^\/]*$/, '/');
-            return base + raw.replace(/^\.?\//, '');
+        // tools.json 路径 —— 与 index.html 同目录，部署后自动读取
+        const TOOLS_JSON_URL = 'tools.json';
+        // posts.json 路径
+        const POSTS_JSON_URL = 'posts.json';
+        const POSTS_BASE_PATH = './posts/';
+
+        // ── 知识文档分类列表 ──
+        // ── 知识文档分类：纯文字，与 posts.json 的 category 字段完全一致 ──
+        const POST_CAT_LABELS = [
+            '玩机科普',
+            '实操教程',
+            '网络知识',
+        ];
+        // ── 知识文档分类图标（只在代码里维护，posts.json 无需填 emoji）──
+        const POST_CAT_ICONS = {
+            '玩机科普': '⚡',
+            '实操教程': '🛠️',
+            '网络知识': '🌐',
+        };
+        function getIconForPostCat(name) {
+            return POST_CAT_ICONS[name] || '📄';
+        }
+
+        // ── 分类列表：只需在这里增删，页面自动同步 ──
+        const CAT_LABELS = [
+            '官方网站',
+            '综合效率',
+            '资源下载',
+            '图像视听',
+            '文档处理',
+            '网络工具',
+            '视频提取',
+            '聚合搜索',
+        ];
+        const CAT_MAP = {};
+        CAT_LABELS.forEach(c => { CAT_MAP[c] = c; });
+
+        // ── 图标匹配：新增分类只需在此加一行 ──
+        function getIconForCat(name) {
+            const icons = {
+                '官方网站': '🌐',
+                '综合效率': '🛠️',
+                '资源下载': '📦',
+                '图像视听': '🖼️',
+                '文档处理': '📄',
+                '网络工具': '🧰',
+                '视频提取': '🚀',
+                '聚合搜索': '🔎',
+            };
+            return icons[name] || '🔧';
+        }
+
+        // ── 自动生成手风琴 DOM，CAT_LABELS 改了这里自动跟着变 ──
+        function buildCatNav() {
+            const nav = document.getElementById('sidebar-cat-nav');
+            if (!nav) return;
+            const arrowSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>`;
+            nav.innerHTML = CAT_LABELS.map((label, idx) => `
+                <div class="sidebar-cat-row" id="cat-row-${idx}" data-cat="${label}">
+                    <button class="sidebar-cat-head" onclick="toggleCatRow(${idx})">
+                        <span class="sidebar-cat-head-icon">${getIconForCat(label)}</span>
+                        <span class="sidebar-cat-head-label">${label}</span>
+                        <span class="sidebar-cat-head-arrow">${arrowSVG}</span>
+                    </button>
+                    <div class="sidebar-cat-content">
+                        <div class="sidebar-cat-content-inner" id="cat-content-${idx}"></div>
+                    </div>
+                </div>`
+            ).join('');
         }
 
         let sidebarOpen = false;
-        let _sidebarClosing = false;   // 标记：手动关闭侧栏触发的 history.back
-        let _disclaimerClosing = false; // 标记：关闭免责声明触发的 history.back
-        let blogsLoaded = false;
+        let _sidebarClosing = false;
+        let _disclaimerClosing = false;
+        let toolsLoaded = false;
+        let allTools = [];
+        let currentToolCat = 'all';
         let sbTouchStartX = 0, sbTouchStartY = 0;
+
+        // ── 知识文档状态 ──
+        let postsLoaded = false;
+        let allPosts = [];
+        let currentSidebarTab = 'tools'; // 'tools' | 'posts'
+        let openPostCatRow = null;
+
+        function switchSidebarTab(tab) {
+            currentSidebarTab = tab;
+            document.getElementById('tab-tools').classList.toggle('active', tab === 'tools');
+            document.getElementById('tab-posts').classList.toggle('active', tab === 'posts');
+            document.getElementById('panel-tools').style.display = tab === 'tools' ? '' : 'none';
+            document.getElementById('panel-posts').style.display = tab === 'posts' ? '' : 'none';
+            if (tab === 'posts') {
+                if (!document.getElementById('post-cat-row-0')) buildPostCatNav();
+                if (!postsLoaded) {
+                    loadPosts();
+                }
+            }
+        }
 
         function openSidebar() {
             if (sidebarOpen) return;
@@ -2554,15 +3082,24 @@ function openModal(index) {
                 overlay.classList.add('active');
                 sidebar.classList.add('open');
             });
-            // 锁定滚动（不用 overflow:hidden，避免关闭时抖动）
             _scrollY = window.scrollY;
             document.body.style.position = 'fixed';
             document.body.style.top = '-' + _scrollY + 'px';
             document.body.style.left = '0';
             document.body.style.right = '0';
-            if (!blogsLoaded) loadBlogs();
+            if (!toolsLoaded) { loadTools(); }
+            if (!postsLoaded) { loadPosts(); }
+            // 首次打开时动态生成分类行（之后直接复用）
+            if (!document.getElementById('cat-row-0')) buildCatNav();
             const statApps = document.getElementById('stat-apps');
-            if (statApps && myApps.length) statApps.textContent = myApps.length;
+            if (statApps) {
+                let total = 0;
+                for (let i = 1; i <= totalPages; i++) {
+                    const r = pageCache[i];
+                    if (r && r.status === 'ok') total += r.apps.length;
+                }
+                if (total > 0) statApps.textContent = total;
+            }
             window.history.pushState({ state: 'sidebar' }, '');
         }
 
@@ -2574,13 +3111,11 @@ function openModal(index) {
             overlay.classList.remove('active');
             sidebar.classList.remove('open');
             setTimeout(() => { overlay.style.display = 'none'; }, 380);
-            // 恢复滚动位置，精准还原，不触发重排闪动
             document.body.style.position = '';
             document.body.style.top = '';
             document.body.style.left = '';
             document.body.style.right = '';
             window.scrollTo({ top: _scrollY || 0, behavior: 'instant' });
-            // 手动关闭（非返回键）时主动回退 history，保持栈一致
             if (!fromPopstate) {
                 _sidebarClosing = true;
                 window.history.back();
@@ -2596,70 +3131,289 @@ function openModal(index) {
         document.addEventListener('touchend', e => {
             const dx = sbTouchStartX - e.changedTouches[0].clientX;
             const dy = Math.abs(e.changedTouches[0].clientY - sbTouchStartY);
-            // 弹窗或截图预览打开时，禁用侧滑手势
             const modalOpen = document.getElementById('modal-overlay').classList.contains('active');
             const previewOpen = document.getElementById('preview-overlay').classList.contains('active');
             if (modalOpen || previewOpen) return;
-            // 从右边缘向左划：打开
             if (!sidebarOpen && sbTouchStartX > window.innerWidth - 40 && dx > 40 && dy < 60) {
                 openSidebar();
             }
-            // 侧栏打开时向右划：关闭
             if (sidebarOpen && dx < -50 && dy < 80) {
                 closeSidebar();
             }
         }, { passive: true });
 
-        // ESC 关闭
         document.addEventListener('keydown', e => {
             if (e.key === 'Escape' && sidebarOpen) closeSidebar();
         });
 
-        // ── 加载 blogs.json ──
-        async function loadBlogs() {
-            const wrap = document.getElementById('blog-list-wrap');
+        // ── 手风琴分类展开/收起（精准高度动画，iOS 丝滑手感）──
+        let openCatRow = null;
+
+        function collapseRow(row) {
+            const content = row.querySelector('.sidebar-cat-content');
+            if (!content) return;
+            // 固定当前真实高度，然后在下一帧动画到 0，避免跳帧
+            const h = content.getBoundingClientRect().height;
+            content.style.height = h + 'px';
+            // 强制一次回流，让浏览器记住起始高度
+            void content.offsetHeight;
+            requestAnimationFrame(() => {
+                content.style.height = '0px';
+                row.classList.remove('open');
+            });
+        }
+
+        function expandRow(row, idx) {
+            const content = row.querySelector('.sidebar-cat-content');
+            if (!content) return;
+            // 先让行进入 open 状态（opacity/arrow 立即跟上），高度从 0 开始
+            row.classList.add('open');
+            content.style.height = '0px';
+            // 测量目标高度（内容已渲染，auto 后立即读取）
+            content.style.height = 'auto';
+            const targetH = content.scrollHeight;
+            content.style.height = '0px';
+            // 等两帧：第一帧让 0px 生效进布局树，第二帧再启动过渡
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    content.style.height = targetH + 'px';
+                    // 动画结束后改为 auto，允许内容动态变化
+                    const onEnd = (e) => {
+                        if (e.propertyName !== 'height') return;
+                        content.removeEventListener('transitionend', onEnd);
+                        if (row.classList.contains('open')) {
+                            content.style.height = 'auto';
+                        }
+                    };
+                    content.addEventListener('transitionend', onEnd);
+                });
+            });
+        }
+
+        function toggleCatRow(idx) {
+            const row = document.getElementById('cat-row-' + idx);
+            if (!row) return;
+            const isOpen = row.classList.contains('open');
+
+            // 收起所有已展开的行
+            document.querySelectorAll('.sidebar-cat-row.open').forEach(r => {
+                if (r !== row) collapseRow(r);
+            });
+
+            if (!isOpen) {
+                openCatRow = idx;
+                // 如果内容还没渲染，先加载再展开
+                if (toolsLoaded) {
+                    renderCatContent(idx);
+                    expandRow(row, idx);
+                } else {
+                    expandRow(row, idx); // 先展开骨架
+                    loadTools().then(() => {
+                        renderCatContent(idx);
+                        // 内容高度变了，重新测量并更新
+                        const content = row.querySelector('.sidebar-cat-content');
+                        if (content && row.classList.contains('open')) {
+                            content.style.height = content.scrollHeight + 'px';
+                            content.addEventListener('transitionend', function onEnd2(e) {
+                                if (e.propertyName !== 'height') return;
+                                content.removeEventListener('transitionend', onEnd2);
+                                if (row.classList.contains('open')) content.style.height = 'auto';
+                            });
+                        }
+                    });
+                }
+            } else {
+                openCatRow = null;
+                collapseRow(row);
+            }
+        }
+
+        function renderCatContent(idx) {
+            const cat = CAT_LABELS[idx];
+            const contentEl = document.getElementById('cat-content-' + idx);
+            if (!contentEl) return;
+            const filtered = allTools.filter(t => t.category === cat);
+            if (!filtered || !filtered.length) {
+                contentEl.innerHTML = '<div class="sidebar-empty"><div class="sidebar-empty-icon">📭</div>该分类暂无工具</div>';
+                return;
+            }
+            contentEl.innerHTML = '<div class="tool-list-inner">' + filtered.map(t => {
+                const href = t.url || '#';
+                const isExternal = href.startsWith('http');
+                const iconHtml = t.icon
+                    ? `<img class="tool-item-icon" src="${t.icon}" alt="${t.title || ''}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+                    : '';
+                const fallback = `<span class="tool-item-icon-emoji" style="display:${t.icon ? 'none' : 'flex'}">🔧</span>`;
+                return `
+                <a class="tool-item" href="${href}" target="${isExternal ? '_blank' : '_self'}" rel="noopener">
+                    <div class="tool-item-icon-wrap">${iconHtml}${fallback}</div>
+                    <div class="tool-item-info">
+                        <div class="tool-item-title">${t.title || '未命名工具'}</div>
+                        ${t.description ? `<div class="tool-item-desc">${t.description}</div>` : ''}
+                    </div>
+                    <span class="tool-item-arrow">›</span>
+                </a>`;
+            }).join('') + '</div>';
+        }
+
+        // ── 兼容旧接口 ──
+        function toggleCatDropdown() {}
+        function selectCat(el) {}
+        function switchToolTab(cat) {}
+        function renderTools(tools, cat) {
+            // 加载完成后刷新当前展开行的高度
+            if (openCatRow !== null) {
+                renderCatContent(openCatRow);
+                const row = document.getElementById('cat-row-' + openCatRow);
+                if (row) {
+                    const content = row.querySelector('.sidebar-cat-content');
+                    if (content && row.classList.contains('open')) {
+                        content.style.height = content.scrollHeight + 'px';
+                    }
+                }
+            }
+        }
+
+        // ── 加载 tools.json ──
+        async function loadTools() {
+            if (toolsLoaded) return;
             try {
-                const res = await fetch(BLOGS_JSON_URL + '?t=' + Date.now());
+                const res = await fetch(TOOLS_JSON_URL + '?t=' + Date.now());
                 if (!res.ok) throw new Error('HTTP ' + res.status);
-                const blogs = await res.json();
-                blogsLoaded = true;
-                renderBlogs(blogs);
-                const statEl = document.getElementById('stat-articles');
-                if (statEl) statEl.textContent = blogs.length;
+                const tools = await res.json();
+                const processed = tools.map(t => ({
+                    ...t,
+                    icon: t.icon
+                        ? (t.icon.startsWith('http') || t.icon.startsWith('assets/')
+                            ? t.icon
+                            : 'assets/toolIcons/' + t.icon)
+                        : ''
+                }));
+                allTools = processed;
+                toolsLoaded = true;
+                const statEl = document.getElementById('stat-tools');
+                if (statEl) statEl.textContent = processed.length;
+                // 填充当前展开行
+                if (openCatRow !== null) renderCatContent(openCatRow);
             } catch (e) {
-                blogsLoaded = false;
-                wrap.innerHTML = `
-                    <div class="sidebar-empty">
-                        <div class="sidebar-empty-icon">📝</div>
-                        尚未配置 blogs.json 或读取失败
-                    </div>`;
-                const statFail = document.getElementById('stat-articles');
+                toolsLoaded = false;
+                // 在当前展开行显示错误
+                if (openCatRow !== null) {
+                    const contentEl = document.getElementById('cat-content-' + openCatRow);
+                    if (contentEl) contentEl.innerHTML = '<div class="sidebar-empty"><div class="sidebar-empty-icon">🔧</div>尚未配置 tools.json 或读取失败</div>';
+                }
+                const statFail = document.getElementById('stat-tools');
                 if (statFail) statFail.textContent = '0';
             }
         }
 
-        function renderBlogs(blogs) {
-            const wrap = document.getElementById('blog-list-wrap');
-            if (!blogs || !blogs.length) {
-                wrap.innerHTML = '<div class="sidebar-empty"><div class="sidebar-empty-icon">📭</div>暂无文章</div>';
+        function updateTabCounts(tools) {}
+
+        // ════ 知识文档 posts.json 逻辑 ════
+
+        function buildPostCatNav() {
+            const nav = document.getElementById('sidebar-posts-nav');
+            if (!nav) return;
+            const arrowSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>`;
+            nav.innerHTML = POST_CAT_LABELS.map((label, idx) => `
+                <div class="sidebar-cat-row" id="post-cat-row-${idx}" data-cat="${label}">
+                    <button class="sidebar-cat-head" onclick="togglePostCatRow(${idx})">
+                        <span class="sidebar-cat-head-icon">${getIconForPostCat(label)}</span>
+                        <span class="sidebar-cat-head-label">${label}</span>
+                        <span class="sidebar-cat-head-arrow">${arrowSVG}</span>
+                    </button>
+                    <div class="sidebar-cat-content">
+                        <div class="sidebar-cat-content-inner" id="post-cat-content-${idx}"></div>
+                    </div>
+                </div>`
+            ).join('');
+        }
+
+        function togglePostCatRow(idx) {
+            const row = document.getElementById('post-cat-row-' + idx);
+            if (!row) return;
+            const isOpen = row.classList.contains('open');
+
+            // 收起所有已展开的行
+            document.querySelectorAll('#sidebar-posts-nav .sidebar-cat-row.open').forEach(r => {
+                if (r !== row) collapseRow(r);
+            });
+
+            if (!isOpen) {
+                openPostCatRow = idx;
+                if (postsLoaded) {
+                    renderPostCatContent(idx);
+                    expandRow(row, idx);
+                } else {
+                    expandRow(row, idx);
+                    loadPosts().then(() => {
+                        renderPostCatContent(idx);
+                        const content = row.querySelector('.sidebar-cat-content');
+                        if (content && row.classList.contains('open')) {
+                            content.style.height = content.scrollHeight + 'px';
+                            content.addEventListener('transitionend', function onEnd2(e) {
+                                if (e.propertyName !== 'height') return;
+                                content.removeEventListener('transitionend', onEnd2);
+                                if (row.classList.contains('open')) content.style.height = 'auto';
+                            });
+                        }
+                    });
+                }
+            } else {
+                openPostCatRow = null;
+                collapseRow(row);
+            }
+        }
+
+        function renderPostCatContent(idx) {
+            const cat = POST_CAT_LABELS[idx];
+            const contentEl = document.getElementById('post-cat-content-' + idx);
+            if (!contentEl) return;
+
+            let filtered;
+            if (cat === '最近更新') {
+                // 最近更新：取最后加入的10条（posts.json 里越靠后越新）
+                filtered = [...allPosts].reverse().slice(0, 10);
+            } else {
+                filtered = allPosts.filter(p => p.category === cat);
+            }
+
+            if (!filtered || !filtered.length) {
+                contentEl.innerHTML = '<div class="sidebar-empty"><div class="sidebar-empty-icon">📭</div>暂无文档</div>';
                 return;
             }
-            const list = document.createElement('div');
-            list.className = 'blog-list-inner';
-            list.innerHTML = blogs.map(b => {
-                const href = resolveBlogLink(b);
-                const isExternal = href.startsWith('http');
+            contentEl.innerHTML = '<div class="tool-list-inner">' + filtered.map(p => {
+                const href = POSTS_BASE_PATH + p.path;
                 return `
-                <a class="blog-item" href="${href}" target="${isExternal ? '_blank' : '_self'}" rel="noopener">
-                    <div class="blog-item-bar"></div>
-                    <div class="blog-item-info">
-                        <div class="blog-item-title">${b.title || '无标题'}</div>
-                    </div>
-                    <span class="blog-item-arrow">›</span>
+                <a class="post-item" href="${href}" target="_blank" rel="noopener">
+                    <div class="post-item-bar"></div>
+                    <span class="post-item-title">${p.title || '未命名文档'}</span>
+                    <span class="post-item-arrow">›</span>
                 </a>`;
-            }).join('');
-            wrap.innerHTML = '';
-            wrap.appendChild(list);
+            }).join('') + '</div>';
+        }
+
+        async function loadPosts() {
+            if (postsLoaded) return;
+            try {
+                const res = await fetch(POSTS_JSON_URL + '?t=' + Date.now());
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const posts = await res.json();
+                allPosts = posts;
+                postsLoaded = true;
+                const statEl = document.getElementById('stat-posts');
+                if (statEl) statEl.textContent = posts.length;
+                // 填充当前展开行
+                if (openPostCatRow !== null) renderPostCatContent(openPostCatRow);
+            } catch (e) {
+                postsLoaded = false;
+                if (openPostCatRow !== null) {
+                    const contentEl = document.getElementById('post-cat-content-' + openPostCatRow);
+                    if (contentEl) contentEl.innerHTML = '<div class="sidebar-empty"><div class="sidebar-empty-icon">📄</div>尚未配置 posts.json 或读取失败</div>';
+                }
+                const statFail = document.getElementById('stat-posts');
+                if (statFail) statFail.textContent = '0';
+            }
         }
 
 
@@ -2670,6 +3424,24 @@ function openModal(index) {
             requestAnimationFrame(() => overlay.classList.add('active'));
             document.body.style.overflow = 'hidden';
             window.history.pushState({ state: 'disclaimer' }, '');
+
+            // 5秒倒计时
+            const btn = overlay.querySelector('.disclaimer-agree-btn');
+            if (btn) {
+                btn.disabled = true;
+                let sec = 5;
+                btn.textContent = `我已阅读并了解（${sec}s）`;
+                const timer = setInterval(() => {
+                    sec--;
+                    if (sec <= 0) {
+                        clearInterval(timer);
+                        btn.disabled = false;
+                        btn.textContent = '我已阅读并了解';
+                    } else {
+                        btn.textContent = `我已阅读并了解（${sec}s）`;
+                    }
+                }, 1000);
+            }
         }
 
         function closeDisclaimer(fromPopstate) {
@@ -2723,7 +3495,7 @@ function openModal(index) {
         <!-- 顶部 -->
         <div class="sidebar-header">
             <div class="sidebar-header-row">
-                <div class="sidebar-title">个人博客</div>
+                <div class="sidebar-title">智汇空间</div>
                 <button class="sidebar-close" onclick="closeSidebar()">✕</button>
             </div>
             <div class="sidebar-stats">
@@ -2732,21 +3504,30 @@ function openModal(index) {
                     <div class="sidebar-stat-label">应用</div>
                 </div>
                 <div class="sidebar-stat-item">
-                    <div class="sidebar-stat-num" id="stat-articles">—</div>
-                    <div class="sidebar-stat-label">文章</div>
+                    <div class="sidebar-stat-num" id="stat-tools">—</div>
+                    <div class="sidebar-stat-label">网站</div>
+                </div>
+                <div class="sidebar-stat-item">
+                    <div class="sidebar-stat-num" id="stat-posts">—</div>
+                    <div class="sidebar-stat-label">文档</div>
                 </div>
             </div>
         </div>
 
         <!-- 内容 -->
         <div class="sidebar-body" id="sidebar-body">
-            <!-- 博客文章列表 -->
-            <div class="sidebar-section-label">文章列表</div>
-            <div id="blog-list-wrap">
-                <!-- 骨架屏占位 -->
-                <div class="blog-skeleton"></div>
-                <div class="blog-skeleton" style="opacity:0.6"></div>
-                <div class="blog-skeleton" style="opacity:0.35"></div>
+            <!-- Tab 切换栏 -->
+            <div class="sidebar-tab-bar" id="sidebar-tab-bar">
+                <button class="sidebar-tab active" id="tab-tools" onclick="switchSidebarTab('tools')">网站导航</button>
+                <button class="sidebar-tab" id="tab-posts" onclick="switchSidebarTab('posts')">知识文档</button>
+            </div>
+            <!-- 网站导航：分类手风琴导航 -->
+            <div class="sidebar-panel" id="panel-tools">
+                <div class="sidebar-cat-nav" id="sidebar-cat-nav"></div>
+            </div>
+            <!-- 知识文档：分类手风琴 -->
+            <div class="sidebar-panel" id="panel-posts" style="display:none">
+                <div class="sidebar-cat-nav" id="sidebar-posts-nav"></div>
             </div>
         </div>
     </div>
@@ -2773,23 +3554,30 @@ function openModal(index) {
                         本站仅对互联网上公开传播的应用程序进行信息整理与收录，提供应用名称、版本、简介及外部下载链接，<strong>不直接存储、托管或分发任何应用安装包（APK）文件</strong>。所有下载链接均指向蓝奏云、123云盘等第三方网盘平台，文件实际存储于上述平台，本站对相关文件的安全性、完整性、合法性及可用性不承担任何责任。链接失效或文件内容变更等情况，亦与本站无关。
                     </div>
                 </div>
+                
+                <div class="disc-section">
+                    <div class="disc-section-title">🌐 关于网站导航</div>
+                    <div class="disc-section-body">
+                        本站收录的第三方网站（包括但不限于资源库、素材网、技术论坛等）均由搜索引擎及公开信息整理而成，旨在方便用户获取信息。<strong>本站与所列网站无任何隶属、合作或商业关系</strong>。本站无法对第三方网站的内容实时性、安全性及服务质量进行监控，用户在访问上述网站时，请务必自行甄别信息真伪，防止诈骗、病毒感染及隐私泄露。因访问第三方网站产生的任何纠纷或损失，本站概不负责。
+                    </div>
+                </div>
 
                 <div class="disc-section">
                     <div class="disc-section-title">🔧 关于修改版 / 第三方版本</div>
                     <div class="disc-section-body">
                         本站收录的部分内容涉及第三方修改版本，此类内容<strong>仅供个人技术研究与学习交流，严禁用于任何商业用途</strong>。修改版软件可能违反原软件的用户协议，因使用修改版软件导致的账号封禁、数据丢失、设备损坏或其他一切损失，由使用者自行承担全部责任，与本站无关。
                     </div>
-                </div>
-
+                </div>                
+                
                 <div class="disc-section">
                     <div class="disc-section-title">⚙️ 关于 Root / ADB 等高级操作</div>
                     <div class="disc-section-body">
-                        本站收录的部分工具涉及 Root 权限、ADB 调试等高风险操作，可能导致设备保修失效、系统不稳定或数据丢失。请在充分了解风险后谨慎操作，本站对由此产生的一切后果不承担任何法律责任。
+                        本站收录的部分工具涉及 Root 权限、ADB 调试等高风险操作，可能导致设备保修失效、系统不稳定、指纹支付失效或数据永久丢失。<strong>本站不提供技术担保及救砖服务，请在充分了解风险后谨慎操作。</strong>本站对由此产生的一切后果不承担任何法律责任。
                     </div>
                 </div>
 
                 <div class="disc-section">
-                    <div class="disc-section-title">📝 关于博客文章内容</div>
+                    <div class="disc-section-title">📝 关于知识文档</div>
                     <div class="disc-section-body">
                         本站发布的技术文章、教程及攻略均基于作者个人实践经验，仅供参考，不构成专业建议。文章内容可能随软件版本更新而过时，本站不保证内容的时效性与准确性。读者按文章操作造成的任何问题，由操作者本人负责。
                     </div>
@@ -2798,7 +3586,14 @@ function openModal(index) {
                 <div class="disc-section">
                     <div class="disc-section-title">©️ 关于版权与知识产权</div>
                     <div class="disc-section-body">
-                        本站尊重原创，所有收录内容的版权归原作者及相关权利人所有。若您认为本站收录的内容侵犯了您的合法权益，请及时与我们联系，我们将在核实后第一时间予以删除处理。
+                        本站尊重原创，所有收录内容的版权归原作者及相关权利人所有。本站仅对公开信息进行整理，不代表本站拥有相关软件或内容的著作权。若您认为本站收录内容侵犯了您的权益，请按下方“避风港原则”条款联系我们处理。
+                    </div>
+                </div>
+                
+                <div class="disc-section">
+                    <div class="disc-section-title">⚖️ 关于侵权投诉与“避风港”原则</div>
+                    <div class="disc-section-body">
+                        本站作为非盈利性信息整理平台，严格遵守《信息网络传播权保护条例》及“避风港原则”。<strong>若权利人发现本站链接的内容侵犯了您的合法权益，请提供有效的权属证明材料发送邮件至 [你的邮箱地址] 与我们联系</strong>。我们将在核实后的 24 小时内对相关内容进行断开链接或下架处理。
                     </div>
                 </div>
 
