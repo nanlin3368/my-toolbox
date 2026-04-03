@@ -22,6 +22,59 @@
             });
         })();
     </script>
+    <!-- ════ 源码防护脚本 ════ -->
+    <script>
+    (function() {
+        /* ① 禁用右键菜单 */
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        /* ② 禁用危险快捷键 */
+        document.addEventListener('keydown', function(e) {
+            var k = e.key ? e.key.toLowerCase() : '';
+            // F12
+            if (e.key === 'F12') { e.preventDefault(); return false; }
+            // Ctrl+U 查看源码 / Ctrl+S 保存 / Ctrl+P 打印
+            if (e.ctrlKey && !e.shiftKey && ['u','s','p'].includes(k)) {
+                e.preventDefault(); return false;
+            }
+            // Ctrl+Shift+I / J / C  DevTools
+            if (e.ctrlKey && e.shiftKey && ['i','j','c'].includes(k)) {
+                e.preventDefault(); return false;
+            }
+        });
+
+        /* ③ DevTools 尺寸检测：侧边弹出时宽度差 > 160px */
+        var _blocked = false;
+        function checkDevTools() {
+            var widthGap  = window.outerWidth  - window.innerWidth;
+            var heightGap = window.outerHeight - window.innerHeight;
+            if ((widthGap > 160 || heightGap > 160) && !_blocked) {
+                _blocked = true;
+                document.body.innerHTML =
+                    '<div style="display:flex;align-items:center;justify-content:center;' +
+                    'height:100vh;background:#F2F2F7;font-family:-apple-system,sans-serif;">' +
+                    '<p style="font-size:18px;color:#3C3C43;text-align:center;">⚠️ 请关闭开发者工具后刷新页面</p></div>';
+            }
+        }
+        setInterval(checkDevTools, 1000);
+
+        /* ④ console 陷阱：debugger 会持续触发，让控制台卡住 */
+        var _consoleOpen = false;
+        var _trap = /./;
+        _trap.toString = function() {
+            _consoleOpen = true;
+            return '⚠️ 禁止调试';
+        };
+        setInterval(function() {
+            _consoleOpen = false;
+            console.log('%c', _trap);
+        }, 2000);
+
+    })();
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>应用档案</title>
@@ -30,13 +83,29 @@
     <!-- theme-color 由防闪屏脚本根据已存储主题动态注入，确保与用户选择同步 -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="实用软件集">
-    <link rel="apple-touch-icon" href="icon.png">
+    <meta name="apple-mobile-web-app-title" content="应用档案">
+    <link rel="apple-touch-icon" href="assets/logo.png">
+    <link rel="icon" href="assets/logo.png" type="image/png">
 
     <style>
         /* ============================================
            iOS-STYLE DESIGN SYSTEM
         ============================================ */
+
+        /* ============================================
+           防护：禁止文本框选复制
+        ============================================ */
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        /* 允许输入框正常选中 */
+        input, textarea {
+            user-select: text;
+            -webkit-user-select: text;
+        }
 
         /* iOS Light Mode */
         :root {
@@ -89,6 +158,419 @@
             --shadow-1: rgba(0,0,0,0.3);
             --shadow-2: rgba(0,0,0,0.4);
         }
+
+        /* ============================================
+           iOS ACCENT COLOR THEMES (Light)
+        ============================================ */
+
+        /* 默认：靛蓝 (Indigo / iOS Blue) — 与 :root 一致，无需覆盖 */
+
+        /* 薄荷绿 (Mint) */
+        [data-accent="mint"] {
+            --accent-color: #00C7BE;
+            --accent-secondary: #34C759;
+        }
+        [data-accent="mint"][data-theme="dark"] {
+            --accent-color: #63E6E2;
+            --accent-secondary: #30D158;
+        }
+
+        /* 珊瑚红 (Pink) */
+        [data-accent="pink"] {
+            --accent-color: #FF2D55;
+            --accent-secondary: #FF6B6B;
+        }
+        [data-accent="pink"][data-theme="dark"] {
+            --accent-color: #FF375F;
+            --accent-secondary: #FF6B6B;
+        }
+
+        /* 紫色 (Purple) */
+        [data-accent="purple"] {
+            --accent-color: #AF52DE;
+            --accent-secondary: #BF5AF2;
+        }
+        [data-accent="purple"][data-theme="dark"] {
+            --accent-color: #BF5AF2;
+            --accent-secondary: #DA8FFF;
+        }
+
+        /* 橙色 (Orange) */
+        [data-accent="orange"] {
+            --accent-color: #FF9500;
+            --accent-secondary: #FF6B00;
+        }
+        [data-accent="orange"][data-theme="dark"] {
+            --accent-color: #FF9F0A;
+            --accent-secondary: #FF7A00;
+        }
+
+        /* 青色 (Teal) */
+        [data-accent="teal"] {
+            --accent-color: #30B0C7;
+            --accent-secondary: #00C7BE;
+        }
+        [data-accent="teal"][data-theme="dark"] {
+            --accent-color: #40C8E0;
+            --accent-secondary: #63E6E2;
+        }
+
+        /* 绿色 (Green) */
+        [data-accent="green"] {
+            --accent-color: #34C759;
+            --accent-secondary: #00C7BE;
+        }
+        [data-accent="green"][data-theme="dark"] {
+            --accent-color: #30D158;
+            --accent-secondary: #63E6E2;
+        }
+
+        /* ============================================
+           THEME PICKER PANEL
+        ============================================ */
+        #theme-picker-panel {
+            position: fixed;
+            bottom: 90px;
+            right: 16px;
+            z-index: 200;
+            background: var(--pagination-bg);
+            backdrop-filter: saturate(180%) blur(24px);
+            -webkit-backdrop-filter: saturate(180%) blur(24px);
+            border-radius: 18px;
+            padding: 14px 16px 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.18), 0 0 0 0.5px var(--card-border);
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 168px;
+            transform-origin: bottom right;
+            animation: picker-in 0.22s cubic-bezier(0.22,1,0.36,1) both;
+        }
+        @keyframes picker-in {
+            from { opacity: 0; transform: scale(0.88) translateY(8px); }
+            to   { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        #theme-picker-panel.visible { display: flex; }
+
+        .picker-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-sub);
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            padding-bottom: 2px;
+        }
+        .picker-colors {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+        }
+        .picker-swatch {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.15s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .picker-swatch:active { transform: scale(0.88); }
+        .picker-swatch.selected::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        .picker-label {
+            font-size: 10px;
+            color: var(--text-sub);
+            text-align: center;
+            margin-top: 2px;
+        }
+        .picker-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* ============================================
+           SETTINGS SHEET (iOS Control Center style)
+           从顶部下滑的半屏抽屉，毛玻璃效果
+        ============================================ */
+
+        /* 遮罩层：透明度过渡，GPU层 */
+        #settings-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 299;
+            background: rgba(0,0,0,0.28);
+            opacity: 0;
+            pointer-events: none;
+            will-change: opacity;
+            transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(0px);
+            -webkit-backdrop-filter: blur(0px);
+        }
+        #settings-overlay.visible {
+            opacity: 1;
+            pointer-events: auto;
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+        }
+
+        /* 面板：从顶部向下滑出 */
+        #settings-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 300;
+            /* 毛玻璃 */
+            background: rgba(var(--settings-panel-rgb, 242,242,247), 0.82);
+            backdrop-filter: saturate(180%) blur(32px);
+            -webkit-backdrop-filter: saturate(180%) blur(32px);
+            border-radius: 0 0 26px 26px;
+            box-shadow: 0 12px 48px rgba(0,0,0,0.22), 0 0 0 0.5px var(--card-border);
+            display: flex;
+            flex-direction: column;
+            /* 从顶部向上收起：translateY(-100%) */
+            will-change: transform;
+            transform: translateY(-102%);
+            transition: transform 0.42s cubic-bezier(0.32, 0.72, 0, 1);
+            padding-bottom: 12px;
+            max-height: 80dvh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        #settings-panel.open {
+            transform: translateY(0);
+        }
+
+        /* 深色模式背景变量 */
+        [data-theme="dark"] #settings-panel {
+            background: rgba(28,28,30,0.88);
+        }
+
+        /* 顶部指示条（iOS风格拖拽条） */
+        .settings-drag-bar {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 10px 0 4px;
+            flex-shrink: 0;
+        }
+        .settings-drag-bar::after {
+            content: '';
+            width: 36px;
+            height: 4px;
+            border-radius: 2px;
+            background: var(--border-color);
+        }
+
+        /* 标题行 */
+        .settings-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px 12px;
+            flex-shrink: 0;
+        }
+        .settings-title {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.4px;
+            color: var(--text-main);
+        }
+        .settings-close-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--fill-1);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-sub);
+            font-size: 13px;
+            font-weight: 600;
+            -webkit-tap-highlight-color: transparent;
+            transition: background 0.1s;
+        }
+        .settings-close-btn:active { background: var(--fill-2); }
+
+        /* 内容区：分隔线 + 分组 */
+        .settings-body {
+            padding: 0 14px 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        /* 快捷操作行：两列并排（深色 / 布局） */
+        .settings-quick-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        /* 快捷按钮块 */
+        .settings-quick-btn {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 14px 14px 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 1px 4px var(--shadow-1), 0 0 0 0.5px var(--card-border);
+            -webkit-tap-highlight-color: transparent;
+            transition: background 0.12s, transform 0.12s;
+            text-align: left;
+            width: 100%;
+        }
+        .settings-quick-btn:active {
+            background: var(--fill-1);
+            transform: scale(0.96);
+        }
+        .settings-quick-btn.active-state {
+            box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+        }
+        .settings-quick-btn.active-state .sqb-label,
+        .settings-quick-btn.active-state .sqb-icon {
+            color: var(--text-secondary);
+        }
+        .settings-quick-btn.active-state .sqb-toggle {
+            background: var(--accent-color);
+        }
+        .sqb-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .sqb-icon {
+            font-size: 20px;
+            line-height: 1;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+        }
+        .sqb-icon svg { display: block; }
+
+        /* 右侧小 toggle（inline） */
+        .sqb-toggle {
+            width: 40px;
+            height: 24px;
+            border-radius: 12px;
+            background: rgba(120,120,128,0.3);
+            position: relative;
+            flex-shrink: 0;
+            transition: background 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .sqb-toggle-knob {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.22);
+            will-change: transform;
+            transition: transform 0.2s cubic-bezier(0.34, 1.4, 0.64, 1);
+        }
+        .settings-quick-btn.active-state .sqb-toggle-knob {
+            transform: translateX(16px);
+        }
+
+        .sqb-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            letter-spacing: -0.1px;
+        }
+
+        /* 主题色块 */
+        .settings-colors-card {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 12px 14px 10px;
+            box-shadow: 0 1px 4px var(--shadow-1), 0 0 0 0.5px var(--card-border);
+        }
+        .settings-colors-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-sub);
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .settings-colors-card .picker-colors {
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+        }
+        .settings-colors-card .picker-item { gap: 4px; }
+        .settings-colors-card .picker-swatch {
+            width: 32px;
+            height: 32px;
+        }
+        .settings-colors-card .picker-label { font-size: 9px; }
+
+        /* 免责声明行 */
+        .settings-disclaimer-row {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 13px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            box-shadow: 0 1px 4px var(--shadow-1), 0 0 0 0.5px var(--card-border);
+            -webkit-tap-highlight-color: transparent;
+            transition: background 0.1s;
+        }
+        .settings-disclaimer-row:active { background: var(--fill-1); }
+        .settings-disclaimer-row-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .settings-disclaimer-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: rgba(255,149,0,0.12);
+            color: #FF9500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .settings-disclaimer-label {
+            font-size: 15px;
+            color: var(--text-main);
+        }
+
+        /* 底部署名 */
+        .settings-footer {
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 11px;
+            padding: 6px 0 4px;
+            letter-spacing: 0.2px;
+        }
+
+        /* settings btn active state in header */
+        #settings-btn.active { color: var(--accent-color); }
 
         /* ---- Reset & Base ---- */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -2252,21 +2734,17 @@
         <div class="header-inner">
             <span>应用档案</span>
             <div style="display:flex;align-items:center;gap:8px;">
-                <button class="header-view-btn" id="view-btn" onclick="toggleView()" title="切换视图" aria-label="切换网格/列表">
-                    <svg id="view-icon-grid" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
-                        <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
-                    </svg>
-                    <svg id="view-icon-list" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="display:none">
-                        <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
-                        <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
+                <button class="header-view-btn" id="settings-btn" onclick="toggleSettings()" title="设置" aria-label="设置">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
                     </svg>
                 </button>
-                <button class="header-blog-btn" onclick="openSidebar()" title="工具导航" aria-label="打开工具导航侧栏">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                </svg>
-            </button>
+                <button class="header-blog-btn" onclick="openSidebar()" title="智汇空间" aria-label="打开智汇空间侧栏">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    </svg>
+                </button>
             </div>
         </div>
     </div>
@@ -2287,7 +2765,8 @@
         <button id="back-to-top" class="fab-btn" onclick="scrollToTop()" title="回到顶部">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
         </button>
-        <button id="theme-btn" class="fab-btn" onclick="toggleTheme()" title="切换主题">🌙</button>
+        <button id="theme-btn" class="fab-btn" style="display:none" onclick="toggleTheme()" title="切换主题">🌙</button>
+        <button id="palette-btn" class="fab-btn" style="display:none" onclick="togglePicker()" title="主题色">🎨</button>
         <button id="refresh-btn" class="fab-btn" onclick="softRefresh()" title="刷新页面">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
@@ -2297,6 +2776,78 @@
             </svg>
         </button>
     </div>
+
+    <!-- ════ 设置面板 ════ -->
+    <div id="settings-panel">
+        <!-- 顶部拖拽指示条 -->
+        <div class="settings-drag-bar"></div>
+
+        <!-- 标题行 -->
+        <div class="settings-header">
+            <span class="settings-title">设置</span>
+            <button class="settings-close-btn" onclick="closeSettings()">✕</button>
+        </div>
+
+        <!-- 内容 -->
+        <div class="settings-body">
+            <!-- 快捷操作：深色模式 + 布局 并排 -->
+            <div class="settings-quick-row">
+                <!-- 深色模式 -->
+                <button class="settings-quick-btn" id="sqb-theme" onclick="toggleTheme()">
+                    <div class="sqb-top">
+                        <div class="sqb-icon" id="settings-theme-icon">🌙</div>
+                        <div class="sqb-toggle" id="sqb-theme-toggle">
+                            <div class="sqb-toggle-knob"></div>
+                        </div>
+                    </div>
+                    <div class="sqb-label" id="settings-theme-label">深色模式</div>
+                </button>
+
+                <!-- 布局切换 -->
+                <button class="settings-quick-btn" id="sqb-view" onclick="toggleView()">
+                    <div class="sqb-top">
+                        <div class="sqb-icon" style="color:var(--accent-color)">
+                            <svg id="settings-view-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+                                <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+                            </svg>
+                        </div>
+                        <div class="sqb-toggle" id="sqb-view-toggle">
+                            <div class="sqb-toggle-knob"></div>
+                        </div>
+                    </div>
+                    <div class="sqb-label" id="settings-view-label">列表视图</div>
+                </button>
+            </div>
+
+            <!-- 主题色 -->
+            <div class="settings-colors-card">
+                <div class="settings-colors-title">主题色</div>
+                <div class="picker-colors" id="picker-colors"></div>
+            </div>
+
+            <!-- 免责声明 -->
+            <div class="settings-disclaimer-row" onclick="closeSettings();openDisclaimer();">
+                <div class="settings-disclaimer-row-left">
+                    <div class="settings-disclaimer-icon">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                        </svg>
+                    </div>
+                    <span class="settings-disclaimer-label">免责声明</span>
+                </div>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-tertiary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+
+            <!-- 署名 -->
+            <div class="settings-footer">由 闲月 整理 ❤️ | 纯粹收录 · 极简丝滑 · 拒绝臃肿</div>
+        </div>
+    </div>
+    <!-- 设置面板背景蒙层 -->
+    <div id="settings-overlay" onclick="closeSettings()"></div>
+
+    <!-- ════ 旧主题色面板（隐藏保留，JS 复用） ════ -->
+    <div id="theme-picker-panel" style="display:none!important"></div>
 
     <div id="modal-overlay" onmousedown="if(event.target===this)handleBack()" ontouchstart="if(event.target===this){event.preventDefault();handleBack();}">
         <div class="modal-content" onclick="event.stopPropagation()">
@@ -2364,6 +2915,8 @@
                 document.head.appendChild(tc);
                 localStorage.setItem('theme', newTheme);
                 updateThemeIcon(newTheme);
+                if (pickerOpen) buildPicker();
+                if (settingsOpen) buildPicker();
             }, 150);
 
             // 清除动画类以便下次使用
@@ -2371,10 +2924,116 @@
         }
 
         function updateThemeIcon(theme) {
+            // 旧 FAB 按钮（隐藏中）
             const btn = document.getElementById('theme-btn');
-            // 白天显示月亮（点它变黑），黑夜显示太阳（点它变亮）
-            btn.innerHTML = theme === 'light' ? '🌙' : '☀️';
+            if (btn) btn.innerHTML = theme === 'light' ? '🌙' : '☀️';
+            // 设置面板新式快捷按钮同步
+            const sqbTheme  = document.getElementById('sqb-theme');
+            const themeIcon = document.getElementById('settings-theme-icon');
+            const themeLabel= document.getElementById('settings-theme-label');
+            const themeToggle = document.getElementById('sqb-theme-toggle');
+            const isDark = theme === 'dark';
+            if (sqbTheme)    sqbTheme.classList.toggle('active-state', isDark);
+            if (themeIcon)   themeIcon.textContent = isDark ? '☀️' : '🌙';
+            if (themeLabel)  themeLabel.textContent = isDark ? '深色模式' : '浅色模式';
+            if (themeToggle) themeToggle.classList.toggle('on', isDark); // legacy compat
         }
+
+        // ── 主题色定义 ──
+        const ACCENT_THEMES = [
+            { key: 'blue',   label: '靛蓝', light: '#007AFF', dark: '#0A84FF' },
+            { key: 'mint',   label: '薄荷', light: '#00C7BE', dark: '#63E6E2' },
+            { key: 'pink',   label: '粉红', light: '#FF2D55', dark: '#FF375F' },
+            { key: 'purple', label: '紫色', light: '#AF52DE', dark: '#BF5AF2' },
+            { key: 'orange', label: '橙色', light: '#FF9500', dark: '#FF9F0A' },
+            { key: 'teal',   label: '青色', light: '#30B0C7', dark: '#40C8E0' },
+            { key: 'green',  label: '绿色', light: '#34C759', dark: '#30D158' },
+        ];
+
+        let pickerOpen = false;
+        let settingsOpen = false;
+
+        function buildPicker() {
+            const container = document.getElementById('picker-colors');
+            if (!container) return;
+            const currentAccent = localStorage.getItem('accent') || 'blue';
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            container.innerHTML = ACCENT_THEMES.map(t => `
+                <div class="picker-item">
+                    <button class="picker-swatch${t.key === currentAccent ? ' selected' : ''}"
+                        style="background:${isDark ? t.dark : t.light}"
+                        onclick="setAccent('${t.key}')"
+                        title="${t.label}">
+                    </button>
+                    <div class="picker-label">${t.label}</div>
+                </div>
+            `).join('');
+        }
+
+        function togglePicker() { /* legacy — no-op */ }
+
+        function toggleSettings() {
+            settingsOpen ? closeSettings() : openSettings();
+        }
+
+        function openSettings() {
+            settingsOpen = true;
+            buildPicker();
+            syncViewToggle();
+            document.getElementById('settings-panel').classList.add('open');
+            document.getElementById('settings-overlay').classList.add('visible');
+            document.getElementById('settings-btn').classList.add('active');
+        }
+
+        function closeSettings() {
+            settingsOpen = false;
+            document.getElementById('settings-panel').classList.remove('open');
+            document.getElementById('settings-overlay').classList.remove('visible');
+            document.getElementById('settings-btn').classList.remove('active');
+        }
+
+        function syncViewToggle() {
+            const sqbView   = document.getElementById('sqb-view');
+            const icon      = document.getElementById('settings-view-icon');
+            const label     = document.getElementById('settings-view-label');
+            const toggle    = document.getElementById('sqb-view-toggle');
+            if (sqbView)  sqbView.classList.toggle('active-state', isListView);
+            if (label)    label.textContent = isListView ? '列表视图' : '网格视图';
+            if (toggle)   toggle.classList.toggle('on', isListView);
+            if (icon) {
+                icon.innerHTML = isListView
+                    ? `<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>`
+                    : `<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>`;
+            }
+        }
+
+        function setAccent(key) {
+            localStorage.setItem('accent', key);
+            if (key === 'blue') {
+                document.documentElement.removeAttribute('data-accent');
+            } else {
+                document.documentElement.setAttribute('data-accent', key);
+            }
+            buildPicker(); // refresh checkmarks
+        }
+
+        function initAccent() {
+            const saved = localStorage.getItem('accent') || 'blue';
+            if (saved !== 'blue') {
+                document.documentElement.setAttribute('data-accent', saved);
+            }
+        }
+
+        // 点击面板外关闭（legacy picker — now handled by overlay）
+        document.addEventListener('click', function(e) {
+            if (!pickerOpen) return;
+            const panel = document.getElementById('theme-picker-panel');
+            const btn = document.getElementById('palette-btn');
+            if (panel && !panel.contains(e.target) && e.target !== btn) {
+                pickerOpen = false;
+                panel.classList.remove('visible');
+            }
+        });
 
         function scrollToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2800,6 +3459,7 @@
         }
 
         // ── 视图切换（网格 / 列表）──
+        // 默认列表模式：未存储时默认 list，只有明确存了 'grid' 才用网格
         let isListView = (localStorage.getItem('view_mode') !== 'grid');
 
         function toggleView() {
@@ -2824,6 +3484,7 @@
                 if (iconList) iconList.style.display = 'none';
                 if (btn) btn.style.color = '';
             }
+            syncViewToggle();
         }
 
         async function filterApps() {
@@ -2998,13 +3659,11 @@ function openModal(pageNum, idx) {
 
         // ── 分类列表：只需在这里增删，页面自动同步 ──
         const CAT_LABELS = [
-            '官方网站',
             '综合效率',
             '资源下载',
             '图像视听',
             '文档处理',
             '网络工具',
-            '视频提取',
             '聚合搜索',
         ];
         const CAT_MAP = {};
@@ -3013,13 +3672,11 @@ function openModal(pageNum, idx) {
         // ── 图标匹配：新增分类只需在此加一行 ──
         function getIconForCat(name) {
             const icons = {
-                '官方网站': '🌐',
                 '综合效率': '🛠️',
                 '资源下载': '📦',
                 '图像视听': '🖼️',
                 '文档处理': '📄',
                 '网络工具': '🧰',
-                '视频提取': '🚀',
                 '聚合搜索': '🔎',
             };
             return icons[name] || '🔧';
@@ -3459,6 +4116,7 @@ function openModal(pageNum, idx) {
 
         // 执行初始化
         initTheme();
+        initAccent();
         loadAppData();
 
         // ── 开屏动画：展示后淡出消失 ──
