@@ -323,24 +323,23 @@
             pointer-events: auto;
             backdrop-filter: blur(2px);
             -webkit-backdrop-filter: blur(2px);
+            touch-action: none;
         }
 
-        /* 面板：从顶部向下滑出 */
+        /* 面板：从顶部向下滑出（移动端：全宽） */
         #settings-panel {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 300;
-            /* 毛玻璃 */
-            background: rgba(var(--settings-panel-rgb, 242,242,247), 0.82);
+            background: rgba(var(--settings-panel-rgb, 242,242,247), 0.92);
             backdrop-filter: saturate(180%) blur(32px);
             -webkit-backdrop-filter: saturate(180%) blur(32px);
             border-radius: 0 0 26px 26px;
             box-shadow: 0 12px 48px rgba(0,0,0,0.22), 0 0 0 0.5px var(--card-border);
             display: flex;
             flex-direction: column;
-            /* 从顶部向上收起：translateY(-100%) */
             will-change: transform;
             transform: translateY(-102%);
             transition: transform 0.42s cubic-bezier(0.32, 0.72, 0, 1);
@@ -353,9 +352,35 @@
             transform: translateY(0);
         }
 
+        /* 桌面端：居中下拉卡片，不拉满全宽 */
+        @media (min-width: 680px) {
+            #settings-panel {
+                left: 50%;
+                right: auto;
+                top: 12px;
+                width: 480px;
+                max-width: calc(100vw - 32px);
+                transform: translateX(-50%) translateY(calc(-100% - 20px));
+                border-radius: 20px;
+                max-height: 85dvh;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.28), 0 0 0 0.5px var(--card-border);
+                opacity: 0;
+                transition: transform 0.36s cubic-bezier(0.32, 0.72, 0, 1),
+                            opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            #settings-panel.open {
+                transform: translateX(-50%) translateY(0);
+                opacity: 1;
+            }
+            /* 桌面端隐藏拖拽条 */
+            #settings-panel .settings-drag-bar {
+                display: none;
+            }
+        }
+
         /* 深色模式背景变量 */
         [data-theme="dark"] #settings-panel {
-            background: rgba(28,28,30,0.88);
+            background: rgba(28,28,30,0.92);
         }
 
         /* 顶部指示条（iOS风格拖拽条） */
@@ -2844,7 +2869,7 @@
         </div>
     </div>
     <!-- 设置面板背景蒙层 -->
-    <div id="settings-overlay" onclick="closeSettings()"></div>
+    <div id="settings-overlay" onclick="closeSettings()" ontouchmove="event.preventDefault()"></div>
 
     <!-- ════ 旧主题色面板（隐藏保留，JS 复用） ════ -->
     <div id="theme-picker-panel" style="display:none!important"></div>
@@ -2952,6 +2977,7 @@
 
         let pickerOpen = false;
         let settingsOpen = false;
+        let _settingsClosing = false;
 
         function buildPicker() {
             const container = document.getElementById('picker-colors');
@@ -2977,19 +3003,32 @@
         }
 
         function openSettings() {
+            if (settingsOpen) return;
             settingsOpen = true;
             buildPicker();
             syncViewToggle();
             document.getElementById('settings-panel').classList.add('open');
             document.getElementById('settings-overlay').classList.add('visible');
             document.getElementById('settings-btn').classList.add('active');
+            // 锁定背景滚动
+            _scrollY = window.scrollY;
+            document.body.style.overflow = 'hidden';
+            // push history，让返回键能关闭设置而不是退出网页
+            window.history.pushState({ state: 'settings' }, '');
         }
 
-        function closeSettings() {
+        function closeSettings(fromPopstate) {
+            if (!settingsOpen) return;
             settingsOpen = false;
             document.getElementById('settings-panel').classList.remove('open');
             document.getElementById('settings-overlay').classList.remove('visible');
             document.getElementById('settings-btn').classList.remove('active');
+            // 恢复背景滚动
+            document.body.style.overflow = '';
+            if (!fromPopstate) {
+                _settingsClosing = true;
+                window.history.back();
+            }
         }
 
         function syncViewToggle() {
@@ -2997,9 +3036,11 @@
             const icon      = document.getElementById('settings-view-icon');
             const label     = document.getElementById('settings-view-label');
             const toggle    = document.getElementById('sqb-view-toggle');
-            if (sqbView)  sqbView.classList.toggle('active-state', isListView);
-            if (label)    label.textContent = isListView ? '列表视图' : '网格视图';
-            if (toggle)   toggle.classList.toggle('on', isListView);
+            // 网格模式时 toggle 点亮；列表模式（默认）时 toggle 关闭
+            const isGrid = !isListView;
+            if (sqbView)  sqbView.classList.toggle('active-state', isGrid);
+            if (label)    label.textContent = isGrid ? '网格视图' : '列表视图';
+            if (toggle)   toggle.classList.toggle('on', isGrid);
             if (icon) {
                 icon.innerHTML = isListView
                     ? `<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>`
@@ -3023,6 +3064,11 @@
                 document.documentElement.setAttribute('data-accent', saved);
             }
         }
+
+        // 设置面板打开时，阻止遮罩层的鼠标滚轮穿透到背景
+        document.getElementById('settings-overlay').addEventListener('wheel', function(e) {
+            e.preventDefault();
+        }, { passive: false });
 
         // 点击面板外关闭（legacy picker — now handled by overlay）
         document.addEventListener('click', function(e) {
@@ -3091,10 +3137,13 @@
         }
 
         window.onpopstate = function(event) {
-            // 手动关闭侧栏/免责声明触发的 history.back，忽略这次 popstate
+            // 手动关闭侧栏/设置/免责声明触发的 history.back，忽略这次 popstate
             if (_sidebarClosing)   { _sidebarClosing = false;   return; }
+            if (_settingsClosing)  { _settingsClosing = false;  return; }
             if (_disclaimerClosing){ _disclaimerClosing = false; return; }
-            // 侧栏最高优先级
+            // 设置面板优先（设置打开时返回键关闭设置）
+            if (settingsOpen) { closeSettings(true); return; }
+            // 侧栏次优先
             if (sidebarOpen) { closeSidebar(true); return; }
             // 免责声明弹窗：强制只能点按钮关闭
             const disclaimerOverlay = document.getElementById('disclaimer-overlay');
@@ -3800,7 +3849,10 @@ function openModal(pageNum, idx) {
         }, { passive: true });
 
         document.addEventListener('keydown', e => {
-            if (e.key === 'Escape' && sidebarOpen) closeSidebar();
+            if (e.key === 'Escape') {
+                if (settingsOpen) { closeSettings(); return; }
+                if (sidebarOpen) closeSidebar();
+            }
         });
 
         // ── 手风琴分类展开/收起（精准高度动画，iOS 丝滑手感）──
