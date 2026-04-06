@@ -283,5 +283,244 @@
         ],
         "url": "https://nanlinyou.lanzoul.com/i47wa3m6lc0f",
         "source": "https://github.com/hushenghao/AndroidEasterEggs"
+    },
+    {
+        "name": "爱玩机工具箱",
+        "pkg": "com.byyoung.setting",
+        "version": "S-22.1.0.7",
+        "size": "9.40MB",
+        "system": "Android",
+        "mod": "原版",
+        "icon": "爱玩机工具箱_icon.webp",
+        "intro": "爱玩机工具箱 是一款功能极其丰富的 Android 玩机神器，支持Shizuku/ADB免Root + Root/Magisk多种激活方式，集成应用冻结/隐藏/伪装/多开/备份、系统优化、模块管理、刷机辅助、硬件监控、实用工具等400+项功能，是安卓搞机爱好者常用的“百宝箱”。",
+        "screenshots": [
+            "爱玩机工具箱_screen_1.webp",
+            "爱玩机工具箱_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/i84Ie3m7p59c",
+        "source": "https://doc.byyoung.top/"
+    },
+    {
+        "name": "侠客工具箱",
+        "pkg": "com.shiyi.toolbox",
+        "version": "5.0.3",
+        "size": "36.89MB",
+        "system": "Android",
+        "mod": "原版",
+        "icon": "侠客工具箱_icon.webp",
+        "intro": "侠客工具箱 是一款功能全面的 Android 实用工具合集App，内置200+种日常工具，涵盖文字/图片/音视频处理、系统清理、文件管理、单位换算、查询、计算器、手电筒等，界面简洁无广告，分类清晰且支持收藏，适合一站式解决生活和工作中的各种小需求。",
+        "screenshots": [
+            "侠客工具箱_screen_1.webp",
+            "侠客工具箱_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/i3JKi3m7tbtc",
+        "source": ""
+    },
+    {
+        "name": "一句心情签名",
+        "pkg": "com.goodluck.qianming",
+        "version": "3.9.9.3",
+        "size": "16.59MB",
+        "system": "Android",
+        "mod": "原版",
+        "icon": "一句心情签名_icon.webp",
+        "intro": "一句心情签名 是一款纯净简洁的心情签名App，每日精选唯美伤感、正能量、励志、英文等各类经典短句和美文，供用户快速更换微信/QQ个性签名或朋友圈文案，无需注册登录，专注于优美文字与好心情分享。",
+        "screenshots": [
+            "一句心情签名_screen_1.webp",
+            "一句心情签名_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/iSGWq3m7vjpi",
+        "source": ""
+    },
+    {
+        "name": "YC调度管理",
+        "pkg": "com.sulisong.uperf",
+        "version": "1.1.3",
+        "size": "6.65MB",
+        "system": "Android",
+        "mod": "原版",
+        "icon": "YC调度管理_icon.webp",
+        "intro": "YC调度管理 是一款专为 Android 打造的性能调度优化工具（常配合Uperf内核模块或Magisk使用），支持全局与分应用动态性能模式，可一键切换省电、均衡、性能、极速/激进等多种调度策略，实时监控CPU/GPU/刷新率等参数，支持高通骁龙处理器与MIUI/HyperOS刷新率显示，帮助用户在流畅度与续航之间实现精准平衡，是玩机用户常用的性能调优神器。",
+        "screenshots": [
+            "YC调度管理_screen_1.webp",
+            "YC调度管理_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/iXiT63imjn6h",
+        "source": "https://www.coolapk.com/u/491255"
+    },
+    {
+        "name": "DNA桌面",
+        "pkg": "com.atlantis.launcher",
+        "version": "2.9.9.96",
+        "size": "11.52MB",
+        "system": "Android",
+        "mod": "专业版",
+        "icon": "DNA桌面_icon.webp",
+        "intro": "DNA桌面 是一款高度可定制的 Android 桌面启动器，支持横向滚动页面、极简单手操作、字母索引、iOS风格模仿、Widgets小组件、图标与壁纸深度自定义等功能，帮助用户打造独一无二的个性化主屏幕体验。",
+        "screenshots": [
+            "DNA桌面_screen_1.webp",
+            "DNA桌面_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/ivfOB2yq4sxi",
+        "source": ""
+    },
+    {
+        "name": "魔方",
+        "pkg": "com.app.rubiks",
+        "version": "1.2.4",
+        "size": "63.59MB",
+        "system": "Android",
+        "mod": "原版",
+        "icon": "魔方_icon.webp",
+        "intro": "",
+        "screenshots": [
+            "魔方_screen_1.webp",
+            "魔方_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/inTOa3m8lbde",
+        "source": "https://dmla.lanzouo.com/b00tbvt6cf"
+    },
+    {
+        "name": "磁域",
+        "pkg": "com.metacube.magnet",
+        "version": "1.0.2",
+        "size": "9.67MB",
+        "system": "Android",
+        "mod": "原版",
+        "icon": "磁域_icon.webp",
+        "intro": "",
+        "screenshots": [
+            "磁域_screen_1.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/iSeie3m8lmhe",
+        "source": "https://bgg.lanzout.com/b0w9bde5a"
+    },
+    {
+        "name": "Karing",
+        "pkg": "com.nebula.karing",
+        "version": "1.2.15",
+        "size": "46.87MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "Karing_icon.webp",
+        "intro": "Karing 是一款免费开源的跨平台网络工具（基于sing-box内核），兼容Clash、V2ray、Shadowsocks等多种订阅格式和协议，支持智能分流、规则管理、一键导入配置与自定义代理组，界面简洁易用，适用于 Android 等多平台网络连接与优化需求。",
+        "screenshots": [
+            "Karing_screen_1.webp",
+            "Karing_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/iABwH3m9zf5a",
+        "source": "https://github.com/KaringX/karing"
+    },
+    {
+        "name": "EhViewer",
+        "pkg": "com.xjs.ehviewer",
+        "version": "2.0.1.6",
+        "size": "26.42MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "EhViewer_icon.webp",
+        "intro": "EhViewer 是一款开源免费的Android E-Hentai/ExHentai漫画浏览器，支持画廊浏览、在线阅读、批量下载、收藏评分与搜索，采用 Material Design 3 现代界面，注重隐私保护与流畅体验，是漫画爱好者常用的专业阅读工具。",
+        "screenshots": [
+            "EhViewer_screen_1.webp",
+            "EhViewer_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/ieLbz3m9zgja",
+        "source": "https://github.com/xiaojieonly/Ehviewer_CN_SXJ"
+    },
+    {
+        "name": "BiliPai",
+        "pkg": "com.android.purebilibili",
+        "version": "7.3.3",
+        "size": "19.95MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "BiliPai_icon.webp",
+        "intro": "BiliPai 是一款开源纯净的第三方 Bilibili 客户端（Android），采用原生 Kotlin 开发，界面简洁现代且支持 Material You 设计、无任何广告，专注于视频播放（支持4K/HDR/DASH高画质）、弹幕精细调节、空降助手、SponsorBlock跳过片头片尾等实用功能，体验流畅且可扩展，适合追求干净无干扰B站观看的用户。",
+        "screenshots": [
+            "BiliPai_screen_1.webp",
+            "BiliPai_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/iyKIH3m9zu6b",
+        "source": "https://github.com/jay3-yy/BiliPai"
+    },
+    {
+        "name": "无水印解析",
+        "pkg": "mjie.dyxhsjx",
+        "version": "1.0.3",
+        "size": "11.94MB",
+        "system": "Android",
+        "mod": "原版",
+        "icon": "无水印解析_icon.webp",
+        "intro": "",
+        "screenshots": [
+            "无水印解析_screen_1.webp",
+            "无水印解析_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/iG4gR3ma0sdc",
+        "source": "https://mu-jie.cc/jxAPP/"
+    },
+    {
+        "name": "LightNovelReader",
+        "pkg": "indi.dmzz_yyhyy.lightnovelreader",
+        "version": "1.1.7a",
+        "size": "4.44MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "LightNovelReader_icon.webp",
+        "intro": "LightNovelReader 是一款开源免费的多数据源轻小说阅读器（Android），采用Kotlin + Jetpack Compose开发，界面轻量现代、阅读流畅，支持探索发现、书架管理、更新提醒、内容缓存离线阅读、EPUB导出、自定义背景样式，甚至可切换数据源浏览漫画，适合轻小说爱好者追求纯净高效阅读体验。",
+        "screenshots": [
+            "LightNovelReader_screen_1.webp",
+            "LightNovelReader_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/iiRQB3mdbckh",
+        "source": "https://github.com/dmzz-yyhyy/LightNovelReader"
+    },
+    {
+        "name": "Anx Reader",
+        "pkg": "com.anxcye.anx_reader",
+        "version": "1.14.0",
+        "size": "26.25MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "Anx_Reader_icon.webp",
+        "intro": "Anx Reader 是一款开源跨平台AI智能电子书阅读器（支持Android/iOS/Windows等），采用 Flutter 开发，无广告干扰，支持EPUB、MOBI、PDF、TXT等多种格式，本地AI功能（总结、翻译、语音等）、WebDAV多设备同步阅读进度与笔记、丰富自定义配色、阅读统计，界面简洁专注，帮助用户更智能、更沉浸地阅读电子书与漫画。",
+        "screenshots": [
+            "Anx_Reader_screen_1.webp",
+            "Anx_Reader_screen_2.webp"
+        ],
+        "url": "",
+        "source": "https://github.com/Anxcye/anx-reader"
+    },
+    {
+        "name": "Xed-Editor",
+        "pkg": "com.rk.xededitor",
+        "version": "3.2.7",
+        "size": "21.88MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "Xed-Editor_icon.webp",
+        "intro": "Xed-Editor 是一款开源免费的 Android 高级文本/代码编辑器，专为开发者、程序员和高级用户设计，支持200+种语言语法高亮、LSP代码智能补全、自动缩进、多标签页编辑、内置终端（可运行Python/Node.js等）、文件浏览器、Git版本控制、插件扩展与项目级搜索等功能，界面现代流畅、自定义丰富，是手机上高效编码与文本编辑的强大工具。",
+        "screenshots": [
+            "Xed-Editor_screen_1.webp",
+            "Xed-Editor_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/iIM5v3mglgqf",
+        "source": "https://github.com/Xed-Editor/Xed-Editor"
+    },
+    {
+        "name": "Extinguish",
+        "pkg": "own.moderpach.extinguish",
+        "version": "0.9.5.1",
+        "size": "3.39MB",
+        "system": "Android",
+        "mod": "开源",
+        "icon": "Extinguish_icon.webp",
+        "intro": "Extinguish 是一款轻量开源的 Android 屏幕控制工具（支持 Shizuku 激活），能使用系统隐藏功能真正关闭屏幕（而非黑屏覆盖），同时保持设备唤醒状态，让前台应用继续正常运行，适合听音乐/视频、挂机任务、接听电话时关闭屏幕省电，兼容LCD与OLED屏，操作简洁实用。",
+        "screenshots": [
+            "Extinguish_screen_1.webp",
+            "Extinguish_screen_2.webp"
+        ],
+        "url": "https://nanlinyou.lanzoul.com/imuwg3mhdmng",
+        "source": "https://github.com/Moderpach/Extinguish"
     }
 ]
