@@ -341,15 +341,17 @@
             display: flex;
             flex-direction: column;
             will-change: transform;
-            transform: translateY(-102%);
+            transform: translateY(-102%) translateZ(0);
             transition: transform 0.42s cubic-bezier(0.32, 0.72, 0, 1);
             padding-bottom: 12px;
             max-height: 80dvh;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
         #settings-panel.open {
-            transform: translateY(0);
+            transform: translateY(0) translateZ(0);
         }
 
         /* 桌面端：居中下拉卡片，不拉满全宽 */
@@ -357,14 +359,15 @@
             #settings-panel {
                 left: 50%;
                 right: auto;
-                top: 12px;
-                width: 480px;
-                max-width: calc(100vw - 32px);
+                top: 16px;
+                width: 560px;
+                max-width: calc(100vw - 48px);
                 transform: translateX(-50%) translateY(calc(-100% - 20px));
-                border-radius: 20px;
+                border-radius: 22px;
                 max-height: 85dvh;
                 box-shadow: 0 20px 60px rgba(0,0,0,0.28), 0 0 0 0.5px var(--card-border);
                 opacity: 0;
+                padding-bottom: 6px;
                 transition: transform 0.36s cubic-bezier(0.32, 0.72, 0, 1),
                             opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             }
@@ -375,6 +378,40 @@
             /* 桌面端隐藏拖拽条 */
             #settings-panel .settings-drag-bar {
                 display: none;
+            }
+            /* 桌面端标题行增加顶部内边距，避免贴边 */
+            #settings-panel .settings-header {
+                padding: 20px 20px 14px;
+            }
+            /* 桌面端叉号按钮稍大，更好点击 */
+            #settings-panel .settings-close-btn {
+                width: 32px;
+                height: 32px;
+                font-size: 14px;
+            }
+            /* 桌面端内容区左右边距稍大 */
+            #settings-panel .settings-body {
+                padding: 0 16px 4px;
+                gap: 8px;
+            }
+            /* 桌面端署名紧凑，不留多余空白 */
+            #settings-panel .settings-footer {
+                padding: 8px 0 6px;
+            }
+            /* 桌面端颜色圆点稍大 */
+            #settings-panel .settings-colors-card .picker-swatch {
+                width: 36px;
+                height: 36px;
+            }
+            #settings-panel .settings-colors-card .picker-label {
+                font-size: 10px;
+            }
+            /* 桌面端快捷按钮：不显示 hover 灰色背景，保持纯净 */
+            #settings-panel .settings-quick-btn:hover {
+                background: var(--card-bg);
+            }
+            #settings-panel .settings-disclaimer-row:hover {
+                background: var(--card-bg);
             }
         }
 
@@ -404,7 +441,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 20px 12px;
+            padding: 12px 20px 12px;
             flex-shrink: 0;
         }
         .settings-title {
@@ -458,13 +495,15 @@
             border: none;
             box-shadow: 0 1px 4px var(--shadow-1), 0 0 0 0.5px var(--card-border);
             -webkit-tap-highlight-color: transparent;
-            transition: background 0.12s, transform 0.12s;
+            transition: transform 0.12s;
             text-align: left;
             width: 100%;
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
         .settings-quick-btn:active {
-            background: var(--fill-1);
-            transform: scale(0.96);
+            transform: scale(0.96) translateZ(0);
         }
         .settings-quick-btn.active-state {
             box-shadow: 0 2px 12px rgba(0,0,0,0.18);
@@ -530,6 +569,9 @@
             border-radius: 14px;
             padding: 12px 14px 10px;
             box-shadow: 0 1px 4px var(--shadow-1), 0 0 0 0.5px var(--card-border);
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
         .settings-colors-title {
             font-size: 11px;
@@ -561,9 +603,14 @@
             cursor: pointer;
             box-shadow: 0 1px 4px var(--shadow-1), 0 0 0 0.5px var(--card-border);
             -webkit-tap-highlight-color: transparent;
-            transition: background 0.1s;
+            transition: transform 0.12s;
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
-        .settings-disclaimer-row:active { background: var(--fill-1); }
+        .settings-disclaimer-row:active {
+            transform: scale(0.98) translateZ(0);
+        }
         .settings-disclaimer-row-left {
             display: flex;
             align-items: center;
@@ -590,12 +637,132 @@
             text-align: center;
             color: var(--text-tertiary);
             font-size: 11px;
-            padding: 6px 0 4px;
+            padding: 4px 0 2px;
             letter-spacing: 0.2px;
+        }
+
+        /* 收录提示行（延续免责声明通栏卡片风格） */
+        .settings-notice-row {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 13px 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            box-shadow: 0 1px 4px var(--shadow-1), 0 0 0 0.5px var(--card-border);
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+        .settings-notice-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: rgba(255,204,0,0.13);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 14px;
+            line-height: 1;
+        }
+        .settings-notice-text {
+            font-size: 13px;
+            color: var(--text-sub);
+            line-height: 1.55;
+            padding-top: 4px;
         }
 
         /* settings btn active state in header */
         #settings-btn.active { color: var(--accent-color); }
+
+        /* 设置按钮旋转动画 */
+        @keyframes settings-spin-open {
+            0%   { transform: rotate(0deg) scale(1); }
+            40%  { transform: rotate(72deg) scale(1.15); }
+            100% { transform: rotate(90deg) scale(1); }
+        }
+        @keyframes settings-spin-close {
+            0%   { transform: rotate(90deg) scale(1); }
+            40%  { transform: rotate(18deg) scale(1.12); }
+            100% { transform: rotate(0deg) scale(1); }
+        }
+        #settings-btn.spin-open svg,
+        #fab-settings-btn.spin-open svg {
+            animation: settings-spin-open 0.38s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        #settings-btn.spin-close svg,
+        #fab-settings-btn.spin-close svg {
+            animation: settings-spin-close 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        /* FAB 设置按钮激活状态高亮 */
+        #fab-settings-btn.active {
+            color: var(--accent-color) !important;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.18), 0 0 0 0.5px var(--accent-color) !important;
+        }
+
+        /* ============================================
+           SMOOTH THEME TRANSITION
+           为深色/浅色切换加全局颜色过渡
+        ============================================ */
+
+        /* 主题切换时，对所有 CSS 变量消费属性做平滑过渡 */
+        html.theme-transitioning,
+        html.theme-transitioning *,
+        html.theme-transitioning *::before,
+        html.theme-transitioning *::after {
+            transition:
+                background-color 0.38s cubic-bezier(0.4, 0, 0.2, 1),
+                color            0.28s cubic-bezier(0.4, 0, 0.2, 1),
+                border-color     0.32s cubic-bezier(0.4, 0, 0.2, 1),
+                box-shadow       0.32s cubic-bezier(0.4, 0, 0.2, 1),
+                fill             0.28s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        }
+
+        /* View Transition API：主题切换圆形扩散（支持时生效） */
+        ::view-transition-old(root),
+        ::view-transition-new(root) {
+            animation-duration: 0.42s;
+            animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        ::view-transition-old(root) {
+            animation-name: theme-fade-out;
+        }
+        ::view-transition-new(root) {
+            animation-name: theme-fade-in;
+        }
+        @keyframes theme-fade-out {
+            from { opacity: 1; }
+            to   { opacity: 0; }
+        }
+        @keyframes theme-fade-in {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        /* ============================================
+           SMOOTH VIEW SWITCH (网格 / 列表 切换动画)
+        ============================================ */
+
+        /* 容器切换视图时，先整体淡出 */
+        #app-container.view-switching {
+            animation: view-switch-out 0.18s cubic-bezier(0.4, 0, 1, 1) forwards;
+        }
+
+        /* 切换后淡入 + 轻微上浮 */
+        #app-container.view-switched {
+            animation: view-switch-in 0.28s cubic-bezier(0, 0, 0.2, 1) forwards;
+        }
+
+        @keyframes view-switch-out {
+            from { opacity: 1; transform: translateY(0) scale(1); }
+            to   { opacity: 0; transform: translateY(6px) scale(0.985); }
+        }
+
+        @keyframes view-switch-in {
+            from { opacity: 0; transform: translateY(8px) scale(0.988); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
 
         /* ---- Reset & Base ---- */
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -694,6 +861,60 @@
             font-size: 12px;
             text-align: center;
             font-weight: 400;
+        }
+
+        /* ---- Notice Bar (iOS Capsule Tip) ---- */
+        .notice-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 7px 16px 4px;
+        }
+        .notice-bar-inner {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0,122,255,0.07);
+            border: 0.5px solid rgba(0,122,255,0.15);
+            border-radius: 20px;
+            padding: 6px 13px 6px 10px;
+            max-width: 700px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        [data-theme="dark"] .notice-bar-inner {
+            background: rgba(10,132,255,0.1);
+            border-color: rgba(10,132,255,0.2);
+        }
+        /* 使用 accent-color 而非硬编码蓝色 */
+        [data-accent="mint"] .notice-bar-inner   { background: rgba(0,199,190,0.07); border-color: rgba(0,199,190,0.18); }
+        [data-accent="pink"] .notice-bar-inner   { background: rgba(255,45,85,0.07);  border-color: rgba(255,45,85,0.15); }
+        [data-accent="purple"] .notice-bar-inner { background: rgba(175,82,222,0.07); border-color: rgba(175,82,222,0.15); }
+        [data-accent="orange"] .notice-bar-inner { background: rgba(255,149,0,0.07);  border-color: rgba(255,149,0,0.15); }
+        [data-accent="teal"] .notice-bar-inner   { background: rgba(48,176,199,0.07); border-color: rgba(48,176,199,0.15); }
+        [data-accent="green"] .notice-bar-inner  { background: rgba(52,199,89,0.07);  border-color: rgba(52,199,89,0.15); }
+        .notice-icon {
+            font-size: 13px;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+        .notice-text {
+            font-size: 12px;
+            color: var(--text-sub);
+            line-height: 1.45;
+            letter-spacing: 0.1px;
+        }
+        /* 平板及以上：字号稍大，宽度跟搜索框对齐 */
+        @media (min-width: 768px) {
+            .notice-bar { padding: 8px 40px 4px; }
+            .notice-bar-inner { max-width: 860px; padding: 7px 16px 7px 12px; border-radius: 22px; }
+            .notice-text { font-size: 12.5px; }
+        }
+        @media (min-width: 1024px) {
+            .notice-bar { padding: 10px 60px 5px; }
+            .notice-bar-inner { max-width: 960px; padding: 8px 18px 8px 14px; border-radius: 24px; }
+            .notice-text { font-size: 13px; }
+            .notice-icon { font-size: 14px; }
         }
 
         /* ---- App Grid ---- */
@@ -1673,7 +1894,7 @@
 
         /* ── 顶部 safe area ── */
         .sidebar-header {
-            padding: 20px 20px 16px;
+            padding: 32px 20px 16px;
             background: var(--search-bar-bg);
             backdrop-filter: saturate(180%) blur(20px);
             -webkit-backdrop-filter: saturate(180%) blur(20px);
@@ -2777,7 +2998,7 @@
         <input type="text" id="search-input" placeholder="搜索应用..." oninput="filterApps()">
         <div id="app-count">同步数据中...</div>
     </div>
-    
+
     <div id="app-container">
         <div class="skeleton"></div><div class="skeleton"></div>
         <div class="skeleton"></div><div class="skeleton"></div>
@@ -2792,6 +3013,12 @@
         </button>
         <button id="theme-btn" class="fab-btn" style="display:none" onclick="toggleTheme()" title="切换主题">🌙</button>
         <button id="palette-btn" class="fab-btn" style="display:none" onclick="togglePicker()" title="主题色">🎨</button>
+        <button id="fab-settings-btn" class="fab-btn" onclick="toggleSettings()" title="设置菜单栏" style="background:var(--card-bg);color:var(--text-main);box-shadow:0 2px 12px rgba(0,0,0,0.14),0 0 0 0.5px var(--card-border);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+        </button>
         <button id="refresh-btn" class="fab-btn" onclick="softRefresh()" title="刷新页面">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
@@ -2820,7 +3047,7 @@
                 <!-- 深色模式 -->
                 <button class="settings-quick-btn" id="sqb-theme" onclick="toggleTheme()">
                     <div class="sqb-top">
-                        <div class="sqb-icon" id="settings-theme-icon">🌙</div>
+                        <div class="sqb-icon" id="settings-theme-icon">☀️</div>
                         <div class="sqb-toggle" id="sqb-theme-toggle">
                             <div class="sqb-toggle-knob"></div>
                         </div>
@@ -2862,6 +3089,14 @@
                     <span class="settings-disclaimer-label">免责声明</span>
                 </div>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--text-tertiary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+
+            <!-- 收录提示 -->
+            <div class="settings-notice-row">
+                <div class="settings-notice-icon">
+                    <span>💡</span>
+                </div>
+                <span class="settings-notice-text">站内应用版本非实时更新，请以官方发布为准</span>
             </div>
 
             <!-- 署名 -->
@@ -2921,37 +3156,52 @@
             document.head.appendChild(tc);
         }
 
+        function _applyThemeChange(newTheme) {
+            document.documentElement.setAttribute('data-theme', newTheme);
+            document.querySelectorAll('meta[name="theme-color"]').forEach(m => m.remove());
+            const tc = document.createElement('meta');
+            tc.name = 'theme-color';
+            tc.content = newTheme === 'dark' ? '#1C1C1E' : '#F2F2F7';
+            document.head.appendChild(tc);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+            if (pickerOpen) buildPicker();
+            if (settingsOpen) buildPicker();
+        }
+
         function toggleTheme() {
             const btn = document.getElementById('theme-btn');
             const currentTheme = document.documentElement.getAttribute('data-theme');
             const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-            
-            // 触发旋转动画
-            btn.classList.add('rotating');
-            
-            // 动画中途切换图标和属性
-            setTimeout(() => {
-                document.documentElement.setAttribute('data-theme', newTheme);
-                // 同步更新浏览器地址栏颜色
-                document.querySelectorAll('meta[name="theme-color"]').forEach(m => m.remove());
-                const tc = document.createElement('meta');
-                tc.name = 'theme-color';
-                tc.content = newTheme === 'dark' ? '#1C1C1E' : '#F2F2F7';
-                document.head.appendChild(tc);
-                localStorage.setItem('theme', newTheme);
-                updateThemeIcon(newTheme);
-                if (pickerOpen) buildPicker();
-                if (settingsOpen) buildPicker();
-            }, 150);
 
-            // 清除动画类以便下次使用
-            setTimeout(() => btn.classList.remove('rotating'), 400);
+            // 触发旋转动画
+            if (btn) {
+                btn.classList.add('rotating');
+                setTimeout(() => btn.classList.remove('rotating'), 400);
+            }
+
+            // ── 优先使用 View Transitions API（淡入淡出过渡）──
+            if (document.startViewTransition) {
+                document.startViewTransition(() => { _applyThemeChange(newTheme); });
+                return;
+            }
+
+            // ── 降级：CSS class 全局颜色 transition ──
+            document.documentElement.classList.add('theme-transitioning');
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    _applyThemeChange(newTheme);
+                    setTimeout(() => {
+                        document.documentElement.classList.remove('theme-transitioning');
+                    }, 420);
+                });
+            });
         }
 
         function updateThemeIcon(theme) {
             // 旧 FAB 按钮（隐藏中）
             const btn = document.getElementById('theme-btn');
-            if (btn) btn.innerHTML = theme === 'light' ? '🌙' : '☀️';
+            if (btn) btn.innerHTML = theme === 'dark' ? '🌙' : '☀️';
             // 设置面板新式快捷按钮同步
             const sqbTheme  = document.getElementById('sqb-theme');
             const themeIcon = document.getElementById('settings-theme-icon');
@@ -2959,7 +3209,7 @@
             const themeToggle = document.getElementById('sqb-theme-toggle');
             const isDark = theme === 'dark';
             if (sqbTheme)    sqbTheme.classList.toggle('active-state', isDark);
-            if (themeIcon)   themeIcon.textContent = isDark ? '☀️' : '🌙';
+            if (themeIcon)   themeIcon.textContent = isDark ? '🌙' : '☀️';
             if (themeLabel)  themeLabel.textContent = isDark ? '深色模式' : '浅色模式';
             if (themeToggle) themeToggle.classList.toggle('on', isDark); // legacy compat
         }
@@ -3009,7 +3259,15 @@
             syncViewToggle();
             document.getElementById('settings-panel').classList.add('open');
             document.getElementById('settings-overlay').classList.add('visible');
-            document.getElementById('settings-btn').classList.add('active');
+            // 旋转动画
+            const sBtn = document.getElementById('settings-btn');
+            const fBtn = document.getElementById('fab-settings-btn');
+            [sBtn, fBtn].forEach(btn => {
+                if (!btn) return;
+                btn.classList.remove('spin-close');
+                btn.classList.add('active', 'spin-open');
+                btn.addEventListener('animationend', () => btn.classList.remove('spin-open'), { once: true });
+            });
             // 锁定背景滚动
             _scrollY = window.scrollY;
             document.body.style.overflow = 'hidden';
@@ -3022,7 +3280,15 @@
             settingsOpen = false;
             document.getElementById('settings-panel').classList.remove('open');
             document.getElementById('settings-overlay').classList.remove('visible');
-            document.getElementById('settings-btn').classList.remove('active');
+            // 旋转动画（反向）
+            const sBtn = document.getElementById('settings-btn');
+            const fBtn = document.getElementById('fab-settings-btn');
+            [sBtn, fBtn].forEach(btn => {
+                if (!btn) return;
+                btn.classList.remove('spin-open', 'active');
+                btn.classList.add('spin-close');
+                btn.addEventListener('animationend', () => btn.classList.remove('spin-close'), { once: true });
+            });
             // 恢复背景滚动
             document.body.style.overflow = '';
             if (!fromPopstate) {
@@ -3512,9 +3778,25 @@
         let isListView = (localStorage.getItem('view_mode') !== 'grid');
 
         function toggleView() {
-            isListView = !isListView;
-            applyViewMode();
-            localStorage.setItem('view_mode', isListView ? 'list' : 'grid');
+            const container = document.getElementById('app-container');
+
+            // 淡出
+            container.classList.add('view-switching');
+
+            setTimeout(() => {
+                container.classList.remove('view-switching');
+
+                // 切换实际模式
+                isListView = !isListView;
+                applyViewMode();
+                localStorage.setItem('view_mode', isListView ? 'list' : 'grid');
+
+                // 淡入
+                container.classList.add('view-switched');
+                container.addEventListener('animationend', () => {
+                    container.classList.remove('view-switched');
+                }, { once: true });
+            }, 180);
         }
 
         function applyViewMode() {
