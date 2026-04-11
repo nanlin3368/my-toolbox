@@ -6,6 +6,7 @@
         "size": "41.40MB",
         "system": "Android",
         "mod": "原版",
+        "author": "元力菌",
         "icon": "元力音乐_icon.webp",
         "intro": "元力音乐 是一款集音乐播放、搜索、下载、管理于一体的多功能听歌软件，支持整合多个主流音乐平台资源，支持导入音源/歌单链接，实现跨平台听歌，相当于一个“音乐资源整合器，支持标准 / 高品质 / 无损音质，可下载歌曲本地播放，界面简洁，免费无广告听歌体验。",
         "screenshots": [
@@ -22,6 +23,7 @@
         "size": "10.36MB",
         "system": "Android",
         "mod": "开源",
+        "author": "KusStar",
         "icon": "倒带_icon.webp",
         "intro": "倒带 是一款专为 Android 用户设计的极简主义聚合音乐播放器，它通过整合网易云音乐与 QQ 音乐的双平台曲库，在彻底剔除广告与社交冗余功能的同时，为用户提供清爽、高效且高度可定制的跨平台听歌体验。",
         "screenshots": [
@@ -38,6 +40,7 @@
         "size": "3.99MB",
         "system": "Android",
         "mod": "开源",
+        "author": "KusStar",
         "icon": "Krude_icon.webp",
         "intro": "Krude 是一款小而美、开源的 Android 应用与工作流启动器（Jetpack Compose开发），支持快速搜索启动App、扩展插件、工作流自动化、拼音搜索、Shizuku集成等功能，界面现代简洁，注重高效与个性化，是高效启动与快捷操作工具。",
         "screenshots": [
@@ -54,6 +57,7 @@
         "size": "42.67MB",
         "system": "Android",
         "mod": "开源",
+        "author": "leonlatsch",
         "icon": "Photok_icon.webp",
         "intro": "Photok 是一款开源免费的 Android 私密照片与视频保险箱App，采用AES-256强加密技术对本地媒体进行加密隐藏，提供独立加密图库、指纹/密码解锁、导入导出等功能，无广告、无任何追踪，专注隐私保护。",
         "screenshots": [
@@ -70,6 +74,7 @@
         "size": "73.14MB",
         "system": "Android",
         "mod": "开源",
+        "author": "xigua222",
         "icon": "photoo_icon.webp",
         "intro": "Photoo 是一款极简轻量的 Android 照片浏览工具，界面干净纯净无广告，专注于快速查看照片、相册管理以及基础编辑（裁剪、滤镜、旋转、调整等），操作流畅，适合日常简单整理和浏览照片。",
         "screenshots": [
@@ -86,6 +91,7 @@
         "size": "61.77MB",
         "system": "Android",
         "mod": "开源",
+        "author": "Nekogram",
         "icon": "Nekogram_icon.webp",
         "intro": "Nekogram 是一款开源免费的第三方 Telegram 客户端，基于官方 Telegram 源码优化，修改不多但实用，包含界面自定义（头像背景、系统表情、透明状态栏、隐藏导航栏等）、聊天增强（贴纸大小调节、自动暂停视频、免费语音转文字）、内置多引擎免费翻译（整聊/单消息/文章）、媒体下载优化等功能，界面简洁流畅、无广告，体验更丰富纯粹。",
         "screenshots": [
@@ -102,6 +108,7 @@
         "size": "17.03MB",
         "system": "Android",
         "mod": "开源",
+        "author": "venera-app",
         "icon": "venera_icon.webp",
         "intro": "Venera 是一款开源免费的跨平台漫画阅读器，基于 Flutter 开发，专注于本地漫画阅读，同时支持通过自定义JS脚本添加网络漫画源，提供流畅的阅读体验、收藏管理、下载与标签搜索，界面现代简洁，是漫画爱好者聚合本地与在线资源的优秀工具。",
         "screenshots": [
@@ -118,6 +125,7 @@
         "size": "17.89MB",
         "system": "Android",
         "mod": "开源",
+        "author": "pure-music",
         "icon": "棉花音乐_icon.webp",
         "intro": "棉花音乐 是一款干净简洁的 Android 本地+云盘/NAS音乐播放器，支持本地歌曲扫描编辑、歌词显示、元数据刮削，以及挂载WebDAV、阿里云盘、百度网盘、OneDrive、Google Drive等云存储和Plex/Emby/Jellyfin等媒体服务器，纯净无广告，适合管理个人音乐库。",
         "screenshots": [
@@ -134,6 +142,7 @@
         "size": "2.52MB",
         "system": "Android",
         "mod": "开源",
+        "author": "butzist",
         "icon": "活动启动器_icon.webp",
         "intro": "活动启动器 是一款开源免费的 Android 工具App，能浏览手机中所有已安装应用的导出与未导出Activity，支持直接启动特定页面、创建桌面快捷方式、查看Intent信息与 Manifest 细节，适合开发者与玩机用户快速测试和访问应用隐藏功能。",
         "screenshots": [
@@ -148,7 +157,8 @@
         "version": "1.5.8",
         "size": "3.90MB",
         "system": "Android",
-        "mod": "原版",
+        "mod": "开源",
+        "author": "StellarSand",
         "icon": "IYPS_icon.webp",
         "intro": "IYPS 是一款开源免费的 Android 密码强度检测App，采用 Material Design 3 设计，支持离线评估密码强度、预测破解时间、分析模式并给出改进建议与警告，完全本地运行、无广告，适合检查和优化密码安全性。",
         "screenshots": [
@@ -165,6 +175,7 @@
         "size": "20.06MB",
         "system": "Android",
         "mod": "原版",
+        "author": "",
         "icon": "Kitsune_Mask_icon.webp",
         "intro": "Kitsune Mask 是一款 Magisk 的流行 Fork 分支（管理器+内核），在官方 Magisk 基础上重新加入隐藏 Root 功能（Magisk Hide），增强对银行/支付/游戏等应用的检测绕过能力，支持 Zygisk 模块与系统级 Root 自定义，是玩机用户常用的 Root 管理工具。",
         "screenshots": [
@@ -180,6 +191,7 @@
         "size": "24.11MB",
         "system": "Android",
         "mod": "开源",
+        "author": "topjohnwu",
         "icon": "Magisk_icon.webp",
         "intro": "Magisk 是一款经典开源的 Android 系统级 Root 工具（The Magic Mask），采用 systemless 方式实现 Root（不修改系统分区），支持安装 Magisk 模块、Zygisk、隐藏Root（MagiskHide）、Boot镜像修补等功能，是安卓玩机与深度自定义的核心神器。",
         "screenshots": [
@@ -195,6 +207,7 @@
         "size": "30.65MB",
         "system": "Android",
         "mod": "开源",
+        "author": "badnng",
         "icon": "澎湃记_icon.webp",
         "intro": "澎湃记 是一款免费开源的 Android 本地OCR工具，专为快速识别和管理外卖取餐码、快递取件码、验证码等设计。完全离线运行，支持截图识别、分享识别、划词识别、快捷开关等多种触发方式，采用 Material You 现代界面，所有数据仅在本地处理，注重隐私与速度，识别准确且无需联网。",
         "screenshots": [
@@ -211,6 +224,7 @@
         "size": "52.54MB",
         "system": "Android",
         "mod": "专业版",
+        "author": "",
         "icon": "AnExplorer_Pro_icon.webp",
         "intro": "AnExplorer Pro 是一款功能强大的 Android 文件管理器，界面采用 Material Design 3 风格，支持根目录浏览、隐藏文件显示、SMB/FTP/WebDAV/云盘等多协议连接、文件压缩解压、文本编辑、媒体预览、批量操作、主题自定义与 Root 增强，体验流畅且功能全面，是 MiXplorer 之外的另一款全能文件管理工具。",
         "screenshots": [
@@ -227,6 +241,7 @@
         "size": "7.17MB",
         "system": "Android",
         "mod": "开源",
+        "author": "GwoApps",
         "icon": "ShotClean_icon.webp",
         "intro": "ShotClean 是一款轻量实用的 Android 截图自动化管理工具，核心功能是将手机中不断堆积的截图从系统相册中自动“搬走”，归档到用户指定的独立文件夹中，让相册保持清爽。支持按日期整理、批量删除、设置保留期限（默认30天）后自动清理过期截图，同时保留随时找回的能力，操作简单、无广告，适合解决截图过多导致相册混乱的问题。",
         "screenshots": [
@@ -243,6 +258,7 @@
         "size": "2.05MB",
         "system": "Android",
         "mod": "开源",
+        "author": "PixelTelo",
         "icon": "Pixel_Telo_icon.webp",
         "intro": "",
         "screenshots": [
