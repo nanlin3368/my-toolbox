@@ -1342,6 +1342,31 @@
             font-size: 20px;
             font-weight: 700;
             letter-spacing: -0.3px;
+            line-height: 1.2;
+        }
+
+        .modal-app-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 2px;
+            min-width: 0;
+        }
+
+        .modal-app-author {
+            font-size: 13px;
+            color: var(--text-sub);
+            font-weight: 400;
+        }
+
+        .modal-app-author.has-link {
+            color: var(--accent-color);
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .modal-app-author.has-link:active {
+            opacity: 0.6;
         }
 
         /* iOS grouped inset table style */
@@ -1371,15 +1396,42 @@
             border-top: 0.5px solid var(--separator);
             padding: 10px 14px;
         }
-
+        .pkg-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 4px;
+        }
         .pkg-value {
             font-family: "SF Mono", "Menlo", monospace;
             color: var(--text-sub);
             font-size: 11px;
             word-break: break-all;
-            margin-top: 4px;
+            line-height: 1.5;
+            flex: 1 1 0;
+            min-width: 0;
+        }
+        .pkg-copy-btn {
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+            padding: 3px 9px;
+            border-radius: 7px;
+            border: none;
+            background: var(--fill-1);
+            color: var(--accent-color);
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            transition: background 0.12s, transform 0.1s;
+            white-space: nowrap;
             line-height: 1.5;
         }
+        .pkg-copy-btn:active { transform: scale(0.92); background: var(--fill-2); }
+        .pkg-copy-btn.copied { color: var(--accent-secondary); }
 
         .section-title {
             font-weight: 600;
@@ -1758,6 +1810,7 @@
             .modal-content { max-width: 680px; }
             .modal-inner-pad { padding: 16px 36px 36px; }
             .modal-app-name { font-size: 22px; }
+            .modal-app-author { font-size: 14px; }
             .modal-icon-wrap { width: 72px; height: 72px; border-radius: 16px; }
             .modal-icon { width: 100%; height: 100%; border-radius: 0; }
 
@@ -3176,7 +3229,7 @@
     </div>
     <div class="search-container">
         <div class="search-input-wrap">
-            <input type="text" id="search-input" placeholder="搜索应用..." oninput="filterApps();updateClearBtn()">
+            <input type="text" id="search-input" placeholder="搜索应用名称或包名..." oninput="filterApps();updateClearBtn()">
             <button id="search-clear-btn" class="search-clear-btn" onclick="clearSearch()" aria-label="清除搜索" style="display:none">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
             </button>
@@ -3975,11 +4028,19 @@
 
         function renderSearchResults(animate) {
             const term = document.getElementById('search-input').value.toLowerCase();
-            const filtered = searchList.filter(({ app }) => app.name.toLowerCase().includes(term));
+            const filtered = searchList.filter(({ app }) =>
+                app.name.toLowerCase().includes(term) ||
+                (app.pkg && app.pkg.toLowerCase().includes(term))
+            );
             const container = document.getElementById('app-container');
             const countDisplay = document.getElementById('app-count');
             const sTotal = Math.ceil(filtered.length / searchPerPage) || 1;
             if (searchPage > sTotal) searchPage = sTotal;
+
+            // 立即滚动到顶部，不等键盘收起
+            if (animate) {
+                window.scrollTo({ top: 0, behavior: 'instant' });
+            }
 
             if (filtered.length === 0) {
                 container.innerHTML = '<div class="empty-status">未发现相关应用</div>';
@@ -4223,11 +4284,11 @@ function openModal(pageNum, idx) {
         }
     }
     document.getElementById('modal-body').innerHTML = `
-        <div class="modal-header"><div class="modal-icon-wrap"><img src="${app.icon}" class="modal-icon" oncontextmenu="return false" draggable="false"></div><div class="modal-app-name">${app.name}</div></div>
+        <div class="modal-header"><div class="modal-icon-wrap"><img src="${app.icon}" class="modal-icon" oncontextmenu="return false" draggable="false"></div><div class="modal-app-info"><div class="modal-app-name">${app.name}</div>${app.author ? `<div class="modal-app-author${app.source ? ' has-link' : ''}" ${app.source ? `onclick="window.open('${app.source}','_blank')"` : ''}>${app.author}</div>` : ''}</div></div>
         <div class="modal-info-box">
             <div class="info-row"><div class="info-left"><span class="info-label">版本</span><span class="info-value">${app.version}</span></div><div class="info-right" style="width:110px"><span class="info-label">大小</span><span class="info-value">${app.size}</span></div></div>
             <div class="info-row"><div class="info-left"><span class="info-label">系统</span><span class="info-value">${app.system}</span></div><div class="info-right" style="width:110px"><span class="info-label">类型</span><span class="info-value">${app.mod || '原版'}</span></div></div>
-            <div class="pkg-section"><span class="info-label">应用包名</span><div class="pkg-value">${app.pkg}</div></div>
+            <div class="pkg-section"><span class="info-label">应用包名</span><div class="pkg-row"><div class="pkg-value">${app.pkg}</div><button class="pkg-copy-btn" onclick="copyPkg(this,'${app.pkg}')" aria-label="复制包名"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>复制</button></div></div>
         </div>
         <div class="section-title">📸 应用截图</div>
         <div class="screenshot-container" id="screenshot-list">${app.screenshots.map((s, idx) => `<div class="screenshot-wrap" id="sw-${idx}"><img src="${s}" class="screenshot-img" loading="lazy" decoding="async" onclick="openPreview(${idx})" onload="onScreenshotLoad(this, 'sw-'+${idx})" onerror="onScreenshotError('sw-'+${idx})" oncontextmenu="return false" draggable="false"></div>`).join('')}</div>
@@ -4245,6 +4306,29 @@ function openModal(pageNum, idx) {
 }
         
         function handleBack() { window.history.back(); }
+
+        function copyPkg(btn, pkg) {
+            const doFallback = () => {
+                const el = document.createElement('textarea');
+                el.value = pkg;
+                el.style.cssText = 'position:fixed;opacity:0;pointer-events:none';
+                document.body.appendChild(el);
+                el.focus(); el.select();
+                try { document.execCommand('copy'); } catch(e) {}
+                document.body.removeChild(el);
+            };
+            const onSuccess = () => {
+                btn.classList.add('copied');
+                btn.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>已复制';
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    btn.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>复制';
+                }, 1800);
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(pkg).then(onSuccess).catch(() => { doFallback(); onSuccess(); });
+            } else { doFallback(); onSuccess(); }
+        }
         function openPreview(index) {
             currentImgIndex = index; updatePreviewUI(); showElement('preview-overlay');
             window.history.pushState({state: 'preview', page: currentPage}, "");
@@ -4916,11 +5000,11 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.style.overflow = 'hidden';
             window.history.pushState({ state: 'disclaimer' }, '');
 
-            // 5秒倒计时
+            // 10秒倒计时
             const btn = overlay.querySelector('.disclaimer-agree-btn');
             if (btn) {
                 btn.disabled = true;
-                let sec = 5;
+                let sec = 10;
                 btn.textContent = `我已阅读并了解（${sec}s）`;
                 const timer = setInterval(() => {
                     sec--;
