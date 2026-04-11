@@ -1,0 +1,37 @@
+[
+    {
+        "title": "简历模板资源网",
+        "icon": "简历模板资源网_icon.png",
+        "url": "https://www.jianlimoban-ziyuan.com/",
+        "description": "收录了大量 Word 可编辑的免费模板",
+        "category": "文档处理"
+    },
+    {
+        "title": "iLovePDF",
+        "icon": "iLovePDF_icon.png",
+        "url": "https://www.ilovepdf.com/zh-cn",
+        "description": "完全免费的在线 PDF 文件处理平台",
+        "category": "文档处理"
+    },
+    {
+        "title": "PDF24",
+        "icon": "PDF24_icon.png",
+        "url": "https://tools.pdf24.org/zh/all-tools",
+        "description": "合并、压缩、创建、编辑和转换 PDF 文件的免费在线 PDF 工具",
+        "category": "文档处理"
+    },
+    {
+        "title": "FileUNZIP",
+        "icon": "FileUNZIP_icon.png",
+        "url": "https://cn.fileunzip.com/",
+        "description": "专注于在线压缩与解压工具，支持 ZIP、RAR、7Z 等多种格式",
+        "category": "文档处理"
+    },
+    {
+        "title": "TinyWow",
+        "icon": "TinyWow_icon.png",
+        "url": "https://tinywow.com/",
+        "description": "免费的在线工具平台，提供超过 200 种 涵盖 PDF、图像、视频和写作的数字化处理工具",
+        "category": "文档处理"
+    }
+]

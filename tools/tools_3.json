@@ -1,0 +1,23 @@
+[
+    {
+        "title": "一个木函",
+        "icon": "一个木函_icon.png",
+        "url": "https://ol.woobx.cn/",
+        "description": "多功能在线效率工具，基本满足您在数码生活中的所有需求",
+        "category": "综合效率"
+    },
+    {
+        "title": "帮小忙",
+        "icon": "帮小忙_icon.png",
+        "url": "https://tool.browser.qq.com/",
+        "description": "集成视频去水印、PDF转换等数百种工具",
+        "category": "综合效率"
+    },
+    {
+        "title": "奇妙工具箱",
+        "icon": "奇妙工具箱_icon.png",
+        "url": "https://www.magicalbox.cn/",
+        "description": "提供视频压缩、音频转换、图片处理等100+免费在线工具",
+        "category": "综合效率"
+    }
+]

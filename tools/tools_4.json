@@ -1,0 +1,37 @@
+[
+    {
+        "title": "FMHY",
+        "icon": "FMHY_icon.png",
+        "url": "https://fmhy.net/",
+        "description": "互联网上最大的开源资源导航库之一",
+        "category": "资源下载"
+    },
+    {
+        "title": "软仓",
+        "icon": "软仓_icon.png",
+        "url": "https://www.ruancang.net/",
+        "description": "集合大型专业软件下载的免费纯公益聚合平台",
+        "category": "资源下载"
+    },
+    {
+        "title": "奇迹秀",
+        "icon": "奇迹秀_icon.png",
+        "url": "https://www.qijishow.com/",
+        "description": "集成设计素材、软件插件、灵感导航及高效办公工具",
+        "category": "资源下载"
+    },
+    {
+        "title": "鹿鸣",
+        "icon": "鹿鸣_icon.png",
+        "url": "https://www.lumingrj.com/",
+        "description": "提供 Mac+Win 软件安装包下载及安装教程",
+        "category": "资源下载"
+    },
+    {
+        "title": "考拉资源库",
+        "icon": "考拉资源库_icon.png",
+        "url": "https://www.kaolarj.com/",
+        "description": "专注分享日常工作生活办公技术资源",
+        "category": "资源下载"
+    }
+]

@@ -1,0 +1,30 @@
+[
+    {
+        "title": "SSR-V2ray-Trojan机场推荐",
+        "icon": "SSR-V2ray-Trojan机场推荐_icon.webp",
+        "url": "https://github.com/hwanz/SSR-V2ray-Trojan",
+        "description": "机场推荐与机场评测",
+        "category": "GitHub项目"
+    },
+    {
+        "title": "awesome-shizuku",
+        "icon": "awesome-shizuku_icon.png",
+        "url": "https://github.com/timschneeb/awesome-shizuku/blob/master/README_cn.md",
+        "description": "汇集了已知可利用 Shizuku 功能的应用",
+        "category": "GitHub项目"
+    },
+    {
+        "title": "GitHub中文排行榜",
+        "icon": "GitHub中文排行榜_icon.png",
+        "url": "https://github.com/GrowingGit/GitHub-Chinese-Top-Charts",
+        "description": "专门收集和整理 GitHub 上高质量中文开源项目的知名项目",
+        "category": "GitHub项目"
+    },
+    {
+        "title": "TelegramGroup",
+        "icon": "TelegramGroup_icon.jpg",
+        "url": "https://github.com/itgoyo/TelegramGroup",
+        "description": "收集、整理并分享大量（上万个）Telegram群组、频道和机器人",
+        "category": "GitHub项目"
+    }
+]
